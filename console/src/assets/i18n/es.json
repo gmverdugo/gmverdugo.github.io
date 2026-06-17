@@ -85,5 +85,16 @@
   "iam.section.aiCapability.title": "Rol Otorgado — Desarrollo Asistido por Agentes de IA",
   "iam.section.aiCapability.roleLabel": "Capacidad",
   "iam.section.aiCapability.description": "Este mismo portfolio fue diseñado y construido aplicando prácticas de desarrollo asistido por agentes de IA (Claude Code): planificación guiada por especificaciones, implementación ejecutada por agentes y revisión de arquitectura dirigida por una persona humana en cada etapa — el mismo modelo operativo aplicado al trabajo de infraestructura en producción.",
-  "iam.section.aiCapability.note": "Esta capacidad no tiene demo interactiva: se documenta como una declaración, no como un control en vivo."
+  "iam.section.aiCapability.note": "Esta capacidad no tiene demo interactiva: se documenta como una declaración, no como un control en vivo.",
+
+  "contact.dialog.title": "Ponte en contacto",
+  "contact.dialog.intro": "Elegí qué te trae por aquí y enviá el mensaje: se abre directamente en tu cliente de correo.",
+  "contact.intent.hirePerson": "Contratar a una persona",
+  "contact.intent.engageProject": "Contratar para un proyecto",
+  "contact.dialog.cancel": "Cancelar",
+  "contact.dialog.submit": "Enviar",
+  "contact.mailto.hirePerson.subject": "Consulta de contratación — Gonzalo Verdugo",
+  "contact.mailto.hirePerson.body": "Hola Gonzalo,\n\nEstoy interesado en contratarte. Aquí algunos detalles sobre el puesto:\n\n",
+  "contact.mailto.engageProject.subject": "Consulta de proyecto — Gonzalo Verdugo",
+  "contact.mailto.engageProject.body": "Hola Gonzalo,\n\nMe gustaría contratarte para un proyecto. Aquí algunos detalles:\n\n"
 }

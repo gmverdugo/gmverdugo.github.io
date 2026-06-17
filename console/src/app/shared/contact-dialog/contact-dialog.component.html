@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>{{ i18n.t('contact.dialog.title') }}</h2>
+
+<div mat-dialog-content>
+  <p class="contact-dialog__intro">{{ i18n.t('contact.dialog.intro') }}</p>
+
+  <form [formGroup]="form" class="contact-dialog__form">
+    <mat-radio-group formControlName="intent" class="contact-dialog__intent-group" aria-label="Contact intent">
+      <mat-radio-button class="contact-dialog__intent-option" value="hire-person">
+        {{ i18n.t('contact.intent.hirePerson') }}
+      </mat-radio-button>
+      <mat-radio-button class="contact-dialog__intent-option" value="engage-project">
+        {{ i18n.t('contact.intent.engageProject') }}
+      </mat-radio-button>
+    </mat-radio-group>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="close()">{{ i18n.t('contact.dialog.cancel') }}</button>
+  <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="submit()">
+    {{ i18n.t('contact.dialog.submit') }}
+  </button>
+</div>
