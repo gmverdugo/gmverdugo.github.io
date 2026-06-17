@@ -1,0 +1,23 @@
+<section class="console-card">
+  <header class="console-card__bar">
+    <span class="console-card__dot" [class.console-card__dot--error]="failed()"></span>
+    <span class="console-card__title">{{ title() }}</span>
+  </header>
+
+  <div class="console-card__body">
+    @if (!failed()) {
+      <iframe
+        class="console-card__frame"
+        [src]="safeSrc"
+        title="{{ title() }}"
+        loading="lazy"
+        (error)="onLoadError()"
+      ></iframe>
+    } @else {
+      <div class="console-card__fallback" role="alert">
+        <span class="console-card__fallback-icon">!</span>
+        <p class="console-card__fallback-text">{{ fallbackMessage() }}</p>
+      </div>
+    }
+  </div>
+</section>
