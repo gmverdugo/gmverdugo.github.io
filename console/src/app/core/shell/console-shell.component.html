@@ -53,7 +53,7 @@
         <button mat-stroked-button class="locale-btn" (click)="toggleLocale()">
           {{ i18n.t('shell.locale.toggle') }}
         </button>
-        <button mat-flat-button color="primary" class="contact-btn">
+        <button mat-flat-button color="primary" class="contact-btn" (click)="openContactDialog()">
           {{ i18n.t('shell.contact.cta') }}
         </button>
       </div>
