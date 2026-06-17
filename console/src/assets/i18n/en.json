@@ -70,5 +70,20 @@
 
   "serviceDetail.secops-siem-platform.reportTitle": "SecOps SIEM Platform — case study",
   "serviceDetail.secops-siem-platform.summary.security-ops": "Designed and operate real-time threat detection across MercadoLibre's critical e-commerce infrastructure: a SIEM platform processing 320GB/day of security events through 102 deployed agents, with a retention guardrail that closed a leak across 2,351 long-lived security indices that were never being deleted.",
-  "serviceDetail.secops-siem-platform.summary.contractor": "Deployed an enterprise SIEM platform at e-commerce scale for a long-running MercadoLibre engagement: 320GB/day of security events processed, 102 agents providing coverage across the infrastructure, and a retention-lifecycle guardrail that closed a leak affecting 2,351 indices that had never been deleted."
+  "serviceDetail.secops-siem-platform.summary.contractor": "Deployed an enterprise SIEM platform at e-commerce scale for a long-running MercadoLibre engagement: 320GB/day of security events processed, 102 agents providing coverage across the infrastructure, and a retention-lifecycle guardrail that closed a leak affecting 2,351 indices that had never been deleted.",
+
+  "iam.section.credentials.title": "Granted Roles — Credentials",
+  "iam.section.credentials.description": "Security education completed and verified, modeled here as IAM roles granted to this profile.",
+  "iam.credential.issuedBy": "Issued by",
+  "iam.credential.completedOn": "Completed",
+  "iam.credential.secureDevGo.title": "Secure Back-End Development Practices — Go",
+  "iam.credential.secureDevJava.title": "Secure Back-End Development Practices — Java",
+  "iam.credential.secureDevPython.title": "Secure Back-End Development Practices — Python",
+  "iam.credential.secureDevNode.title": "Secure Front-End Development Practices — Node.js",
+  "iam.credential.ssdlc.title": "Security in the Software Development Lifecycle (SSDLC)",
+
+  "iam.section.aiCapability.title": "Granted Role — AI-Agent-Assisted Development",
+  "iam.section.aiCapability.roleLabel": "Capability",
+  "iam.section.aiCapability.description": "This portfolio itself was designed and built using AI-agent-assisted development practices (Claude Code): spec-driven planning, agent-executed implementation, and human-directed architecture review at every stage — the same operating model applied to production infrastructure work.",
+  "iam.section.aiCapability.note": "No interactive demo for this capability — it is documented here as a statement, not a live control."
 }

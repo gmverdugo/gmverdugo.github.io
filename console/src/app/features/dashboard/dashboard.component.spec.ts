@@ -58,6 +58,7 @@ describe('DashboardComponent', () => {
     fixture.detectChanges();
 
     httpMock.expectOne('/assets/data/services.json').flush(SERVICES);
+    httpMock.expectOne('/assets/data/credentials.json').flush([]);
     httpMock.expectOne('/assets/i18n/en.json').flush(EN_DICT);
     httpMock.expectOne('/assets/i18n/es.json').flush({});
 
