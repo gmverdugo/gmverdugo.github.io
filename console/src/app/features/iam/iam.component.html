@@ -1,0 +1,27 @@
+<section class="iam">
+  <header class="iam__section-header">
+    <h2 class="iam__section-title">{{ sectionTitle() }}</h2>
+    <p class="iam__section-description">{{ sectionDescription() }}</p>
+  </header>
+
+  <div class="iam__list">
+    @for (credential of credentials(); track credential.id) {
+      <app-role-badge
+        [roleName]="credential.roleName"
+        [issuer]="credential.issuer"
+        [grantedLabel]="grantedLabel()"
+        [grantedDate]="credential.completedDate"
+      />
+    }
+  </div>
+
+  <header class="iam__section-header iam__section-header--secondary">
+    <h2 class="iam__section-title">{{ aiCapabilityTitle() }}</h2>
+  </header>
+
+  <article class="iam__ai-capability">
+    <span class="iam__ai-capability-label">{{ aiCapabilityRoleLabel() }}</span>
+    <p class="iam__ai-capability-description">{{ aiCapabilityDescription() }}</p>
+    <p class="iam__ai-capability-note">{{ aiCapabilityNote() }}</p>
+  </article>
+</section>
