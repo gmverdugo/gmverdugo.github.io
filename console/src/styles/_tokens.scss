@@ -1,0 +1,39 @@
+// Design tokens — ported from obs_madurez_v2.html / diagnostico_hot_optimization.html
+$bg: #fafbfe;
+$surface: #ffffff;
+$surface-alt: #f4f6fb;
+$surface-dark: #0f1923;
+$ink: #0f1923;
+$ink-2: #3a4a5c;
+$ink-3: #7c8da3;
+$ink-4: #b0bccb;
+$teal: #0a9b8e;
+$blue: #2563eb;
+$amber: #d97706;
+$rose: #dc2649;
+$violet: #7c3aed;
+$slate: #e8ecf2;
+$radius: 14px;
+$radius-sm: 8px;
+$radius-pill: 100px;
+
+// CSS custom properties (for runtime use in components)
+:root {
+  --bg: #{$bg};
+  --surface: #{$surface};
+  --surface-alt: #{$surface-alt};
+  --surface-dark: #{$surface-dark};
+  --ink: #{$ink};
+  --ink-2: #{$ink-2};
+  --ink-3: #{$ink-3};
+  --ink-4: #{$ink-4};
+  --teal: #{$teal};
+  --blue: #{$blue};
+  --amber: #{$amber};
+  --rose: #{$rose};
+  --violet: #{$violet};
+  --slate: #{$slate};
+  --radius: #{$radius};
+  --radius-sm: #{$radius-sm};
+  --radius-pill: #{$radius-pill};
+}
