@@ -70,5 +70,20 @@
 
   "serviceDetail.secops-siem-platform.reportTitle": "Plataforma SIEM SecOps — caso de estudio",
   "serviceDetail.secops-siem-platform.summary.security-ops": "Diseñé y opero la detección de amenazas en tiempo real sobre la infraestructura crítica de e-commerce de MercadoLibre: una plataforma SIEM que procesa 320GB/día de eventos de seguridad a través de 102 agentes desplegados, con un guardrail de retención que cerró una fuga en 2.351 índices de seguridad de larga vida que nunca se eliminaban.",
-  "serviceDetail.secops-siem-platform.summary.contractor": "Desplegué una plataforma SIEM enterprise a escala de e-commerce en un engagement de largo plazo con MercadoLibre: 320GB/día de eventos de seguridad procesados, 102 agentes dando cobertura a toda la infraestructura, y un guardrail de ciclo de vida de retención que cerró una fuga en 2.351 índices que nunca se habían eliminado."
+  "serviceDetail.secops-siem-platform.summary.contractor": "Desplegué una plataforma SIEM enterprise a escala de e-commerce en un engagement de largo plazo con MercadoLibre: 320GB/día de eventos de seguridad procesados, 102 agentes dando cobertura a toda la infraestructura, y un guardrail de ciclo de vida de retención que cerró una fuga en 2.351 índices que nunca se habían eliminado.",
+
+  "iam.section.credentials.title": "Roles Otorgados — Credenciales",
+  "iam.section.credentials.description": "Formación en seguridad completada y verificada, presentada aquí como roles IAM otorgados a este perfil.",
+  "iam.credential.issuedBy": "Emitido por",
+  "iam.credential.completedOn": "Completado",
+  "iam.credential.secureDevGo.title": "Buenas Prácticas de Desarrollo Seguro Back-End — Go",
+  "iam.credential.secureDevJava.title": "Buenas Prácticas de Desarrollo Seguro Back-End — Java",
+  "iam.credential.secureDevPython.title": "Buenas Prácticas de Desarrollo Seguro Back-End — Python",
+  "iam.credential.secureDevNode.title": "Buenas Prácticas de Desarrollo Seguro Front-End — Node.js",
+  "iam.credential.ssdlc.title": "Seguridad en el Ciclo de Desarrollo de Software (SSDLC)",
+
+  "iam.section.aiCapability.title": "Rol Otorgado — Desarrollo Asistido por Agentes de IA",
+  "iam.section.aiCapability.roleLabel": "Capacidad",
+  "iam.section.aiCapability.description": "Este mismo portfolio fue diseñado y construido aplicando prácticas de desarrollo asistido por agentes de IA (Claude Code): planificación guiada por especificaciones, implementación ejecutada por agentes y revisión de arquitectura dirigida por una persona humana en cada etapa — el mismo modelo operativo aplicado al trabajo de infraestructura en producción.",
+  "iam.section.aiCapability.note": "Esta capacidad no tiene demo interactiva: se documenta como una declaración, no como un control en vivo."
 }

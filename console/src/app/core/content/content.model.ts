@@ -16,3 +16,10 @@ export interface ServiceTile {
   personas: Persona[];
   reportFile?: string;
 }
+
+export interface Credential {
+  id: string;
+  titleKey: string;
+  issuer: string;
+  completedDate: string;
+}
