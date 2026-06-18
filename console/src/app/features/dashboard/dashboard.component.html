@@ -1,0 +1,13 @@
+<section class="dashboard">
+  <div class="dashboard__grid">
+    @for (tile of tiles(); track tile.id) {
+      <app-metric-tile
+        [title]="tile.title"
+        [headline]="tile.headline"
+        [metrics]="tile.metrics"
+        [accent]="tile.metrics[0]?.accent ?? 'teal'"
+        (tileClick)="openService(tile.id)"
+      />
+    }
+  </div>
+</section>

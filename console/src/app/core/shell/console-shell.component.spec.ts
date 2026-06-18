@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ConsoleShellComponent } from './console-shell.component';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
@@ -6,6 +7,7 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 describe('ConsoleShellComponent', () => {
   let fixture: ComponentFixture<ConsoleShellComponent>;
+  let httpMock: HttpTestingController;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -13,12 +15,24 @@ describe('ConsoleShellComponent', () => {
       providers: [
         provideRouter([]),
         provideHttpClient(),
+        provideHttpClientTesting(),
         provideNoopAnimations(),
       ],
     }).compileComponents();
 
+    httpMock = TestBed.inject(HttpTestingController);
+
     fixture = TestBed.createComponent(ConsoleShellComponent);
     fixture.detectChanges();
+
+    httpMock.expectOne('/assets/i18n/en.json').flush({});
+    httpMock.expectOne('/assets/i18n/es.json').flush({});
+
+    fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    httpMock.verify();
   });
 
   it('should render the nav sidebar', () => {
