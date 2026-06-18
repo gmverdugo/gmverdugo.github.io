@@ -50,5 +50,25 @@
   "dashboard.tile.siemPlatform.metric.agentCoverage.value": "102",
   "dashboard.tile.siemPlatform.metric.agentCoverage.label": "Agents across infrastructure",
   "dashboard.tile.siemPlatform.metric.retentionGuardrail.value": "2,351 indices",
-  "dashboard.tile.siemPlatform.metric.retentionGuardrail.label": "Retention leak closed"
+  "dashboard.tile.siemPlatform.metric.retentionGuardrail.label": "Retention leak closed",
+
+  "serviceDetail.notFound": "Service not found.",
+  "serviceDetail.report.fallbackMessage": "This report panel could not be loaded right now.",
+
+  "serviceDetail.hot-tier-optimization.reportTitle": "Live report — HOT tier diagnostic (Elasticsearch 9.3)",
+  "serviceDetail.hot-tier-optimization.summary.security-ops": "On the MercadoLibre cluster, HOT-tier sprawl was quietly keeping security data live indefinitely. I closed the retention leak: 2,351 long-lived security indices (secops-2y) were moved onto a delete@730d lifecycle, and shard count on the validated cluster dropped from 10,150 to 8,173 (-19.5%) while staying green throughout.",
+  "serviceDetail.hot-tier-optimization.summary.contractor": "Engaged to diagnose and fix HOT-tier over-sharding on a live, production Elasticsearch 9.3 cluster (16 nodes, 3 HOT). Delivered a validated fix: shards down from 10,150 to 8,173 (-19.5%), shards/GB-heap from 78 to 49 (official limit is 20), and ~1.2TB of cold data routed out of HOT via a hot→cold@7d→frozen@30d→delete@60d lifecycle — zero downtime, cluster stayed green.",
+  "serviceDetail.hot-tier-optimization.summary.architect": "Root-caused a 3.9x shard-budget overrun on a production cluster without adding hardware. Resolution: shard count reduced 10,150 → 8,173 (-19.5%), shards/GB-heap brought from 78 down to 49 against an official limit of 20, indices consolidated from 3,566 to 3,040, and 785GB purged from six hot-only default indices — all with 0 ILM errors and the cluster green end to end.",
+
+  "serviceDetail.icbc-enterprise-migration.reportTitle": "ICBC Enterprise Migration — case study",
+  "serviceDetail.icbc-enterprise-migration.summary.contractor": "Hired to re-architect ICBC Bank's on-premise Elasticsearch footprint under banking compliance constraints. Outcome: infrastructure consolidated from 93 nodes to 16 ERUs (-83%), storage reduced 30.75% via LogsDB, and 395-day audit retention maintained throughout — delivered as a fixed-scope architecture + implementation engagement.",
+  "serviceDetail.icbc-enterprise-migration.summary.architect": "Re-architected a Platinum-licensed, 93-node on-premise cluster into a leaner 16-ERU Enterprise topology for a banking client (-83% infrastructure). Storage dropped 30.75% via LogsDB while preserving the 395-day retention required for regulatory compliance — covering licensing strategy, data-tier design, and lifecycle management end to end.",
+
+  "serviceDetail.meli-observability-maturity.reportTitle": "Live report — Observability & Security maturity assessment",
+  "serviceDetail.meli-observability-maturity.summary.security-ops": "Built the security and audit foundation behind MercadoLibre's observability program: a 16-node cluster (hot/cold/frozen) indexing 12B+ documents across 11 monitored business domains, with 1,459 alert rules (260 active) and 102 deployed agents feeding 30+ Kibana dashboards. Maturity assessment scored the program at 1.8/4.0, between StackState Level 1 (Monitoring) and Level 2 (Observability) — the baseline this work is closing.",
+  "serviceDetail.meli-observability-maturity.summary.architect": "Scaled and assessed a 16-node Elasticsearch cluster (hot/cold/frozen) covering 11 business domains end to end for MercadoLibre: 12B+ documents indexed, 1,459 alert rules (260 active), 102 deployed agents, 30+ Kibana dashboards. The maturity assessment placed the program at 1.8/4.0 on the StackState model — the data this engagement used to define the next architecture milestones.",
+
+  "serviceDetail.secops-siem-platform.reportTitle": "SecOps SIEM Platform — case study",
+  "serviceDetail.secops-siem-platform.summary.security-ops": "Designed and operate real-time threat detection across MercadoLibre's critical e-commerce infrastructure: a SIEM platform processing 320GB/day of security events through 102 deployed agents, with a retention guardrail that closed a leak across 2,351 long-lived security indices that were never being deleted.",
+  "serviceDetail.secops-siem-platform.summary.contractor": "Deployed an enterprise SIEM platform at e-commerce scale for a long-running MercadoLibre engagement: 320GB/day of security events processed, 102 agents providing coverage across the infrastructure, and a retention-lifecycle guardrail that closed a leak affecting 2,351 indices that had never been deleted."
 }

@@ -1,0 +1,80 @@
+.service-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px;
+  max-width: 960px;
+}
+
+.service-detail__header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.service-detail__title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  color: var(--ink);
+  margin: 0;
+}
+
+.service-detail__summary {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin: 0;
+  max-width: 680px;
+}
+
+.service-detail__metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--slate);
+  border-radius: var(--radius);
+}
+
+.service-detail__metric {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.service-detail__metric-value {
+  font-family: 'Fraunces', serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--teal);
+}
+
+.service-detail__metric.accent-teal .service-detail__metric-value { color: var(--teal); }
+.service-detail__metric.accent-blue .service-detail__metric-value { color: var(--blue); }
+.service-detail__metric.accent-amber .service-detail__metric-value { color: var(--amber); }
+.service-detail__metric.accent-rose .service-detail__metric-value { color: var(--rose); }
+.service-detail__metric.accent-violet .service-detail__metric-value { color: var(--violet); }
+
+.service-detail__metric-label {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--ink-3);
+}
+
+.service-detail__report {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.service-detail--not-found {
+  font-family: 'Geist Mono', monospace;
+  color: var(--ink-3);
+}

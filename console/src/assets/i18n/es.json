@@ -50,5 +50,25 @@
   "dashboard.tile.siemPlatform.metric.agentCoverage.value": "102",
   "dashboard.tile.siemPlatform.metric.agentCoverage.label": "Agentes en toda la infraestructura",
   "dashboard.tile.siemPlatform.metric.retentionGuardrail.value": "2.351 índices",
-  "dashboard.tile.siemPlatform.metric.retentionGuardrail.label": "Fuga de retención cerrada"
+  "dashboard.tile.siemPlatform.metric.retentionGuardrail.label": "Fuga de retención cerrada",
+
+  "serviceDetail.notFound": "Servicio no encontrado.",
+  "serviceDetail.report.fallbackMessage": "Este panel de reporte no pudo cargarse en este momento.",
+
+  "serviceDetail.hot-tier-optimization.reportTitle": "Reporte en vivo — Diagnóstico de tier HOT (Elasticsearch 9.3)",
+  "serviceDetail.hot-tier-optimization.summary.security-ops": "En el cluster de MercadoLibre, el crecimiento descontrolado del tier HOT mantenía datos de seguridad activos indefinidamente. Cerré la fuga de retención: 2.351 índices de seguridad de larga vida (secops-2y) pasaron a un ciclo de vida delete@730d, y la cantidad de shards en el cluster validado bajó de 10.150 a 8.173 (-19,5%), manteniéndose en estado verde durante todo el proceso.",
+  "serviceDetail.hot-tier-optimization.summary.contractor": "Contratado para diagnosticar y corregir over-sharding en el tier HOT de un cluster Elasticsearch 9.3 productivo (16 nodos, 3 HOT). Resultado validado: shards de 10.150 a 8.173 (-19,5%), shards/GB de heap de 78 a 49 (el límite oficial es 20), y ~1,2TB de datos fríos migrados fuera de HOT mediante un ciclo hot→cold@7d→frozen@30d→delete@60d, sin downtime y con el cluster en verde.",
+  "serviceDetail.hot-tier-optimization.summary.architect": "Identifiqué la causa raíz de un excedente de 3,9x en el presupuesto de shards de un cluster productivo, sin agregar hardware. Resolución: shards reducidos de 10.150 a 8.173 (-19,5%), shards/GB de heap llevados de 78 a 49 contra un límite oficial de 20, índices consolidados de 3.566 a 3.040, y 785GB purgados de seis índices HOT-only por defecto, todo con 0 errores de ILM y el cluster en verde de punta a punta.",
+
+  "serviceDetail.icbc-enterprise-migration.reportTitle": "Migración Enterprise ICBC — caso de estudio",
+  "serviceDetail.icbc-enterprise-migration.summary.contractor": "Contratado para rediseñar la infraestructura on-premise de Elasticsearch de ICBC Bank bajo restricciones de compliance bancario. Resultado: infraestructura consolidada de 93 nodos a 16 ERUs (-83%), almacenamiento reducido un 30,75% mediante LogsDB, y retención de auditoría de 395 días mantenida durante todo el proceso — entregado como un engagement de alcance fijo de arquitectura e implementación.",
+  "serviceDetail.icbc-enterprise-migration.summary.architect": "Rediseñé un cluster on-premise de licenciamiento Platinum de 93 nodos hacia una topología Enterprise más eficiente de 16 ERUs para un cliente bancario (-83% de infraestructura). El almacenamiento bajó un 30,75% mediante LogsDB, preservando la retención de 395 días requerida por compliance regulatorio — cubriendo estrategia de licenciamiento, diseño de data tiers y gestión de ciclo de vida de punta a punta.",
+
+  "serviceDetail.meli-observability-maturity.reportTitle": "Reporte en vivo — Evaluación de madurez de Observabilidad y Seguridad",
+  "serviceDetail.meli-observability-maturity.summary.security-ops": "Construí la base de seguridad y auditoría detrás del programa de observabilidad de MercadoLibre: un cluster de 16 nodos (hot/cold/frozen) que indexa más de 12.000 millones de documentos en 11 dominios de negocio monitoreados, con 1.459 reglas de alerta (260 activas) y 102 agentes desplegados alimentando más de 30 dashboards de Kibana. La evaluación de madurez ubicó al programa en 1,8/4,0, entre el Nivel 1 (Monitoreo) y el Nivel 2 (Observabilidad) del modelo StackState — la línea base que este trabajo está cerrando.",
+  "serviceDetail.meli-observability-maturity.summary.architect": "Escalé y evalué un cluster Elasticsearch de 16 nodos (hot/cold/frozen) que cubre 11 dominios de negocio de punta a punta para MercadoLibre: más de 12.000 millones de documentos indexados, 1.459 reglas de alerta (260 activas), 102 agentes desplegados, más de 30 dashboards de Kibana. La evaluación de madurez ubicó al programa en 1,8/4,0 sobre el modelo StackState — los datos que este engagement usó para definir los próximos hitos de arquitectura.",
+
+  "serviceDetail.secops-siem-platform.reportTitle": "Plataforma SIEM SecOps — caso de estudio",
+  "serviceDetail.secops-siem-platform.summary.security-ops": "Diseñé y opero la detección de amenazas en tiempo real sobre la infraestructura crítica de e-commerce de MercadoLibre: una plataforma SIEM que procesa 320GB/día de eventos de seguridad a través de 102 agentes desplegados, con un guardrail de retención que cerró una fuga en 2.351 índices de seguridad de larga vida que nunca se eliminaban.",
+  "serviceDetail.secops-siem-platform.summary.contractor": "Desplegué una plataforma SIEM enterprise a escala de e-commerce en un engagement de largo plazo con MercadoLibre: 320GB/día de eventos de seguridad procesados, 102 agentes dando cobertura a toda la infraestructura, y un guardrail de ciclo de vida de retención que cerró una fuga en 2.351 índices que nunca se habían eliminado."
 }
