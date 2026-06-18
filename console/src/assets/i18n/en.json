@@ -1,0 +1,13 @@
+{
+  "shell.nav.dashboard": "Dashboard",
+  "shell.nav.services": "Services",
+  "shell.nav.iam": "IAM & Credentials",
+  "shell.project.switcher.label": "Project",
+  "shell.project.security-ops": "Security & Observability",
+  "shell.project.contractor": "Independent Contractor",
+  "shell.project.architect": "Elasticsearch Architect",
+  "shell.locale.toggle": "ES",
+  "shell.contact.cta": "Contact",
+  "shell.tagline": "Elasticsearch Solutions Architect",
+  "shell.name": "Gonzalo Verdugo"
+}
