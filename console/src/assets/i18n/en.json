@@ -85,5 +85,16 @@
   "iam.section.aiCapability.title": "Granted Role — AI-Agent-Assisted Development",
   "iam.section.aiCapability.roleLabel": "Capability",
   "iam.section.aiCapability.description": "This portfolio itself was designed and built using AI-agent-assisted development practices (Claude Code): spec-driven planning, agent-executed implementation, and human-directed architecture review at every stage — the same operating model applied to production infrastructure work.",
-  "iam.section.aiCapability.note": "No interactive demo for this capability — it is documented here as a statement, not a live control."
+  "iam.section.aiCapability.note": "No interactive demo for this capability — it is documented here as a statement, not a live control.",
+
+  "contact.dialog.title": "Get in touch",
+  "contact.dialog.intro": "Choose what brings you here, then send the message — it opens directly in your email client.",
+  "contact.intent.hirePerson": "Hire a person",
+  "contact.intent.engageProject": "Engage for a project",
+  "contact.dialog.cancel": "Cancel",
+  "contact.dialog.submit": "Send",
+  "contact.mailto.hirePerson.subject": "Hiring inquiry — Gonzalo Verdugo",
+  "contact.mailto.hirePerson.body": "Hi Gonzalo,\n\nI'm interested in hiring you. Here are some details about the role:\n\n",
+  "contact.mailto.engageProject.subject": "Project inquiry — Gonzalo Verdugo",
+  "contact.mailto.engageProject.body": "Hi Gonzalo,\n\nI'd like to engage you for a project. Here are some details:\n\n"
 }
