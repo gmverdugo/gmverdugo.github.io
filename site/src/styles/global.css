@@ -456,6 +456,15 @@ pre.code .c {
   top: 0;
   z-index: 5;
 }
+.shell .statusbar .statusbar-crumb {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.shell .statusbar .statusbar-spacer {
+  flex: 1;
+}
 .shell .content {
   padding: 24px;
   max-width: 1080px;
@@ -516,6 +525,30 @@ pre.code .c {
 @media (max-width: 900px) {
   .hamburger {
     display: inline-flex;
+  }
+  /* Statusbar at <900px: the sidebar collapses to an off-canvas drawer
+     (see .shell .sidebar above), so the statusbar is now the only
+     persistent chrome row. Secondary status info (contractor label,
+     cert chip) is decorative/supplementary, not navigation-critical —
+     it collapses first so the hamburger + breadcrumb never overlap or
+     get squeezed. Same precedent as the sidebar itself disappearing
+     at this breakpoint: secondary chrome yields before core nav/content. */
+  .shell .statusbar .statusbar-contractor,
+  .shell .statusbar .statusbar-cert {
+    display: none;
+  }
+  .shell .statusbar .statusbar-spacer {
+    display: none;
+  }
+  .shell .statusbar .statusbar-crumb {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .shell .statusbar {
+    padding: 0 14px;
+    gap: 10px;
   }
 }
 
