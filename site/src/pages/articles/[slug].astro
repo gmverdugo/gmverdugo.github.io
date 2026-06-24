@@ -15,7 +15,7 @@ const { entry } = Astro.props;
 const { data } = entry;
 ---
 
-<ConsoleShell title={data.title} breadcrumb={`~/articles/${entry.id}`} description={data.body}>
+<ConsoleShell title={data.title} breadcrumb={`~/articles/${entry.id}`} description={data.body} backHref="/articles" backLabel="Articles">
   <div class="eyebrow">Articles</div>
   <div class="art-entry-head">
     <h1>{data.title}</h1>

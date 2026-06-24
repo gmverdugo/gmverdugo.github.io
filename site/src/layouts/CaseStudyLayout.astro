@@ -18,6 +18,8 @@ interface Props {
 }
 
 const { breadcrumb, crumbsLabel, title, dek, tags, dataIntegrity } = Astro.props;
+const backHref = '/case-studies';
+const backLabel = 'Case Studies';
 
 const railLinks = [
   { href: '#challenge', label: 'Challenge' },
@@ -29,7 +31,7 @@ const railLinks = [
 ];
 ---
 
-<ConsoleShell title={title} breadcrumb={breadcrumb} description={dek}>
+<ConsoleShell title={title} breadcrumb={breadcrumb} description={dek} backHref={backHref} backLabel={backLabel}>
   <div class="cs-head">
     <div class="crumbs">{crumbsLabel}</div>
     <h1>{title}</h1>

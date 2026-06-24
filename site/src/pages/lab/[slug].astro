@@ -17,7 +17,7 @@ const { data } = entry;
 const isIllustrative = data.status === 'illustrative';
 ---
 
-<ConsoleShell title={data.title} breadcrumb={`~/lab/${entry.id}`} description={data.body}>
+<ConsoleShell title={data.title} breadcrumb={`~/lab/${entry.id}`} description={data.body} backHref="/lab" backLabel="Lab">
   <div class="eyebrow">Lab</div>
   <div class="lab-entry-head">
     <h1>{data.title}</h1>

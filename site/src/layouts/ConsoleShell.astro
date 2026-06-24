@@ -7,9 +7,11 @@ interface Props {
   title: string;
   breadcrumb: string;
   description?: string;
+  backHref?: string;
+  backLabel?: string;
 }
 
-const { title, breadcrumb, description } = Astro.props;
+const { title, breadcrumb, description, backHref, backLabel } = Astro.props;
 ---
 
 <html lang="en">
@@ -28,6 +30,9 @@ const { title, breadcrumb, description } = Astro.props;
       <div class="main">
         <Statusbar breadcrumb={breadcrumb} />
         <main id="main-content" class="content">
+          {backHref && (
+            <a href={backHref} class="back-link">← {backLabel ?? 'Back'}</a>
+          )}
           <slot />
         </main>
       </div>
