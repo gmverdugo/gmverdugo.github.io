@@ -1,0 +1,6 @@
+{
+  "name": "Security Monitoring & SIEM Implementation",
+  "category": "Security",
+  "description": "Elastic Security/SIEM deployment, MITRE ATT&CK-based detection engineering, SOC dashboards, incident-response workflow setup, and compliance/audit dashboards (PCI-DSS, SOC 2, HIPAA).",
+  "source": "catalog"
+}

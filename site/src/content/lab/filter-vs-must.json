@@ -1,0 +1,7 @@
+{
+  "title": "filter vs. must — query before/after",
+  "status": "real",
+  "tags": ["Elasticsearch", "query DSL", "performance"],
+  "snippet": "// before — must clause scores every document, defeats caching\n{ \"query\": { \"bool\": { \"must\": [\n  { \"term\": { \"status\": \"active\" } },\n  { \"range\": { \"created_at\": { \"gte\": \"now-7d\" } } }\n] } } }\n\n// after — filter context skips scoring, cacheable\n{ \"query\": { \"bool\": { \"filter\": [\n  { \"term\": { \"status\": \"active\" } },\n  { \"range\": { \"created_at\": { \"gte\": \"now-7d\" } } }\n] } } }",
+  "body": "Moving non-scoring clauses from `must` to `filter` context removes unnecessary relevance scoring and lets Elasticsearch cache the filter bitset across requests. On clusters carrying the shard counts seen in the HOT-tier optimization work, this kind of query-shape fix is a meaningful complement to infrastructure-level tuning."
+}

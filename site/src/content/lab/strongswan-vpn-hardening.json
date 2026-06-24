@@ -1,0 +1,6 @@
+{
+  "title": "StrongSwan VPN hardening notes (draft)",
+  "status": "illustrative",
+  "tags": ["VPN", "StrongSwan", "networking"],
+  "body": "Draft checklist for hardening a StrongSwan IPsec VPN gateway: cipher suite restriction, perfect forward secrecy enforcement, and dead-peer-detection tuning. Illustrative reference material, not a completed engagement deliverable."
+}

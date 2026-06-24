@@ -1,0 +1,6 @@
+{
+  "name": "Observability Platform Implementation",
+  "category": "Observability",
+  "description": "Unified data collection via Fleet/Elastic Agent rollout (100-10,000+ hosts), APM and distributed tracing setup, custom integrations, and alerting/notification tuning.",
+  "source": "catalog"
+}

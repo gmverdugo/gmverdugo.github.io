@@ -1,0 +1,6 @@
+{
+  "title": "Shard-sizing heuristics for production clusters (draft)",
+  "status": "illustrative",
+  "topic": "Elasticsearch architecture",
+  "body": "Draft article outline on practical shard-sizing heuristics — target shard size, shards-per-GB-heap as an early warning signal, and when to rely on ILM rollover thresholds versus manual resizing. Illustrative draft, not yet published."
+}

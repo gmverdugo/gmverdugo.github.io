@@ -1,0 +1,6 @@
+{
+  "title": "Managing a 1,000+ rule SIEM detection lifecycle (draft)",
+  "status": "illustrative",
+  "topic": "Security / SIEM",
+  "body": "Draft article outline on the operational discipline needed to keep a large MITRE-mapped detection rule set healthy over time — rule deprecation, false-positive tuning cadence, and impact analysis automation. Illustrative draft, not yet published."
+}

@@ -1,0 +1,6 @@
+{
+  "title": "Network traffic baselining approach (draft)",
+  "status": "illustrative",
+  "tags": ["traffic analysis", "security", "anomaly detection"],
+  "body": "Draft notes on building a network traffic baseline using Elastic Security flow data to support anomaly-based alerting. Illustrative direction, not a completed or deployed analysis."
+}

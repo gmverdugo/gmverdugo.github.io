@@ -1,0 +1,38 @@
+{
+  "slug": "meli-hot-tier",
+  "client": "MELI",
+  "engagementId": "A",
+  "title": "HOT-tier cluster optimization under production load",
+  "summary": "Reducing shard pressure and heap contention on a 16-node production cluster without downtime — moving cold data out of the HOT tier and putting durable guardrails on index growth.",
+  "dataIntegrity": "verified",
+  "sections": {
+    "challenge": "The HOT tier of a 16-node production cluster was carrying far more shards than its heap could comfortably serve. Shard count had grown to 10,150, with a heap density of 78 shards per GB of heap — well past healthy thresholds — driving GC pressure and unstable query latency. Index growth was unbounded: 2,351 indices had no lifecycle guardrails, and roughly 1.2 TB of data that no longer needed HOT-tier performance was still pinned there.",
+    "architecture": "The plan separated two concerns: relieve the HOT tier now and stop it refilling. Eligible indices were rolled over and migrated toward warm storage via ILM, while a guardrail policy template was applied across the index space so new indices inherit rollover and retention by default. Compression was switched to best_compression (ZSTD) on warm data to recover storage without sacrificing HOT query speed. All changes were staged to keep the cluster green with zero ingest errors throughout.",
+    "implementation": "An ILM rollover policy template (illustrative of the applied pattern), staged across the index space and paired with a warm-tier codec change to recover storage without touching HOT latency.",
+    "stack": ["Elasticsearch", "Index Lifecycle Mgmt", "ZSTD / best_compression", "Kibana", "hot / warm / cold tiers", "shard allocation"],
+    "results": "Cluster remained green with zero ingest errors throughout the migration. 2,351 indices were brought under lifecycle guardrails to prevent regrowth.",
+    "lessons": [
+      "Heap density (shards per GB heap) is a better early-warning signal than raw shard count — it surfaces pressure before latency degrades.",
+      "Relief without guardrails regresses: applying ILM templates across the index space mattered more than the one-time migration.",
+      "best_compression on warm tiers reclaimed storage with no measurable HOT-tier query cost.",
+      "Staging every change to hold the cluster green made the optimization a non-event for ingest — the right outcome for a production system."
+    ]
+  },
+  "metrics": [
+    { "label": "Total shards", "before": 10150, "after": 8173, "delta": "-19.5%", "source": "verified" },
+    { "label": "Shards / GB heap", "before": 78, "after": 49, "delta": "-37%", "source": "verified" },
+    { "label": "Off HOT tier", "after": "~1.2TB", "delta": "migrated to warm", "source": "verified" },
+    { "label": "Storage purged", "after": "785GB", "delta": "reclaimed", "source": "verified" },
+    { "label": "Indices guardrailed", "after": 2351, "source": "verified" },
+    { "label": "Ingest errors", "after": "0", "delta": "cluster green", "source": "verified" }
+  ],
+  "diagram": {
+    "type": "bar-before-after",
+    "data": {
+      "groups": [
+        { "label": "Total shards", "before": 10150, "after": 8173 },
+        { "label": "Shards / GB heap", "before": 78, "after": 49 }
+      ]
+    }
+  }
+}

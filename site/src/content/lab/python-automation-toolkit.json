@@ -1,0 +1,6 @@
+{
+  "title": "Python automation toolkit sketch (draft)",
+  "status": "illustrative",
+  "tags": ["Python", "automation", "Elasticsearch"],
+  "body": "Draft outline for a small Python toolkit wrapping common cluster-maintenance tasks (index template audits, ILM policy linting, shard-distribution reports). Illustrative scope only, not a published tool."
+}

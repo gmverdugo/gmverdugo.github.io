@@ -1,0 +1,6 @@
+{
+  "title": "LogsDB storage trade-offs in regulated environments (draft)",
+  "status": "illustrative",
+  "topic": "Storage optimization",
+  "body": "Draft article outline on adopting LogsDB under a fixed retention requirement — what to validate before migrating, and how to measure storage reduction without compromising audit-log retention windows. Illustrative draft, not yet published."
+}

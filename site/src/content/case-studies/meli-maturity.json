@@ -1,0 +1,37 @@
+{
+  "slug": "meli-maturity",
+  "client": "MELI",
+  "engagementId": "B",
+  "title": "Observability & security maturity assessment",
+  "summary": "A maturity assessment across observability and security spanning 11 domains — quantifying current-state coverage and producing a defensible improvement path for engineering leadership.",
+  "dataIntegrity": "verified",
+  "sections": {
+    "challenge": "MELI's observability and security posture spanned 11 domains, more than 12 billion documents, 1,459 detection rules, and 102 agents reporting 100% coverage — a large, mature-looking footprint by volume. A structured maturity assessment was needed to separate genuine operational maturity from sheer scale. The assessment found impact analysis for rule and pipeline changes was still 100% manual — a process gap, not a capability, and one that does not scale safely with the data volume already in place.",
+    "architecture": "The assessment measured maturity against a 4-stage model (current score: 1.8 / 4.0), covering detection coverage, pipeline observability (OpenTelemetry instrumentation flowing from source through collector to backend), and operational process maturity across the 11 domains.",
+    "implementation": "Maturity scoring combined rule-coverage audits (1,459 MITRE-mapped detection rules), agent fleet verification (102 agents, 100% coverage), and an OpenTelemetry pipeline review (source → collector → backend) to establish a baseline before any remediation work.",
+    "stack": ["Elastic Security (SIEM)", "OpenTelemetry", "Elastic Agent / Fleet", "MITRE ATT&CK mapping", "Kibana"],
+    "results": "12B+ documents and 1,459 detection rules were confirmed under 100% agent coverage (102 agents) across 11 domains. The maturity model placed the organization at 1.8 / 4.0, with the clearest gap being the fully manual impact-analysis process for rule and pipeline changes.",
+    "lessons": [
+      "Coverage metrics (102 agents, 100% reporting) measure presence, not maturity — they should never be read as a maturity score on their own.",
+      "A 1.8/4.0 maturity score with 12B+ docs under management shows scale and maturity are independent axes worth measuring separately.",
+      "100% manual impact analysis is the highest-leverage finding: it is a process gap that compounds risk as rule count grows, not a strength to highlight.",
+      "Mapping rules to MITRE ATT&CK before scoring made coverage gaps visible in a way raw rule counts could not."
+    ]
+  },
+  "metrics": [
+    { "label": "Documents", "after": "12B+", "source": "verified" },
+    { "label": "Domains", "after": 11, "source": "verified" },
+    { "label": "Detection rules", "after": 1459, "source": "verified" },
+    { "label": "Agents", "after": 102, "source": "verified" },
+    { "label": "Agent coverage", "after": "100%", "source": "verified" },
+    { "label": "Maturity score", "after": "1.8 / 4.0", "source": "verified" }
+  ],
+  "diagram": {
+    "type": "maturity-tracker",
+    "data": {
+      "stages": ["Ad hoc", "Repeatable", "Defined", "Managed"],
+      "current": 1.8,
+      "max": 4.0
+    }
+  }
+}
