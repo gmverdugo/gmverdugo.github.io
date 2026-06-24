@@ -1,0 +1,509 @@
+/* ============================================================
+   Global stylesheet — Enterprise Observability Architect console.
+   Tokens sourced exactly from design-review/mockups/mockup.css
+   (approved concept-final). Tailwind v4 CSS-first config: tokens
+   are declared as @theme variables, no tailwind.config.js.
+   ============================================================ */
+@import 'tailwindcss';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+
+@theme {
+  /* Surfaces — layered dark, slightly cool (Kibana/Grafana family) */
+  --color-bg-0: #0b0f1a; /* app background, darkest */
+  --color-bg-1: #111623; /* panel background */
+  --color-bg-2: #161d2e; /* raised panel / row */
+  --color-bg-3: #1d273b; /* hover / active row */
+  --color-line: #232c40; /* hairline borders */
+  --color-line-strong: #2e3953;
+
+  /* Text */
+  --color-fg-0: #e6ebf5; /* primary text */
+  --color-fg-1: #aab4c8; /* secondary text */
+  --color-fg-2: #6b7588; /* muted / meta — >=12px secondary/meta text ONLY, never primary body */
+
+  /* Accents — restrained. Blue is the safe color per history. */
+  --color-accent: #4f8cff; /* primary action / link */
+  --color-accent-dim: #2a4a87;
+  --color-ok: #3fb950; /* green / healthy */
+  --color-ok-dim: #1a3a22;
+  --color-warn: #d29922;
+  --color-crit: #f85149;
+  --color-info: #58a6ff;
+  --color-purple: #a371f7; /* code keywords */
+
+  --radius-base: 6px;
+  --radius-sm-base: 4px;
+
+  --font-mono: 'SFMono-Regular', 'JetBrains Mono', 'Cascadia Mono', Consolas, 'Liberation Mono', Menlo, monospace;
+  --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg-0);
+  color: var(--color-fg-0);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Visible focus rings for keyboard navigation (a11y plan, design.md section 5) */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm-base);
+}
+
+/* Skip-to-content link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--color-bg-2);
+  color: var(--color-fg-0);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm-base);
+  border: 1px solid var(--color-line-strong);
+  z-index: 100;
+}
+.skip-link:focus {
+  left: 8px;
+  top: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --- Typographic scale --- */
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-fg-2);
+  font-weight: 600;
+}
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.meta {
+  color: var(--color-fg-2);
+  font-size: 12px;
+}
+.dim {
+  color: var(--color-fg-1);
+}
+
+/* --- Status dot --- */
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+.dot.ok {
+  background: var(--color-ok);
+  box-shadow: 0 0 0 3px var(--color-ok-dim);
+}
+.dot.warn {
+  background: var(--color-warn);
+}
+.dot.crit {
+  background: var(--color-crit);
+}
+
+/* --- Badges / chips --- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm-base);
+  border: 1px solid var(--color-line-strong);
+  color: var(--color-fg-1);
+  background: var(--color-bg-2);
+}
+.chip.real {
+  color: var(--color-ok);
+  border-color: var(--color-ok-dim);
+  background: var(--color-ok-dim);
+}
+.chip.illustrative {
+  color: var(--color-warn);
+  border-color: #3a2f12;
+  background: #241c08;
+}
+.chip.mono {
+  font-family: var(--font-mono);
+}
+
+/* --- Avatar (placeholder initials, abstract) --- */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-base);
+  background: linear-gradient(135deg, #1d273b, #2a4a87);
+  border: 1px solid var(--color-line-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--color-fg-0);
+  letter-spacing: 0.02em;
+}
+.avatar.lg {
+  width: 56px;
+  height: 56px;
+  font-size: 18px;
+}
+
+/* --- Panels --- */
+.panel {
+  background: var(--color-bg-1);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-base);
+}
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-line);
+}
+.panel-head h3 {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-fg-1);
+}
+.panel-body {
+  padding: 14px;
+}
+
+/* --- Metric tile --- */
+.metric {
+  padding: 14px;
+}
+.metric .label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-fg-2);
+}
+.metric .value {
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 600;
+  margin-top: 4px;
+  color: var(--color-fg-0);
+  line-height: 1.1;
+}
+.metric .delta {
+  font-size: 12px;
+  margin-top: 4px;
+}
+.metric .delta.down {
+  color: var(--color-ok);
+}
+.metric .delta.up {
+  color: var(--color-info);
+}
+
+/* --- Tables / registers --- */
+table.register {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+table.register th {
+  text-align: left;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-fg-2);
+  font-weight: 600;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--color-line);
+}
+table.register td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--color-line);
+  vertical-align: top;
+}
+table.register tr:hover td {
+  background: var(--color-bg-2);
+}
+table.register .num {
+  color: var(--color-fg-0);
+}
+
+/* --- Buttons (restrained, NOT giant CTAs) --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 12px;
+  border-radius: var(--radius-sm-base);
+  border: 1px solid var(--color-line-strong);
+  color: var(--color-fg-0);
+  background: var(--color-bg-2);
+  cursor: pointer;
+}
+.btn:hover {
+  background: var(--color-bg-3);
+  text-decoration: none;
+}
+.btn.primary {
+  border-color: var(--color-accent-dim);
+  background: var(--color-accent-dim);
+  color: #dbe7ff;
+}
+.btn.primary:hover {
+  background: #335aa0;
+}
+
+/* --- Code block --- */
+pre.code {
+  background: var(--color-bg-0);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm-base);
+  padding: 12px 14px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--color-fg-1);
+  margin: 0;
+}
+pre.code .k {
+  color: var(--color-purple);
+}
+pre.code .s {
+  color: var(--color-ok);
+}
+pre.code .c {
+  color: var(--color-fg-2);
+}
+
+/* --- Utility --- */
+.divider {
+  height: 1px;
+  background: var(--color-line);
+  border: 0;
+  margin: 0;
+}
+.scroll-x {
+  overflow-x: auto;
+}
+
+/* --- Visually-hidden (kept for a11y data-table fallbacks on diagrams) --- */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================================
+   App-shell with persistent left sidebar (concept-final).
+   ============================================================ */
+.shell {
+  display: flex;
+  min-height: 100vh;
+}
+.shell .sidebar {
+  width: 232px;
+  flex-shrink: 0;
+  background: var(--color-bg-1);
+  border-right: 1px solid var(--color-line);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  height: 100vh;
+}
+.shell .sidebar .id {
+  padding: 16px 16px 14px;
+  border-bottom: 1px solid var(--color-line);
+}
+.shell .sidebar .id .name {
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 10px;
+}
+.shell .sidebar .id .role {
+  color: var(--color-fg-2);
+  font-size: 11.5px;
+}
+.shell .sidebar nav {
+  padding: 8px;
+  flex: 1;
+  overflow-y: auto;
+}
+.shell .sidebar nav .group {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-fg-2);
+  padding: 12px 10px 4px;
+}
+.shell .sidebar nav a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  border-radius: 5px;
+  color: var(--color-fg-1);
+  font-size: 13px;
+  margin: 1px 0;
+}
+.shell .sidebar nav a:hover {
+  background: var(--color-bg-2);
+  color: var(--color-fg-0);
+  text-decoration: none;
+}
+.shell .sidebar nav a.active {
+  background: var(--color-bg-3);
+  color: var(--color-fg-0);
+  border-left: 2px solid var(--color-accent);
+  padding-left: 8px;
+}
+.shell .sidebar nav a .badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-fg-2);
+}
+.shell .sidebar .foot {
+  padding: 12px 16px;
+  border-top: 1px solid var(--color-line);
+  font-size: 11px;
+  color: var(--color-fg-2);
+}
+.shell .main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.shell .statusbar {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 22px;
+  border-bottom: 1px solid var(--color-line);
+  background: var(--color-bg-0);
+  font-size: 12px;
+  color: var(--color-fg-1);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+.shell .content {
+  padding: 24px;
+  max-width: 1080px;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .shell .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    height: 100vh;
+    z-index: 50;
+    transform: translateX(-100%);
+    transition: transform 200ms ease;
+    box-shadow: 0 0 0 1px var(--color-line-strong);
+  }
+  .shell .sidebar.is-open {
+    transform: translateX(0);
+  }
+  .shell .sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 15, 26, 0.6);
+    z-index: 40;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease;
+  }
+  .shell .sidebar-backdrop.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@media (max-width: 900px) and (prefers-reduced-motion: reduce) {
+  .shell .sidebar,
+  .shell .sidebar-backdrop {
+    transition: none;
+  }
+}
+
+.hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm-base);
+  border: 1px solid var(--color-line-strong);
+  background: var(--color-bg-2);
+  color: var(--color-fg-1);
+  cursor: pointer;
+}
+.hamburger:hover {
+  background: var(--color-bg-3);
+  color: var(--color-fg-0);
+}
+@media (max-width: 900px) {
+  .hamburger {
+    display: inline-flex;
+  }
+}
