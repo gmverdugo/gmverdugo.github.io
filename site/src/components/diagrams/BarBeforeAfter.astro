@@ -1,0 +1,144 @@
+---
+/**
+ * Data-driven grouped before/after bar chart, native inline SVG.
+ * Geometry is computed from the `groups` data array (no hardcoded
+ * mockup coordinates) — proven layout: two bars per group, shared
+ * vertical scale within each group's own max (independent groups
+ * keep widely different units like shard count vs. shards/GB-heap
+ * readable on the same chart, matching the mockup's approach).
+ */
+interface Group {
+  label: string;
+  before: number;
+  after: number;
+}
+
+interface Props {
+  groups: Group[];
+  ariaLabel: string;
+  title?: string;
+}
+
+const { groups, ariaLabel, title } = Astro.props;
+
+const VIEW_W = 560;
+const VIEW_H = 220;
+const CHART_TOP = 20;
+const CHART_BOTTOM = 180;
+const CHART_LEFT = 60;
+const CHART_RIGHT = 540;
+const BAR_W = 46;
+const GROUP_GAP = 240;
+const PAIR_GAP = 52;
+
+const chartHeight = CHART_BOTTOM - CHART_TOP;
+
+function barHeight(value: number, max: number): number {
+  return Math.round((value / max) * chartHeight);
+}
+
+const groupGeometry = groups.map((group, i) => {
+  const max = Math.max(group.before, group.after) * 1.1;
+  const beforeH = barHeight(group.before, max);
+  const afterH = barHeight(group.after, max);
+  const groupStart = CHART_LEFT + 60 + i * GROUP_GAP;
+  return {
+    label: group.label,
+    before: group.before,
+    after: group.after,
+    beforeX: groupStart,
+    beforeY: CHART_BOTTOM - beforeH,
+    beforeH,
+    afterX: groupStart + PAIR_GAP,
+    afterY: CHART_BOTTOM - afterH,
+    afterH,
+    labelX: groupStart + PAIR_GAP / 2,
+  };
+});
+
+const gridLines = [0, 0.25, 0.5, 0.75].map((fraction) => CHART_TOP + fraction * chartHeight);
+---
+
+<div class="chart-card">
+  {title && <div class="ch-title">{title}</div>}
+  <svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} width="100%" role="img" aria-label={ariaLabel}>
+    <title>{ariaLabel}</title>
+    <g stroke="#232c40" stroke-width="1">
+      {gridLines.map((y) => <line x1={CHART_LEFT} y1={y} x2={CHART_RIGHT} y2={y} />)}
+      <line x1={CHART_LEFT} y1={CHART_BOTTOM} x2={CHART_RIGHT} y2={CHART_BOTTOM} />
+    </g>
+    {
+      groupGeometry.map((g) => (
+        <Fragment>
+          <rect x={g.beforeX} y={g.beforeY} width={BAR_W} height={g.beforeH} rx="2" fill="#2a4a87" />
+          <rect x={g.afterX} y={g.afterY} width={BAR_W} height={g.afterH} rx="2" fill="#4f8cff" />
+          <text x={g.beforeX + BAR_W / 2} y={g.beforeY - 6} fill="#aab4c8" font-size="10" font-family="monospace" text-anchor="middle">
+            {g.before.toLocaleString('en-US')}
+          </text>
+          <text x={g.afterX + BAR_W / 2} y={g.afterY - 6} fill="#e6ebf5" font-size="10" font-family="monospace" text-anchor="middle">
+            {g.after.toLocaleString('en-US')}
+          </text>
+          <text x={g.labelX} y={CHART_BOTTOM + 18} fill="#6b7588" font-size="11" text-anchor="middle">
+            {g.label}
+          </text>
+        </Fragment>
+      ))
+    }
+  </svg>
+  <div class="legend">
+    <span><b style="background:#2a4a87"></b>Before</span>
+    <span><b style="background:#4f8cff"></b>After</span>
+  </div>
+
+  <table class="visually-hidden">
+    <caption>{ariaLabel}</caption>
+    <thead>
+      <tr>
+        <th scope="col">Metric</th>
+        <th scope="col">Before</th>
+        <th scope="col">After</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        groups.map((group) => (
+          <tr>
+            <th scope="row">{group.label}</th>
+            <td>{group.before}</td>
+            <td>{group.after}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .chart-card {
+    background: var(--color-bg-1);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-base);
+    padding: 16px;
+  }
+  .ch-title {
+    font-size: 12px;
+    color: var(--color-fg-1);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .legend {
+    display: flex;
+    gap: 16px;
+    font-size: 11px;
+    color: var(--color-fg-2);
+    margin-top: 10px;
+  }
+  .legend span b {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+</style>

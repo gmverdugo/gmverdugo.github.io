@@ -1,0 +1,146 @@
+---
+/**
+ * Native before/after consolidation diagram (ICBC: 93 -> 16 ERUs).
+ * Data-driven from `before`/`after`/`storageDelta`/`retentionDays` —
+ * bar widths computed proportionally, not hardcoded.
+ */
+interface Endpoint {
+  label: string;
+  value: number;
+  unit: string;
+}
+
+interface Props {
+  before: Endpoint;
+  after: Endpoint;
+  storageDelta: string;
+  retentionDays: number;
+  ariaLabel: string;
+}
+
+const { before, after, storageDelta, retentionDays, ariaLabel } = Astro.props;
+
+const maxValue = Math.max(before.value, after.value);
+const beforeWidth = Math.round((before.value / maxValue) * 100);
+const afterWidth = Math.round((after.value / maxValue) * 100);
+const reductionPercent = Math.round(((before.value - after.value) / before.value) * 100);
+---
+
+<div class="chart-card consolidation">
+  <div class="ch-title">Platform consolidation — before vs. after</div>
+  <div class="ch-sub" aria-hidden="true">Native diagram. {retentionDays}-day retention held constant throughout.</div>
+
+  <div class="bars" role="img" aria-label={ariaLabel}>
+    <div class="row">
+      <div class="row-label">{before.label}</div>
+      <div class="bar-track">
+        <div class="bar before" style={`width:${beforeWidth}%`}>
+          <span class="bar-value">{before.value} {before.unit}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="row-label">{after.label}</div>
+      <div class="bar-track">
+        <div class="bar after" style={`width:${afterWidth}%`}>
+          <span class="bar-value">{after.value} {after.unit}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary">
+    <span class="num" style="color:var(--color-ok)">-{reductionPercent}%</span> footprint &middot;
+    <span class="num" style="color:var(--color-ok)">{storageDelta}</span> storage via LogsDB &middot;
+    {retentionDays}-day retention held
+  </div>
+
+  <table class="visually-hidden">
+    <caption>{ariaLabel}</caption>
+    <thead>
+      <tr>
+        <th scope="col">State</th>
+        <th scope="col">Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><th scope="row">{before.label}</th><td>{before.value} {before.unit}</td></tr>
+      <tr><th scope="row">{after.label}</th><td>{after.value} {after.unit}</td></tr>
+      <tr><th scope="row">Storage reduction</th><td>{storageDelta}</td></tr>
+      <tr><th scope="row">Retention</th><td>{retentionDays} days</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .chart-card {
+    background: var(--color-bg-1);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-base);
+    padding: 16px;
+  }
+  .ch-title {
+    font-size: 12px;
+    color: var(--color-fg-1);
+    font-weight: 600;
+  }
+  .ch-sub {
+    font-size: 11px;
+    color: var(--color-fg-2);
+    margin-bottom: 16px;
+  }
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .row-label {
+    width: 140px;
+    flex-shrink: 0;
+    font-size: 12px;
+    color: var(--color-fg-2);
+  }
+  .bar-track {
+    flex: 1;
+    background: var(--color-bg-0);
+    border-radius: var(--radius-sm-base);
+    overflow: hidden;
+  }
+  .bar {
+    padding: 8px 10px;
+    border-radius: var(--radius-sm-base);
+    display: flex;
+    align-items: center;
+  }
+  .bar.before {
+    background: #2a4a87;
+  }
+  .bar.after {
+    background: var(--color-accent);
+  }
+  .bar-value {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #e6ebf5;
+    white-space: nowrap;
+  }
+  .summary {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--color-fg-1);
+  }
+  @media (max-width: 480px) {
+    .row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    .row-label {
+      width: auto;
+    }
+    .bar-track {
+      width: 100%;
+    }
+  }
+</style>
