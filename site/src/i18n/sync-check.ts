@@ -9,16 +9,16 @@ import { join } from 'node:path';
  * and the missing/extra slugs, so a partial-locale content change fails
  * the build loudly instead of shipping silently.
  *
- * NOTE (Phase 1 / Slice A scope): collections are still FLAT today
- * (`src/content/<collection>/*.json`, no `en/`/`es/` subfolders yet —
- * that restructure is Phase 2 / Slice B). This module is written to the
- * eventual locale-subfolder layout per design Decision 2, but is NOT
- * wired to fail today's build: `checkCollectionSync` simply returns
- * (no-op, sync considered "ok") when neither locale subfolder exists yet,
- * so a flat EN-only collection is treated as "not yet migrated" rather
- * than "out of sync". Phase 2 task 2.9 is where this guard gets activated
- * against real `en/`/`es/` subfolders and is proven to fail loud (e.g.
- * against an empty `es/`) before being relied upon for Phase 3+.
+ * STATUS (Phase 2 / Slice B — ACTIVE): collections were restructured into
+ * `src/content/<collection>/en/*.json` + `<collection>/es/*.json` in this
+ * phase. The guard is now ENFORCING: `es/` subfolders exist but are empty
+ * pending Phase 3/4 Spanish content authoring, so `astro build` and
+ * `astro dev` WILL FAIL on this guard until that content lands — this is
+ * intentional (the guard proving it works), not a bug. The earlier
+ * migration-tolerant no-op (`ok: true` when neither locale subfolder
+ * exists) is kept only as a defensive fallback for any future collection
+ * added before its `en/`/`es/` folders are created; it has no effect on
+ * the 6 collections active today since their subfolders all exist now.
  */
 
 export interface CollectionSyncResult {
@@ -101,7 +101,10 @@ export function checkProfileSync(contentRoot: string): CollectionSyncResult {
   };
 }
 
-const GLOB_COLLECTIONS = ['caseStudies', 'labEntries', 'articles', 'services', 'certifications'] as const;
+// Directory names on disk (kebab-case), NOT the `content.config.ts`
+// collection variable names (camelCase: `caseStudies`, `labEntries`).
+// `src/content/<dir>/en|es/*.json` is what actually exists on disk.
+const GLOB_COLLECTIONS = ['case-studies', 'lab', 'articles', 'services', 'certifications'] as const;
 
 /**
  * Runs the full parity check across all 6 collections and throws a single

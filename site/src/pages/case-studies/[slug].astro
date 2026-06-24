@@ -20,7 +20,13 @@ const ilmPolicyHtml = `<span class="k">PUT</span> _ilm/policy/hot-rollover
 { <span class="s">"index.codec"</span>: <span class="s">"best_compression"</span> }`;
 
 export async function getStaticPaths() {
-  const caseStudies = await getCollection('caseStudies');
+  // EN-only site for now (Phase 2/Slice B) — filter to the en/ locale
+  // subfolder. `caseStudies` entries declare their own `slug` field in the
+  // JSON, which the glob loader uses as `entry.id` (overriding the
+  // path-derived id) — so locale must be read from `entry.filePath` here,
+  // not `entry.id`. `entry.data.slug` is the locale-agnostic public slug
+  // field used for the route param, unrelated to the en//es/ path prefix.
+  const caseStudies = await getCollection('caseStudies', (entry) => entry.filePath?.includes('/en/') ?? false);
   return caseStudies.map((entry) => ({
     params: { slug: entry.data.slug },
     props: { entry },

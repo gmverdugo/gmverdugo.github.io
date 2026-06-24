@@ -4,18 +4,22 @@ import ConsoleShell from '../../layouts/ConsoleShell.astro';
 import Chip from '../../components/Chip.astro';
 
 export async function getStaticPaths() {
-  const entries = await getCollection('articles');
+  // EN-only site for now (Phase 2/Slice B) — filter to the en/ locale
+  // subfolder and strip the prefix from `entry.id` so the public slug
+  // (and therefore the URL) stays identical to its pre-restructure value.
+  const entries = await getCollection('articles', (entry) => entry.id.startsWith('en/'));
   return entries.map((entry) => ({
-    params: { slug: entry.id },
+    params: { slug: entry.id.replace(/^en\//, '') },
     props: { entry },
   }));
 }
 
 const { entry } = Astro.props;
 const { data } = entry;
+const slug = entry.id.replace(/^en\//, '');
 ---
 
-<ConsoleShell title={data.title} breadcrumb={`~/articles/${entry.id}`} description={data.body} backHref="/articles" backLabel="Articles">
+<ConsoleShell title={data.title} breadcrumb={`~/articles/${slug}`} description={data.body} backHref="/articles" backLabel="Articles">
   <div class="eyebrow">Articles</div>
   <div class="art-entry-head">
     <h1>{data.title}</h1>

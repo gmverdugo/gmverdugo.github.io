@@ -3,7 +3,8 @@ import { getCollection } from 'astro:content';
 import ConsoleShell from '../layouts/ConsoleShell.astro';
 import SectionLabel from '../components/SectionLabel.astro';
 
-const services = await getCollection('services');
+// EN-only site for now (Phase 2/Slice B) — filter to the en/ locale subfolder.
+const services = await getCollection('services', (entry) => entry.id.startsWith('en/'));
 ---
 
 <ConsoleShell title="Engagement Models" breadcrumb="~/engagement-models" description="8 named service models — generic catalog ranges, kept separate from verified per-client outcomes.">

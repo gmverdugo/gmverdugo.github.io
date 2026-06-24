@@ -2,6 +2,18 @@ import { defineCollection, z } from 'astro:content';
 import { glob, file } from 'astro/loaders';
 
 /**
+ * i18n layout note (portfolio-i18n, Phase 2 / Slice B): each of the 5 glob
+ * collections below now stores entries under locale subfolders
+ * (`<collection>/en/*.json`, `<collection>/es/*.json`) instead of flat
+ * files. The `pattern: '**\/*.json'` glob is already recursive, so no
+ * loader change was needed — only the on-disk layout moved. Pages MUST
+ * filter `getCollection()` results by `entry.id.startsWith('en/')` (or
+ * `'es/'`) until both locales are populated; see `src/i18n/sync-check.ts`
+ * for the build-time parity guard across `en/`/`es/`. Schemas are
+ * unchanged and apply identically to both locales.
+ */
+
+/**
  * Case studies — 3 non-conflatable engagements (A: MELI HOT-tier,
  * B: MELI maturity assessment, C: ICBC consolidation).
  * Schema enforces attribution: each metric carries its own `source`
@@ -101,9 +113,29 @@ const certifications = defineCollection({
   }),
 });
 
-/** Profile — single entry, identity/availability for sidebar + Contact. */
-const profile = defineCollection({
-  loader: file('./src/content/profile/profile.json'),
+/**
+ * Profile — single entry per locale, identity/availability for sidebar +
+ * Contact. Two `file()` collections (one per locale) rather than a single
+ * glob: `profile.json` is a `file()`-loader document keyed by a top-level
+ * entry id (`gonzalo-verdugo`), not a directory of one-object-per-file
+ * documents like the other 5 collections, so reusing `glob()` here would
+ * require reshaping the JSON itself — out of scope for a mechanical
+ * relocation. Two `file()` loaders keep the JSON shape byte-for-byte
+ * unchanged while still giving each locale its own collection to query.
+ */
+const profileEn = defineCollection({
+  loader: file('./src/content/profile/en/profile.json'),
+  schema: z.object({
+    identity: z.string(),
+    availability: z.string(),
+    location: z.string(),
+    languages: z.array(z.string()),
+    focusAreas: z.array(z.string()),
+  }),
+});
+
+const profileEs = defineCollection({
+  loader: file('./src/content/profile/es/profile.json'),
   schema: z.object({
     identity: z.string(),
     availability: z.string(),
@@ -119,5 +151,6 @@ export const collections = {
   articles,
   services,
   certifications,
-  profile,
+  profileEn,
+  profileEs,
 };

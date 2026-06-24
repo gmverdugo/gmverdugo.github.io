@@ -4,7 +4,8 @@ import ConsoleShell from '../layouts/ConsoleShell.astro';
 import SectionLabel from '../components/SectionLabel.astro';
 import Chip from '../components/Chip.astro';
 
-const certifications = await getCollection('certifications');
+// EN-only site for now (Phase 2/Slice B) — filter to the en/ locale subfolder.
+const certifications = await getCollection('certifications', (entry) => entry.id.startsWith('en/'));
 const certified = certifications.filter((c) => c.data.status === 'certified');
 const training = certifications.filter((c) => c.data.status === 'training');
 ---

@@ -4,7 +4,8 @@ import ConsoleShell from '../../layouts/ConsoleShell.astro';
 import SectionLabel from '../../components/SectionLabel.astro';
 import Chip from '../../components/Chip.astro';
 
-const entries = await getCollection('articles');
+// EN-only site for now (Phase 2/Slice B) — filter to the en/ locale subfolder.
+const entries = await getCollection('articles', (entry) => entry.id.startsWith('en/'));
 ---
 
 <ConsoleShell title="Articles" breadcrumb="~/articles" description="Draft article outlines — illustrative, not yet published.">
@@ -19,7 +20,7 @@ const entries = await getCollection('articles');
   <div class="art-list">
     {
       entries.map((entry) => (
-        <a class="art-row panel" href={`/articles/${entry.id}`}>
+        <a class="art-row panel" href={`/articles/${entry.id.replace(/^en\//, '')}`}>
           <div class="panel-body">
             <div class="art-row-head">
               <h3>{entry.data.title}</h3>

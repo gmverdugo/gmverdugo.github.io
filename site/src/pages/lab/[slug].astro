@@ -5,9 +5,12 @@ import Chip from '../../components/Chip.astro';
 import CodeBlock from '../../components/CodeBlock.astro';
 
 export async function getStaticPaths() {
-  const entries = await getCollection('labEntries');
+  // EN-only site for now (Phase 2/Slice B) — filter to the en/ locale
+  // subfolder and strip the prefix from `entry.id` so the public slug
+  // (and therefore the URL) stays identical to its pre-restructure value.
+  const entries = await getCollection('labEntries', (entry) => entry.id.startsWith('en/'));
   return entries.map((entry) => ({
-    params: { slug: entry.id },
+    params: { slug: entry.id.replace(/^en\//, '') },
     props: { entry },
   }));
 }
@@ -15,9 +18,10 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { data } = entry;
 const isIllustrative = data.status === 'illustrative';
+const slug = entry.id.replace(/^en\//, '');
 ---
 
-<ConsoleShell title={data.title} breadcrumb={`~/lab/${entry.id}`} description={data.body} backHref="/lab" backLabel="Lab">
+<ConsoleShell title={data.title} breadcrumb={`~/lab/${slug}`} description={data.body} backHref="/lab" backLabel="Lab">
   <div class="eyebrow">Lab</div>
   <div class="lab-entry-head">
     <h1>{data.title}</h1>

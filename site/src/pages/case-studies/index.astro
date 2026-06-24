@@ -4,7 +4,11 @@ import ConsoleShell from '../../layouts/ConsoleShell.astro';
 import SectionLabel from '../../components/SectionLabel.astro';
 import Chip from '../../components/Chip.astro';
 
-const caseStudies = await getCollection('caseStudies');
+// EN-only site for now (Phase 2/Slice B) — filter to the en/ locale subfolder.
+// `caseStudies` entries declare their own `slug` field in the JSON, which
+// the glob loader uses as `entry.id` (overriding the path-derived id) —
+// so locale must be read from `entry.filePath` here, not `entry.id`.
+const caseStudies = await getCollection('caseStudies', (entry) => entry.filePath?.includes('/en/') ?? false);
 const sorted = caseStudies.sort((a, b) => a.data.engagementId.localeCompare(b.data.engagementId));
 ---
 

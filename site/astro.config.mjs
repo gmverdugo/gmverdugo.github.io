@@ -8,12 +8,12 @@ const contentRoot = fileURLToPath(new URL('./src/content', import.meta.url));
 
 /**
  * Runs the EN/ES content parity guard at the start of every build and dev
- * session. Inert today (Phase 1 / Slice A): collections are still flat,
- * so `runSyncCheck` no-ops per its own migration-tolerant rules. It
- * becomes meaningfully active once Phase 2 restructures collections into
- * `en/`/`es/` subfolders — see `src/i18n/sync-check.ts` docstring and
- * tasks.md Phase 2 item 2.9 (which proves it fails loud before relying
- * on it for Phase 3+).
+ * session. ACTIVE as of Phase 2 / Slice B: collections were restructured
+ * into `en/`/`es/` subfolders and this guard now enforces parity for
+ * real. `es/` subfolders are currently empty pending Phase 3/4 Spanish
+ * content authoring, so `astro build`/`astro dev` intentionally FAIL
+ * right now — see `src/i18n/sync-check.ts` docstring. Do not disable this
+ * to "fix" the build; the fix is authoring the missing ES content.
  */
 function i18nSyncCheck() {
   return {
