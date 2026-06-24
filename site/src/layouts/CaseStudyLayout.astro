@@ -1,6 +1,7 @@
 ---
 import ConsoleShell from './ConsoleShell.astro';
 import Chip from '../components/Chip.astro';
+import { getLocale, t } from '../i18n';
 
 /**
  * Case-study inner-page layout: header (crumbs/title/tags) + cs-grid
@@ -18,8 +19,12 @@ interface Props {
 }
 
 const { breadcrumb, crumbsLabel, title, dek, tags, dataIntegrity } = Astro.props;
+
+const locale = getLocale(Astro.url.pathname);
+const s = t(locale);
+
 const backHref = '/case-studies';
-const backLabel = 'Case Studies';
+const backLabel = s.nav.caseStudies;
 
 const railLinks = [
   { href: '#challenge', label: 'Challenge' },
@@ -49,8 +54,8 @@ const railLinks = [
       <slot />
     </div>
 
-    <nav class="cs-rail" aria-label="On this page">
-      <div class="label">On this page</div>
+    <nav class="cs-rail" aria-label={s.onThisPage}>
+      <div class="label">{s.onThisPage}</div>
       {railLinks.map((link) => <a href={link.href}>{link.label}</a>)}
     </nav>
   </div>

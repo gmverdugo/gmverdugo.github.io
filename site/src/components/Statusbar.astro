@@ -1,12 +1,17 @@
 ---
 import StatusDot from './StatusDot.astro';
 import Chip from './Chip.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { getLocale, t } from '../i18n';
 
 interface Props {
   breadcrumb: string;
 }
 
 const { breadcrumb } = Astro.props;
+
+const locale = getLocale(Astro.url.pathname);
+const s = t(locale);
 ---
 
 <div class="statusbar">
@@ -23,7 +28,8 @@ const { breadcrumb } = Astro.props;
     </svg>
   </button>
   <span class="num statusbar-crumb" style="color: var(--color-fg-2)">{breadcrumb}</span>
-  <span class="statusbar-contractor"><StatusDot variant="ok" /> Independent contractor</span>
+  <span class="statusbar-contractor"><StatusDot variant="ok" /> {s.statusContractor}</span>
   <span class="statusbar-spacer"></span>
   <Chip variant="mono" class="statusbar-cert">Elastic Certified Observability Engineer</Chip>
+  <LanguageSwitcher />
 </div>
