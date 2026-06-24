@@ -21,7 +21,18 @@
   /* Text */
   --color-fg-0: #e6ebf5; /* primary text */
   --color-fg-1: #aab4c8; /* secondary text */
-  --color-fg-2: #6b7588; /* muted / meta — >=12px secondary/meta text ONLY, never primary body */
+  /* muted / meta — >=12px secondary/meta text ONLY, never primary body.
+     MEASURED (WCAG relative-luminance formula): fg-2 on bg-0 = 4.12:1,
+     fg-2 on bg-1 = 3.89:1. Both are BELOW the 4.5:1 AA threshold for
+     normal text (they clear the 3:1 large-text/UI-component threshold
+     only). This is an approved-mockup token value, not invented here —
+     flagging precisely for sdd-verify rather than silently overriding
+     an approved palette. Usage is restricted to small uppercase
+     labels/meta (eyebrow, badges, table headers, sidebar group labels),
+     never primary body copy, which keeps real-world risk low but the
+     gap is real and should be a verify-time decision, not a build-time
+     assumption. */
+  --color-fg-2: #6b7588;
 
   /* Accents — restrained. Blue is the safe color per history. */
   --color-accent: #4f8cff; /* primary action / link */
