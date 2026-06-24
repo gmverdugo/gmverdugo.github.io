@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content';
+import ConsoleShell from '../layouts/ConsoleShell.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import Chip from '../components/Chip.astro';
+
+const certifications = await getCollection('certifications');
+const certified = certifications.filter((c) => c.data.status === 'certified');
+const training = certifications.filter((c) => c.data.status === 'training');
+---
+
+<ConsoleShell title="Certifications" breadcrumb="~/certifications" description="Certified credentials and internal training, kept visibly distinct.">
+  <div class="eyebrow">Certifications</div>
+  <h1 class="cert-h1">Certified credentials and training history.</h1>
+  <p class="cert-lede">Certified, externally-issued credentials are kept visibly distinct from internal training programs.</p>
+
+  <SectionLabel number="01" heading="Certified" />
+  <div class="cert-list">
+    {
+      certified.map((cert) => (
+        <div class="cert-row panel">
+          <div class="panel-body">
+            <div class="cert-row-head">
+              <h3>{cert.data.name}</h3>
+              <Chip variant="real">certified</Chip>
+            </div>
+            <div class="meta">
+              {cert.data.issuer}
+              {cert.data.year && ` · ${cert.data.year}`}
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <SectionLabel number="02" heading="Training" />
+  <div class="cert-list">
+    {
+      training.map((cert) => (
+        <div class="cert-row panel">
+          <div class="panel-body">
+            <div class="cert-row-head">
+              <h3>{cert.data.name}</h3>
+              <Chip variant="mono">training</Chip>
+            </div>
+            <div class="meta">{cert.data.issuer}</div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</ConsoleShell>
+
+<style>
+  .cert-h1 {
+    font-size: 21px;
+    margin: 6px 0 6px;
+  }
+  .cert-lede {
+    color: var(--color-fg-1);
+    max-width: 720px;
+    margin: 0 0 22px;
+  }
+  .cert-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .cert-row-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+  .cert-row-head h3 {
+    font-size: 14px;
+    color: var(--color-fg-0);
+  }
+</style>

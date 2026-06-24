@@ -1,0 +1,119 @@
+---
+import { getCollection } from 'astro:content';
+import ConsoleShell from '../layouts/ConsoleShell.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+
+const services = await getCollection('services');
+---
+
+<ConsoleShell title="Engagement Models" breadcrumb="~/engagement-models" description="8 named service models — generic catalog ranges, kept separate from verified per-client outcomes.">
+  <div class="eyebrow">Engagement Models</div>
+  <h1 class="em-h1">Eight ways to engage, none of them a generic SaaS plan.</h1>
+  <p class="em-lede">
+    These are catalog service models with generic, aspirational ranges — not verified per-client results.
+    Verified outcomes for specific engagements live on the Case Studies pages and the Overview engagement
+    register, and are never merged into the figures below.
+  </p>
+
+  <SectionLabel number="01" heading="Service models" />
+  <div class="em-grid">
+    {
+      services.map((service) => (
+        <div class="em-card panel">
+          <div class="panel-body">
+            <div class="em-card-head">
+              <span class="meta">{service.data.category}</span>
+            </div>
+            <h3>{service.data.name}</h3>
+            <p class="dim">{service.data.description}</p>
+            {service.data.ranges && (
+              <div class="em-ranges">
+                <div class="em-ranges-label">Illustrative / aspirational ranges</div>
+                <div class="em-ranges-grid">
+                  {service.data.ranges.map((range) => (
+                    <div class="em-range-item">
+                      <span class="meta">{range.metric}</span>
+                      <span class="num em-range-value">
+                        {range.low}–{range.high}{range.unit}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <p class="meta em-footnote">
+    Ranges shown above are generic, aspirational figures from the public service catalog — they are kept
+    separate from the verified per-client outcomes shown on the Overview and Case Studies pages, and are
+    never combined into the same statistic.
+  </p>
+</ConsoleShell>
+
+<style>
+  .em-h1 {
+    font-size: 21px;
+    margin: 6px 0 6px;
+  }
+  .em-lede {
+    color: var(--color-fg-1);
+    max-width: 720px;
+    margin: 0 0 22px;
+  }
+  .em-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .em-card-head {
+    margin-bottom: 6px;
+  }
+  .em-card h3 {
+    font-size: 14px;
+    color: var(--color-fg-0);
+    margin-bottom: 6px;
+  }
+  .em-card p {
+    font-size: 12.5px;
+    margin: 0 0 12px;
+  }
+  .em-ranges {
+    border-top: 1px solid var(--color-line);
+    padding-top: 10px;
+    margin-top: 10px;
+  }
+  .em-ranges-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-warn);
+    margin-bottom: 8px;
+  }
+  .em-ranges-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .em-range-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .em-range-value {
+    font-size: 14px;
+    color: var(--color-fg-0);
+  }
+  .em-footnote {
+    margin-top: 20px;
+    max-width: 720px;
+  }
+  @media (max-width: 700px) {
+    .em-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content';
+import ConsoleShell from '../../layouts/ConsoleShell.astro';
+import SectionLabel from '../../components/SectionLabel.astro';
+import Chip from '../../components/Chip.astro';
+
+const entries = await getCollection('articles');
+---
+
+<ConsoleShell title="Articles" breadcrumb="~/articles" description="Draft article outlines — illustrative, not yet published.">
+  <div class="eyebrow">Articles</div>
+  <h1 class="art-h1">Draft article outlines.</h1>
+  <p class="art-lede">
+    All entries here are illustrative drafts — outlines for articles I intend to write, not published
+    pieces. None of these should be read as completed publications.
+  </p>
+
+  <SectionLabel number="01" heading="Drafts" />
+  <div class="art-list">
+    {
+      entries.map((entry) => (
+        <a class="art-row panel" href={`/articles/${entry.id}`}>
+          <div class="panel-body">
+            <div class="art-row-head">
+              <h3>{entry.data.title}</h3>
+              <Chip variant="illustrative">{entry.data.status}</Chip>
+            </div>
+            <div class="meta">{entry.data.topic}</div>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</ConsoleShell>
+
+<style>
+  .art-h1 {
+    font-size: 21px;
+    margin: 6px 0 6px;
+  }
+  .art-lede {
+    color: var(--color-fg-1);
+    max-width: 720px;
+    margin: 0 0 22px;
+  }
+  .art-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .art-row {
+    display: block;
+    color: inherit;
+  }
+  .art-row:hover {
+    background: var(--color-bg-2);
+    text-decoration: none;
+  }
+  .art-row-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+  .art-row-head h3 {
+    font-size: 14px;
+    color: var(--color-fg-0);
+  }
+</style>

@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import ConsoleShell from '../../layouts/ConsoleShell.astro';
+import Chip from '../../components/Chip.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('articles');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+---
+
+<ConsoleShell title={data.title} breadcrumb={`~/articles/${entry.id}`} description={data.body}>
+  <div class="eyebrow">Articles</div>
+  <div class="art-entry-head">
+    <h1>{data.title}</h1>
+    <Chip variant="illustrative">{data.status}</Chip>
+  </div>
+  <div class="meta" style="margin-bottom:16px">{data.topic}</div>
+
+  <p class="meta art-draft-notice">
+    This is an illustrative draft outline — not a published article.
+  </p>
+
+  <p class="art-body">{data.body}</p>
+</ConsoleShell>
+
+<style>
+  .art-entry-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 6px 0 6px;
+  }
+  .art-entry-head h1 {
+    font-size: 20px;
+  }
+  .art-draft-notice {
+    margin-bottom: 16px;
+  }
+  .art-body {
+    color: var(--color-fg-1);
+    max-width: 720px;
+    margin: 0 0 18px;
+  }
+</style>
