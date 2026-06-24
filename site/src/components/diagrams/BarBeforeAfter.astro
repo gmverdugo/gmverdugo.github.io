@@ -78,7 +78,7 @@ const gridLines = [0, 0.25, 0.5, 0.75].map((fraction) => CHART_TOP + fraction * 
           <text x={g.afterX + BAR_W / 2} y={g.afterY - 6} fill="#e6ebf5" font-size="10" font-family="monospace" text-anchor="middle">
             {g.after.toLocaleString('en-US')}
           </text>
-          <text x={g.labelX} y={CHART_BOTTOM + 18} fill="#6b7588" font-size="11" text-anchor="middle">
+          <text x={g.labelX} y={CHART_BOTTOM + 18} fill="var(--color-fg-2)" font-size="11" text-anchor="middle">
             {g.label}
           </text>
         </Fragment>
