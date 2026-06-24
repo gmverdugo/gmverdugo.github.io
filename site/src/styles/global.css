@@ -507,3 +507,47 @@ pre.code .c {
     display: inline-flex;
   }
 }
+
+/* ============================================================
+   Case-study body content (shared across the 3 engagement pages,
+   used inside CaseStudyLayout's <slot/>).
+   ============================================================ */
+.cs-body section {
+  margin-bottom: 30px;
+}
+.cs-body h2 {
+  font-size: 13px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-fg-1);
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-line);
+}
+.cs-body p {
+  color: var(--color-fg-1);
+  margin: 0 0 12px;
+}
+.result-tiles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.stack-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+ul.clean {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--color-fg-1);
+}
+ul.clean li {
+  margin-bottom: 6px;
+}
+@media (max-width: 760px) {
+  .result-tiles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
