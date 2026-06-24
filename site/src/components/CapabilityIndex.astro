@@ -1,0 +1,53 @@
+---
+/**
+ * 2-col capability list (1-col under responsive breakpoint), used by
+ * Overview's "Capabilities" section. Capability-layer content, not
+ * case evidence — no per-engagement figures here.
+ */
+interface Item {
+  title: string;
+  detail: string;
+}
+
+const items: Item[] = [
+  { title: 'Elastic Stack architecture', detail: 'cluster design, sharding, ILM, LogsDB, ZSTD' },
+  { title: 'OpenTelemetry', detail: 'instrumentation strategy, collector topology' },
+  { title: 'SIEM & detection engineering', detail: 'MITRE ATT&CK, rule lifecycle, coverage' },
+  { title: 'Kubernetes & IaC', detail: 'agent fleets, multi-tenant ingest, automation' },
+  { title: 'Cost & storage optimization', detail: 'retention tiers, heap pressure, index guardrails' },
+  { title: 'DevSecOps enablement', detail: 'SSDLC, secure coding, security guardians' },
+];
+---
+
+<div class="cap-list">
+  {
+    items.map((item) => (
+      <div class="item">
+        <b>{item.title}</b>
+        <span>{item.detail}</span>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .cap-list {
+    columns: 2;
+    column-gap: 28px;
+  }
+  .cap-list .item {
+    break-inside: avoid;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .cap-list .item span {
+    color: var(--color-fg-2);
+    font-size: 12.5px;
+    display: block;
+  }
+  @media (max-width: 700px) {
+    .cap-list {
+      columns: 1;
+    }
+  }
+</style>

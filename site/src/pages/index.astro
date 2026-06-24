@@ -1,9 +1,61 @@
 ---
 import ConsoleShell from '../layouts/ConsoleShell.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import MetricInline from '../components/MetricInline.astro';
+import EngagementRegister from '../components/EngagementRegister.astro';
+import CapabilityIndex from '../components/CapabilityIndex.astro';
+import ContractorCard from '../components/ContractorCard.astro';
+import Chip from '../components/Chip.astro';
+
+const footprint = [
+  { label: 'Cluster nodes', value: '16', sub: 'hot / warm / cold' },
+  { label: 'Documents', value: '12B+', sub: '11 domains' },
+  { label: 'Detection rules', value: '1,459', sub: 'MITRE-mapped' },
+  { label: 'Agent coverage', value: '100%', sub: '102 agents' },
+  { label: 'Dashboards', value: '30+', sub: 'Kibana, operational' },
+];
 ---
 
-<ConsoleShell title="Overview" breadcrumb="~/overview" description="Shell smoke test — replaced by the real Overview page in Phase 5.">
-	<div class="eyebrow">Overview</div>
-	<h1 style="font-size:21px; margin:6px 0;">Shell scaffold smoke test</h1>
-	<p class="dim">ConsoleShell + Sidebar + Statusbar wired. Real content lands in Phase 5.</p>
+<ConsoleShell
+  title="Overview"
+  breadcrumb="~/overview"
+  description="Architecture & advisory for observability and security at organization scale."
+>
+  <div class="eyebrow">Overview</div>
+  <h1 class="ov-h1">Architecture &amp; advisory for observability and security at organization scale.</h1>
+  <p class="ov-lede">
+    I design and harden Elastic Stack / OpenTelemetry / SIEM platforms, optimize clusters under real
+    production load, and run maturity assessments that give engineering leaders a defensible improvement
+    path. This page is an evidence brief — every number below is tied to a named engagement.
+  </p>
+
+  <SectionLabel number="01" heading="Operating footprint" />
+  <MetricInline items={footprint} />
+
+  <SectionLabel number="02" heading="Engagement register">
+    <Chip variant="real">verified per-client</Chip>
+  </SectionLabel>
+  <EngagementRegister />
+
+  <SectionLabel number="03" heading="Capabilities" />
+  <CapabilityIndex />
+
+  <ContractorCard />
+
+  <p class="meta" style="margin:18px 0 30px">
+    Capability ranges shown under Engagement Models (cost −20–50%, queries 2–5×, storage −30–40%) are
+    illustrative aspirational ranges, kept separate from the verified per-client outcomes above.
+  </p>
 </ConsoleShell>
+
+<style>
+  .ov-h1 {
+    font-size: 21px;
+    margin: 6px 0 6px;
+  }
+  .ov-lede {
+    color: var(--color-fg-1);
+    max-width: 720px;
+    margin: 0 0 22px;
+  }
+</style>
