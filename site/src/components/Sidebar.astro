@@ -1,0 +1,66 @@
+---
+import Avatar from './Avatar.astro';
+import StatusDot from './StatusDot.astro';
+
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+
+function isActive(section: string): boolean {
+  if (section === '/') return path === '/';
+  return path === section || path.startsWith(`${section}/`);
+}
+
+const workspaceLinks = [
+  { href: '/', label: 'Overview', badge: '⌘1', section: '/' },
+  { href: '/architectures', label: 'Architectures', section: '/architectures' },
+  { href: '/case-studies', label: 'Case Studies', badge: '3', section: '/case-studies' },
+  { href: '/lab', label: 'Lab', section: '/lab' },
+  { href: '/articles', label: 'Articles', section: '/articles' },
+];
+
+const profileLinks = [
+  { href: '/certifications', label: 'Certifications', section: '/certifications' },
+  { href: '/engagement-models', label: 'Engagement Models', badge: '8', section: '/engagement-models' },
+  { href: '/contact', label: 'Contact', section: '/contact' },
+];
+---
+
+<aside class="sidebar" id="sidebar">
+  <div class="id">
+    <Avatar initials="GV" />
+    <div class="name">Gonzalo Verdugo</div>
+    <div class="role">Enterprise Observability Architect</div>
+  </div>
+  <nav aria-label="Primary">
+    <div class="group">Workspace</div>
+    <ul style="list-style:none; margin:0; padding:0;">
+      {
+        workspaceLinks.map((link) => (
+          <li>
+            <a href={link.href} class={isActive(link.section) ? 'active' : undefined} aria-current={isActive(link.section) ? 'page' : undefined}>
+              <span>{link.label}</span>
+              {link.badge && <span class="badge">{link.badge}</span>}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="group">Profile</div>
+    <ul style="list-style:none; margin:0; padding:0;">
+      {
+        profileLinks.map((link) => (
+          <li>
+            <a href={link.href} class={isActive(link.section) ? 'active' : undefined} aria-current={isActive(link.section) ? 'page' : undefined}>
+              <span>{link.label}</span>
+              {link.badge && <span class="badge">{link.badge}</span>}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+  <div class="foot">
+    <StatusDot variant="ok" /> Available &middot; remote-first<br />
+    Mendoza, AR &middot; ES / EN
+  </div>
+</aside>
+<div class="sidebar-backdrop" id="sidebar-backdrop"></div>

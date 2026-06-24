@@ -1,0 +1,10 @@
+---
+interface Props {
+  variant: 'ok' | 'warn' | 'crit';
+  class?: string;
+}
+
+const { variant, class: className } = Astro.props;
+---
+
+<span class={['dot', variant, className].filter(Boolean).join(' ')} aria-hidden="true"></span>

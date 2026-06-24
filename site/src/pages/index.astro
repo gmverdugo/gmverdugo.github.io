@@ -1,18 +1,9 @@
 ---
-import '../styles/global.css';
+import ConsoleShell from '../layouts/ConsoleShell.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-		<p>Scaffold smoke test — replaced by Overview page in Phase 5.</p>
-	</body>
-</html>
+<ConsoleShell title="Overview" breadcrumb="~/overview" description="Shell smoke test — replaced by the real Overview page in Phase 5.">
+	<div class="eyebrow">Overview</div>
+	<h1 style="font-size:21px; margin:6px 0;">Shell scaffold smoke test</h1>
+	<p class="dim">ConsoleShell + Sidebar + Statusbar wired. Real content lands in Phase 5.</p>
+</ConsoleShell>

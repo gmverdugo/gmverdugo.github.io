@@ -1,0 +1,18 @@
+---
+/**
+ * Content-sourcing-integrity primitive: `real` (green) marks verified
+ * outcomes/snippets, `illustrative` (amber) marks draft/placeholder
+ * content, `mono` is a neutral monospace tag chip (stack/tech labels).
+ */
+interface Props {
+  variant?: 'real' | 'illustrative' | 'mono' | 'neutral';
+  class?: string;
+}
+
+const { variant = 'neutral', class: className } = Astro.props;
+const variantClass = variant === 'neutral' ? '' : variant;
+---
+
+<span class={['chip', variantClass, className].filter(Boolean).join(' ')}>
+  <slot />
+</span>
