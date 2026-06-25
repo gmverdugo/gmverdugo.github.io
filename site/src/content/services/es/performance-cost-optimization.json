@@ -1,0 +1,11 @@
+{
+  "name": "Optimización de Performance y Reducción de Costos",
+  "category": "Optimización",
+  "description": "Assessment de salud del cluster, profiling de queries, optimización de almacenamiento vía LogsDB, rightsizing de data tiers y optimización de tier de licencia (Basic a Enterprise).",
+  "ranges": [
+    { "metric": "Reducción de costos", "low": 20, "high": 50, "unit": "%" },
+    { "metric": "Performance de queries", "low": 2, "high": 5, "unit": "x" },
+    { "metric": "Ahorro de almacenamiento", "low": 30, "high": 40, "unit": "%" }
+  ],
+  "source": "catalog"
+}

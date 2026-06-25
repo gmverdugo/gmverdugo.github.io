@@ -1,0 +1,6 @@
+{
+  "name": "Monitoreo de Seguridad e Implementación SIEM",
+  "category": "Seguridad",
+  "description": "Despliegue de Elastic Security/SIEM, ingeniería de detección basada en MITRE ATT&CK, dashboards para SOC, configuración de workflows de respuesta a incidentes y dashboards de compliance y auditoría (PCI-DSS, SOC 2, HIPAA).",
+  "source": "catalog"
+}
