@@ -1,6 +1,0 @@
-{
-  "name": "Migration & Platform Modernization",
-  "category": "Migration",
-  "description": "Legacy platform migration (Splunk, ELK 6.x/7.x, Graylog), version upgrade planning, on-prem-to-cloud or cloud-to-on-prem migration, and zero-downtime cutover strategy.",
-  "source": "catalog"
-}

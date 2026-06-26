@@ -1,6 +1,0 @@
-{
-  "name": "Implementación de Plataforma de Observabilidad",
-  "category": "Observabilidad",
-  "description": "Recolección unificada de datos vía Fleet/Elastic Agent (100-10.000+ hosts), configuración de APM y distributed tracing, integraciones personalizadas y tuning de alertas y notificaciones.",
-  "source": "catalog"
-}

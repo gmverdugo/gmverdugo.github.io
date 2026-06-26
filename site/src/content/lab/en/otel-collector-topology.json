@@ -1,6 +1,0 @@
-{
-  "title": "OpenTelemetry collector topology (draft)",
-  "status": "illustrative",
-  "tags": ["OpenTelemetry", "instrumentation"],
-  "body": "Draft notes on a gateway-collector topology for routing traces, metrics, and logs from heterogeneous services through a central OTel Collector before backend ingestion. Illustrative — not yet a published, completed implementation."
-}

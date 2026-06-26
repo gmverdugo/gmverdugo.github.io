@@ -1,6 +1,0 @@
-{
-  "name": "DevSecOps & Infrastructure as Code",
-  "category": "DevSecOps",
-  "description": "Terraform module development, Ansible playbooks, CI/CD pipeline setup (Jenkins, GitLab CI, GitHub Actions), Kubernetes Operator (ECK) implementation, and security-hardening automation.",
-  "source": "catalog"
-}

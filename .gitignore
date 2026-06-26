@@ -1,25 +1,8 @@
-# Personal documents — not versioned (root-level only)
-/*.md
-/*.pdf
-/*.html
+# Dev/reference dirs — not part of deployable repo
+Examples/
+Docs/
+.agents/
 
-# Certifications folder
-Certificaciones/
-
-# OS & editor
+# OS
 .DS_Store
 Thumbs.db
-.idea/
-.vscode/
-*.suo
-*.user
-
-# Angular build output (keep source, ignore dist)
-console/dist/
-console/.angular/
-console/node_modules/
-
-# Environment files
-console/.env
-console/.env.*
-!console/.env.example

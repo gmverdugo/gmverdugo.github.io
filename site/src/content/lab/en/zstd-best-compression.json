@@ -1,7 +1,0 @@
-{
-  "title": "ZSTD / best_compression rationale",
-  "status": "real",
-  "tags": ["Elasticsearch", "storage", "codec"],
-  "snippet": "# warm-tier codec — recover storage without touching HOT latency\nPUT warm-*/_settings\n{ \"index.codec\": \"best_compression\" }",
-  "body": "Switching the warm-tier codec to best_compression (ZSTD-based) trades a small amount of CPU on infrequent warm-tier reads for meaningfully lower storage footprint. Because HOT-tier indices keep the default codec, query latency on actively-queried data is unaffected — the trade only applies to data that has already rolled past the HOT phase."
-}

@@ -1,7 +1,0 @@
-{
-  "title": "ILM rollover policy template",
-  "status": "real",
-  "tags": ["Elasticsearch", "ILM", "hot-warm-cold"],
-  "snippet": "PUT _ilm/policy/hot-rollover\n{\n  \"policy\": {\n    \"phases\": {\n      \"hot\":  { \"actions\": { \"rollover\": { \"max_primary_shard_size\": \"50gb\", \"max_age\": \"7d\" } } },\n      \"warm\": { \"min_age\": \"7d\", \"actions\": { \"forcemerge\": { \"max_num_segments\": 1 }, \"set_priority\": { \"priority\": 50 } } }\n    }\n  }\n}",
-  "body": "An ILM rollover policy template illustrative of the pattern applied during the MELI HOT-tier optimization engagement: rollover at 50GB primary shard size or 7 days, then forcemerge and deprioritize on entering warm. Paired with a best_compression codec change on warm-tier settings to recover storage without affecting HOT-tier query latency."
-}

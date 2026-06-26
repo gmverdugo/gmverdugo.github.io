@@ -1,6 +1,0 @@
-{
-  "title": "Kubernetes multi-tenant ingest pattern (draft)",
-  "status": "illustrative",
-  "tags": ["Kubernetes", "Elastic Agent", "multi-tenancy"],
-  "body": "Draft sketch of a multi-tenant log/metric ingest pattern on Kubernetes using per-namespace Elastic Agent DaemonSets and tenant-scoped index routing. Illustrative concept, not a verified deployment."
-}
