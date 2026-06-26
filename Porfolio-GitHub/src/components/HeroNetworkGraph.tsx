@@ -84,7 +84,7 @@ export default function HeroNetworkGraph() {
             fill="rgba(17,24,39,0.85)" stroke="rgba(255,255,255,0.08)" strokeWidth="0.8" />
           <circle cx={0} cy={y} r={3.5} fill="rgba(59,130,246,0.6)"
             style={{ animation: 'ng-pulse 2.5s ease-in-out infinite', animationDelay: `${Math.random() * 1.5}s` }} />
-          <text x={16} y={y + 4} fontSize={9} fontFamily="Inter,sans-serif" fill="#64748b">{label}</text>
+          <text x={16} y={y + 4} fontSize={10} fontFamily="Inter,sans-serif" fill="#64748b">{label}</text>
         </g>
       ))}
 
@@ -93,9 +93,9 @@ export default function HeroNetworkGraph() {
         <rect x={esX - 22} y={esY - 24} width={90} height={48} rx={9}
           fill="rgba(6,182,212,0.08)" stroke="rgba(6,182,212,0.45)" strokeWidth="1.5" />
       </g>
-      <text x={esX + 23} y={esY - 5} fontSize={9} fontFamily="Inter,sans-serif" fill="#94a3b8"
+      <text x={esX + 23} y={esY - 5} fontSize={10} fontFamily="Inter,sans-serif" fill="#94a3b8"
         textAnchor="middle">Elasticsearch</text>
-      <text x={esX + 23} y={esY + 8} fontSize={9} fontFamily="Inter,sans-serif" fill="#06b6d4"
+      <text x={esX + 23} y={esY + 8} fontSize={10} fontFamily="Inter,sans-serif" fill="#06b6d4"
         textAnchor="middle" fontWeight="600">Cluster</text>
       <circle cx={esX + 23} cy={esY + 20} r={3}
         fill="#06b6d4" opacity="0.9"
@@ -106,7 +106,7 @@ export default function HeroNetworkGraph() {
         <g key={label}>
           <rect x={462} y={y - 12} width={112} height={22} rx={5}
             fill="rgba(17,24,39,0.85)" stroke={`${color}30`} strokeWidth="0.8" />
-          <text x={472} y={y + 4} fontSize={9} fontFamily="Inter,sans-serif" fill="#94a3b8">{label}</text>
+          <text x={472} y={y + 4} fontSize={10} fontFamily="Inter,sans-serif" fill="#94a3b8">{label}</text>
           <circle cx={578} cy={y} r={3} fill={color} opacity="0.6"
             style={{ animation: 'ng-pulse 2s ease-in-out infinite' }} />
         </g>

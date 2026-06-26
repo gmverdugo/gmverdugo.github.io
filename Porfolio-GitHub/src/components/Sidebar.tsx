@@ -145,8 +145,8 @@ export default function Sidebar({ isOpen, onClose, activeSection, onNavigate }: 
         {navGroups.map((group) => (
           <div key={group.label}>
             <div
-              className="font-geist mb-2 pl-3 text-[9px] font-bold uppercase tracking-[0.15em]"
-              style={{ color: 'var(--text-muted)', opacity: 0.5 }}
+              className="font-geist mb-2 pl-3 text-[10px] font-bold uppercase tracking-[0.12em]"
+              style={{ color: 'var(--text-muted)', opacity: 0.7 }}
             >
               {group.label}
             </div>
@@ -171,15 +171,31 @@ export default function Sidebar({ isOpen, onClose, activeSection, onNavigate }: 
 
       {/* Sidebar footer */}
       <div className="mt-auto pt-5" style={{ borderTop: '1px solid var(--border)' }}>
-        {/* Location — two lines */}
-        <div className="mb-4 flex flex-col gap-1">
-          <div className="flex items-center gap-2 text-[11px]" style={{ color: 'var(--text-muted)' }}>
-            <MapPin size={11} style={{ flexShrink: 0, opacity: 0.7 }} />
-            <span>Mendoza, Argentina</span>
+        {/* Location card */}
+        <div
+          className="mb-4 rounded-xl p-3"
+          style={{
+            background: 'var(--surface-glass)',
+            border: '1px solid var(--border)',
+          }}
+        >
+          <div className="mb-1.5 flex items-center gap-2">
+            <MapPin size={12} style={{ color: 'var(--primary)', flexShrink: 0 }} />
+            <span className="text-[11px] font-semibold" style={{ color: '#e2e8f0' }}>
+              Mendoza, Argentina
+            </span>
           </div>
-          <div className="flex items-center gap-2 text-[11px]" style={{ color: 'var(--text-muted)' }}>
-            <Globe size={11} style={{ flexShrink: 0, opacity: 0.7 }} />
-            <span>Remote-First · Worldwide</span>
+          <div className="flex items-center gap-2">
+            <Globe size={12} style={{ color: 'var(--cyan)', flexShrink: 0 }} />
+            <span className="text-[11px]" style={{ color: '#94a3b8' }}>
+              Remote-First
+            </span>
+            <span
+              className="ml-auto rounded px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide"
+              style={{ background: 'rgba(6,182,212,0.1)', color: 'var(--cyan)' }}
+            >
+              Worldwide
+            </span>
           </div>
         </div>
 

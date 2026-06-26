@@ -78,20 +78,20 @@ export default function MetricsGrid() {
             </div>
 
             <div
-              className="mb-1 text-2xl font-bold leading-none"
+              className="mb-1 text-xl font-bold leading-none"
               style={{ color: '#f8fafc', letterSpacing: '-0.01em' }}
             >
               {value}
             </div>
 
             <div
-              className="font-geist mb-1 text-[11px] font-semibold uppercase tracking-[0.05em]"
+              className="font-geist mb-1 text-[11px] font-semibold uppercase tracking-[0.03em]"
               style={{ color: '#f8fafc' }}
             >
               {label}
             </div>
 
-            <div className="text-xs" style={{ color: '#64748b' }}>
+            <div className="text-[11px] leading-snug" style={{ color: '#94a3b8' }}>
               {sublabel}
             </div>
           </div>

@@ -45,7 +45,7 @@ export default function HomeLab() {
           {labTags.map(({ label, icon: Icon, color }) => (
             <div
               key={label}
-              className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[11px] font-medium transition-all duration-200 hover:border-white/10"
+              className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[12px] font-medium transition-all duration-200 hover:border-white/10"
               style={{
                 background: 'rgba(255,255,255,0.03)',
                 border:     '1px solid rgba(255,255,255,0.07)',

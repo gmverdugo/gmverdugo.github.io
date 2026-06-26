@@ -65,7 +65,7 @@ function ColLabel({ x, label }: { x: number; label: string }) {
   return (
     <text
       x={x} y={13}
-      fontSize={7.5} fontWeight="700" fontFamily="Inter, sans-serif"
+      fontSize={10} fontWeight="700" fontFamily="Inter, sans-serif"
       fill="#475569" letterSpacing="1"
     >
       {label}
@@ -221,7 +221,7 @@ export default function ArchitectureDiagramFlow() {
             />
             <text
               x={C2 + 72} y={autoY - 4}
-              fontSize={7.5} fontWeight="700" fontFamily="Inter, sans-serif"
+              fontSize={10} fontWeight="700" fontFamily="Inter, sans-serif"
               fill="#475569" letterSpacing="1"
             >
               AUTOMATE &amp; ORCHESTRATE

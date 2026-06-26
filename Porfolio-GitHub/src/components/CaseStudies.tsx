@@ -94,18 +94,18 @@ export default function CaseStudies() {
                       {company}
                     </span>
                     <span
-                      className="rounded-[4px] px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide"
+                      className="rounded-[4px] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide"
                       style={{ background: `${badgeColor}18`, color: badgeColor }}
                     >
                       {badge}
                     </span>
                   </div>
-                  <p className="text-[10px]" style={{ color: '#475569' }}>{context}</p>
+                  <p className="text-[12px]" style={{ color: '#64748b' }}>{context}</p>
                 </div>
               </div>
 
               {/* Description */}
-              <p className="mb-3 text-[11px] leading-relaxed" style={{ color: '#94a3b8' }}>
+              <p className="mb-3 text-[12px] leading-relaxed" style={{ color: '#94a3b8' }}>
                 {description}
               </p>
 

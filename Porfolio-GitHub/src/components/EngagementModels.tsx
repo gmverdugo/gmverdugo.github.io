@@ -46,7 +46,7 @@ export default function EngagementModels() {
           {engagements.map(({ label, Icon, color, isSi }) => (
             <div
               key={label}
-              className="group flex cursor-pointer items-center gap-2.5 rounded-[12px] p-3 text-[11px] font-medium transition-all duration-200 hover:border-white/10"
+              className="group flex cursor-pointer items-center gap-2.5 rounded-[12px] p-3 text-[12px] font-medium transition-all duration-200 hover:border-white/10"
               style={{
                 background: 'rgba(255,255,255,0.02)',
                 border:     '1px solid rgba(255,255,255,0.05)',

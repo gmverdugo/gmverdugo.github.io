@@ -92,7 +92,7 @@ export default function Certifications() {
             </div>
             <div>
               <div
-                className="font-geist mb-1.5 text-[10px] font-bold uppercase tracking-[0.1em]"
+                className="font-geist mb-1.5 text-[11px] font-bold uppercase tracking-[0.1em]"
                 style={{ color: '#f04e23' }}
               >
                 Elastic · Industry Certification
@@ -158,7 +158,7 @@ export default function Certifications() {
                 }}
               >
                 <div
-                  className="font-geist flex h-10 w-10 items-center justify-center rounded-[10px] text-[10px] font-bold tracking-[0.04em]"
+                  className="font-geist flex h-10 w-10 items-center justify-center rounded-[10px] text-[11px] font-bold tracking-[0.04em]"
                   style={{ background: bg, border: `1px solid ${border}`, color }}
                 >
                   {code}
@@ -195,7 +195,7 @@ export default function Certifications() {
           </div>
         </div>
         <div
-          className="flex-shrink-0 rounded-lg px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide"
+          className="flex-shrink-0 rounded-lg px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide"
           style={{ background: 'rgba(139, 92, 246, 0.1)', color: '#8b5cf6' }}
         >
           Certified

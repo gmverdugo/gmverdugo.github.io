@@ -159,7 +159,7 @@ export default function ContractorMode() {
             measurable results, and knowledge transfer included in every project.
           </p>
         </div>
-        <div className="flex flex-shrink-0 items-center gap-3 text-[11px]" style={{ color: '#475569' }}>
+        <div className="flex flex-shrink-0 items-center gap-3 text-[11px]" style={{ color: '#64748b' }}>
           <Clock size={12} />
           <span>Remote-first · UTC-3 · EN/ES</span>
         </div>
@@ -191,13 +191,13 @@ export default function ContractorMode() {
                 <div className="flex flex-col items-end gap-1">
                   {badge && (
                     <span
-                      className="rounded-[4px] px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide"
+                      className="rounded-[4px] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide"
                       style={{ background: `${color}15`, color }}
                     >
                       {badge}
                     </span>
                   )}
-                  <span className="text-[10px]" style={{ color: '#475569' }}>
+                  <span className="text-[12px]" style={{ color: '#64748b' }}>
                     {duration}
                   </span>
                 </div>
@@ -205,7 +205,7 @@ export default function ContractorMode() {
               <h4 className="mb-1.5 text-[12px] font-semibold" style={{ color: '#f8fafc' }}>
                 {title}
               </h4>
-              <p className="text-[11px] leading-relaxed" style={{ color: '#64748b' }}>
+              <p className="text-[12px] leading-relaxed" style={{ color: '#64748b' }}>
                 {desc}
               </p>
             </div>
@@ -231,7 +231,7 @@ export default function ContractorMode() {
             >
               {highlight && (
                 <div
-                  className="absolute -top-2.5 left-4 rounded-[4px] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider"
+                  className="absolute -top-2.5 left-4 rounded-[4px] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider"
                   style={{ background: color, color: '#0a0f1a' }}
                 >
                   Most Popular
@@ -245,7 +245,7 @@ export default function ContractorMode() {
               </div>
               <ul className="flex flex-col gap-2">
                 {features.map(f => (
-                  <li key={f} className="flex items-start gap-2 text-[11px]"
+                  <li key={f} className="flex items-start gap-2 text-[12px]"
                     style={{ color: '#94a3b8' }}>
                     <span className="mt-[5px] h-1 w-1 flex-shrink-0 rounded-full"
                       style={{ background: color }} />
@@ -266,7 +266,7 @@ export default function ContractorMode() {
           <p className="text-[12px] font-semibold" style={{ color: '#f8fafc' }}>
             Ready to discuss your project?
           </p>
-          <p className="text-[11px]" style={{ color: '#64748b' }}>
+          <p className="text-[12px]" style={{ color: '#64748b' }}>
             Direct engagement · No agency overhead · First call free
           </p>
         </div>

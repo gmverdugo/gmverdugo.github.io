@@ -59,7 +59,7 @@ function Col({ title, children }: ColProps) {
   return (
     <div className="flex flex-col gap-1.5">
       <div
-        className="font-geist mb-1 text-center text-[9px] font-bold uppercase tracking-[0.1em]"
+        className="font-geist mb-1 text-center text-[11px] font-bold uppercase tracking-[0.1em]"
         style={{ color: '#64748b' }}
       >
         {title}
@@ -176,7 +176,7 @@ export default function ArchitectureDiagram() {
               style={{ borderTop: '1px solid rgba(255, 255, 255, 0.04)' }}
             >
               <div
-                className="font-geist mb-2 text-center text-[9px] uppercase tracking-[0.1em]"
+                className="font-geist mb-2 text-center text-[11px] uppercase tracking-[0.1em]"
                 style={{ color: '#64748b' }}
               >
                 Automate & Orchestrate

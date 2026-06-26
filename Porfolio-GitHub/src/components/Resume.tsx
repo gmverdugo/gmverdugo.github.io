@@ -230,12 +230,12 @@ export default function Resume() {
                     >
                       <div className="mb-2 flex flex-wrap items-center gap-2">
                         <span
-                          className="rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide"
+                          className="rounded-md px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide"
                           style={{ background: `${cColor}18`, color: cColor }}
                         >
                           {name}
                         </span>
-                        <span className="text-[11px]" style={{ color: '#475569' }}>{label}</span>
+                        <span className="text-[11px]" style={{ color: '#64748b' }}>{label}</span>
                       </div>
                       <ul className="flex flex-col gap-1.5">
                         {points.map(p => (
@@ -273,7 +273,7 @@ export default function Resume() {
                   <div className="flex flex-wrap gap-1.5">
                     {items.map(item => (
                       <span key={item}
-                        className="rounded-md px-2 py-0.5 text-[10px]"
+                        className="rounded-md px-2 py-0.5 text-[11px]"
                         style={{
                           background: 'rgba(255,255,255,0.04)',
                           border:     '1px solid rgba(255,255,255,0.07)',
@@ -294,8 +294,8 @@ export default function Resume() {
             className="rounded-[14px] p-4"
             style={{ background: 'rgba(0,0,0,0.18)', border: '1px solid rgba(255,255,255,0.05)' }}
           >
-            <div className="font-geist mb-3 text-[9px] font-bold uppercase tracking-[0.1em]"
-              style={{ color: '#475569' }}>
+            <div className="font-geist mb-3 text-[11px] font-bold uppercase tracking-[0.1em]"
+              style={{ color: '#64748b' }}>
               Core Stack
             </div>
             <div className="flex flex-wrap gap-3">
@@ -315,7 +315,7 @@ export default function Resume() {
           >
             <div className="mb-2 flex items-center gap-2.5">
               <div
-                className="font-geist flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg text-[9px] font-bold"
+                className="font-geist flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg text-[11px] font-bold"
                 style={{ background: 'rgba(240,78,35,0.15)', color: '#f04e23' }}
               >
                 ECO
@@ -324,12 +324,12 @@ export default function Resume() {
                 <p className="text-[11px] font-semibold" style={{ color: '#f8fafc' }}>
                   Elastic Certified Observability Engineer
                 </p>
-                <p className="text-[10px]" style={{ color: '#64748b' }}>
+                <p className="text-[12px]" style={{ color: '#64748b' }}>
                   Official Elastic Certification
                 </p>
               </div>
             </div>
-            <p className="text-[10px] leading-relaxed" style={{ color: '#64748b' }}>
+            <p className="text-[12px] leading-relaxed" style={{ color: '#64748b' }}>
               Validates advanced expertise in observability, monitoring, security monitoring, and Elasticsearch performance optimization.
             </p>
           </div>
@@ -342,17 +342,17 @@ export default function Resume() {
               border:     '1px solid rgba(255,255,255,0.05)',
             }}
           >
-            <div className="font-geist mb-2 text-[9px] font-bold uppercase tracking-[0.1em]"
-              style={{ color: '#475569' }}>
+            <div className="font-geist mb-2 text-[11px] font-bold uppercase tracking-[0.1em]"
+              style={{ color: '#64748b' }}>
               Education
             </div>
             <p className="text-[11px] font-semibold" style={{ color: '#f8fafc' }}>
               Técnico en Redes de Datos y Telecomunicaciones
             </p>
-            <p className="text-[10px]" style={{ color: '#64748b' }}>
+            <p className="text-[12px]" style={{ color: '#64748b' }}>
               Universidad Nacional de Cuyo (UNCUYO) · 2019–2022
             </p>
-            <p className="mt-1 text-[10px]" style={{ color: '#475569' }}>
+            <p className="mt-1 text-[12px]" style={{ color: '#64748b' }}>
               Network infrastructure, security protocols, telecommunications
             </p>
           </div>
