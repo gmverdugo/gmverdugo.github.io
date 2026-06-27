@@ -1,6 +1,7 @@
 'use client'
 
 import { Menu } from 'lucide-react'
+import LanguageToggle from './LanguageToggle'
 
 interface MobileHeaderProps {
   onToggle: () => void
@@ -22,6 +23,9 @@ export default function MobileHeader({ onToggle }: MobileHeaderProps) {
       >
         GV
       </span>
+
+      {/* Language toggle — center of mobile header */}
+      <LanguageToggle variant="inline" />
 
       <button
         onClick={onToggle}

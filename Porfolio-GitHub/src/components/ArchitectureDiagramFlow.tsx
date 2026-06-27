@@ -1,6 +1,7 @@
 'use client'
 
 import { ArrowRight } from 'lucide-react'
+import { useLanguage } from '@/context/LanguageContext'
 
 /* ── Layout constants ──────────────────────────────────────────────── */
 const VW = 880, VH = 420
@@ -37,6 +38,8 @@ const SOURCES = [
   'Cloud Services','Databases','Endpoints','Custom Apps',
 ]
 const VIS_LABELS = ['Kibana','Dashboards','APM','Security / SIEM','Alerts & Reporting']
+
+const metricValues = ['320 GB/day', '30+', '102']
 
 /* ── SVG helpers ───────────────────────────────────────────────────── */
 function Node({ x, y, w = W1, label, hl }: {
@@ -79,15 +82,11 @@ const bez = (x1: number, y1: number, x2: number, y2: number) => {
   return `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`
 }
 
-/* ── Metrics ───────────────────────────────────────────────────────── */
-const metrics = [
-  { value: '320 GB/day', label: 'Processed' },
-  { value: '30+',        label: 'Sources'   },
-  { value: '102',        label: 'Agents'    },
-]
-
 /* ── Component ─────────────────────────────────────────────────────── */
 export default function ArchitectureDiagramFlow() {
+  const { t } = useLanguage()
+  const arch = t.architecture
+
   return (
     <div
       className="rounded-2xl p-8 transition-all duration-300 hover:border-white/10"
@@ -112,29 +111,28 @@ export default function ArchitectureDiagramFlow() {
           <div>
             <div className="font-geist text-[10px] font-bold uppercase tracking-[0.12em]"
               style={{ color: '#3b82f6' }}>
-              Featured Architecture
+              {arch.badge}
             </div>
             <h2 className="mt-2 text-xl font-semibold leading-snug" style={{ color: '#f8fafc' }}>
-              Enterprise Observability Hub
+              {arch.title}
             </h2>
             <p className="mt-3 text-[13px] leading-relaxed" style={{ color: '#64748b' }}>
-              Unified platform for logs, metrics, traces, and security —
-              from ingestion to operational intelligence.
+              {arch.desc}
             </p>
           </div>
           <div className="flex flex-col gap-3">
-            {metrics.map(({ value, label }) => (
-              <div key={label} className="flex items-baseline gap-2">
+            {metricValues.map((value, i) => (
+              <div key={i} className="flex items-baseline gap-2">
                 <span className="text-lg font-bold leading-none"
                   style={{ color: '#f8fafc', letterSpacing: '-0.02em' }}>{value}</span>
-                <span className="text-xs" style={{ color: '#64748b' }}>{label}</span>
+                <span className="text-xs" style={{ color: '#64748b' }}>{arch.metricLabels[i]}</span>
               </div>
             ))}
             <button
               className="panel-cta mt-2 flex cursor-pointer items-center gap-1 border-none bg-transparent p-0 text-xs font-medium"
               style={{ color: '#3b82f6', fontFamily: 'Geist, Inter, sans-serif' }}
             >
-              View Architecture <ArrowRight size={13} />
+              {arch.cta} <ArrowRight size={13} />
             </button>
           </div>
         </div>
@@ -163,10 +161,10 @@ export default function ArchitectureDiagramFlow() {
             </defs>
 
             {/* ── Column headers ── */}
-            <ColLabel x={C1}      label="DATA SOURCES"    />
-            <ColLabel x={C2 + 40} label="COLLECT"         />
-            <ColLabel x={C3 + 20} label="PROCESS & STORE" />
-            <ColLabel x={C4 + 15} label="ANALYZE & ACT"   />
+            <ColLabel x={C1}      label={arch.cols[0]} />
+            <ColLabel x={C2 + 40} label={arch.cols[1]} />
+            <ColLabel x={C3 + 20} label={arch.cols[2]} />
+            <ColLabel x={C4 + 15} label={arch.cols[3]} />
 
             {/* ── Sources → OTel (top 4, blue faint) ── */}
             {([0,1,2,3] as const).map(r => (
@@ -224,7 +222,7 @@ export default function ArchitectureDiagramFlow() {
               fontSize={10} fontWeight="700" fontFamily="Inter, sans-serif"
               fill="#475569" letterSpacing="1"
             >
-              AUTOMATE &amp; ORCHESTRATE
+              {arch.autoLabel}
             </text>
 
             {/* ── Automation → OTel/Agent (subtle purple upward arcs) ── */}

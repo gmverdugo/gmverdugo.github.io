@@ -266,6 +266,15 @@ const en = {
       },
     ],
   },
+  architecture: {
+    badge: 'Featured Architecture',
+    title: 'Enterprise Observability Hub',
+    desc: 'Unified platform for logs, metrics, traces, and security — from ingestion to operational intelligence.',
+    metricLabels: ['Processed', 'Sources', 'Agents'] as string[],
+    cta: 'View Architecture',
+    cols: ['DATA SOURCES', 'COLLECT', 'PROCESS & STORE', 'ANALYZE & ACT'] as string[],
+    autoLabel: 'AUTOMATE & ORCHESTRATE',
+  },
   footer: {
     quote: '"I don\'t just implement tools. I design platforms that deliver operational intelligence, security and business value at enterprise scale."',
     title: 'Enterprise Observability Architect',
@@ -535,6 +544,15 @@ const es: Translations = {
         ],
       },
     ],
+  },
+  architecture: {
+    badge: 'Arquitectura Destacada',
+    title: 'Hub de Observabilidad Enterprise',
+    desc: 'Plataforma unificada de logs, métricas, trazas y seguridad — desde la ingesta hasta la inteligencia operacional.',
+    metricLabels: ['Procesados', 'Fuentes', 'Agentes'],
+    cta: 'Ver Arquitectura',
+    cols: ['FUENTES DE DATOS', 'RECOLECTAR', 'PROCESAR Y ALMACENAR', 'ANALIZAR Y ACTUAR'],
+    autoLabel: 'AUTOMATIZAR Y ORQUESTAR',
   },
   footer: {
     quote: '"No solo implemento herramientas. Diseño plataformas que entregan inteligencia operacional, seguridad y valor de negocio a escala empresarial."',

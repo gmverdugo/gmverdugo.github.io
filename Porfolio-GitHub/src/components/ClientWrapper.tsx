@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Sidebar from './Sidebar'
 import MobileHeader from './MobileHeader'
+import LanguageToggle from './LanguageToggle'
 import { LanguageProvider } from '@/context/LanguageContext'
 
 export default function ClientWrapper({ children }: { children: React.ReactNode }) {
@@ -18,6 +19,11 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
     <LanguageProvider>
       <>
         <MobileHeader onToggle={() => setSidebarOpen((v) => !v)} />
+
+        {/* Floating language toggle — desktop only (sidebar has its own inline toggle) */}
+        <div className="fixed right-6 top-5 z-[150] hidden lg:block">
+          <LanguageToggle variant="floating" />
+        </div>
 
         <Sidebar
           isOpen={sidebarOpen}
