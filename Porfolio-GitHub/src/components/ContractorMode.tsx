@@ -19,11 +19,6 @@ const servicesMeta = [
   { icon: FileCheck,    color: '#3b82f6' },
 ]
 
-const retainersMeta = [
-  { color: '#3b82f6', highlight: false },
-  { color: '#06b6d4', highlight: true },
-  { color: '#10b981', highlight: false },
-]
 
 export default function ContractorMode() {
   const { t } = useLanguage()
@@ -58,7 +53,7 @@ export default function ContractorMode() {
       </div>
 
       {/* Services grid */}
-      <div className="mb-10">
+      <div className="mb-8">
         <div className="font-geist mb-4 text-[10px] font-bold uppercase tracking-[0.12em]"
           style={{ color: '#3b82f6' }}>
           {t.contractor.servicesBadge}
@@ -82,19 +77,14 @@ export default function ContractorMode() {
                   >
                     <Icon size={16} style={{ color }} />
                   </div>
-                  <div className="flex flex-col items-end gap-1">
-                    {svc.badge && (
-                      <span
-                        className="rounded-[4px] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide"
-                        style={{ background: `${color}15`, color }}
-                      >
-                        {svc.badge}
-                      </span>
-                    )}
-                    <span className="text-[12px]" style={{ color: '#64748b' }}>
-                      {svc.duration}
+                  {svc.badge && (
+                    <span
+                      className="rounded-[4px] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide"
+                      style={{ background: `${color}15`, color }}
+                    >
+                      {svc.badge}
                     </span>
-                  </div>
+                  )}
                 </div>
                 <h4 className="mb-1.5 text-[12px] font-semibold" style={{ color: '#f8fafc' }}>
                   {svc.title}
@@ -102,55 +92,6 @@ export default function ContractorMode() {
                 <p className="text-[12px] leading-relaxed" style={{ color: '#64748b' }}>
                   {svc.desc}
                 </p>
-              </div>
-            )
-          })}
-        </div>
-      </div>
-
-      {/* Retainer packages */}
-      <div>
-        <div className="font-geist mb-4 text-[10px] font-bold uppercase tracking-[0.12em]"
-          style={{ color: '#3b82f6' }}>
-          {t.contractor.retainerBadge}
-        </div>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {retainersMeta.map(({ color, highlight }, i) => {
-            const ret = t.contractor.retainers[i]
-            const hoursMap = ['20 h/month', '40 h/month', '80+ h/month']
-            return (
-              <div
-                key={i}
-                className="relative flex flex-col rounded-[16px] p-5"
-                style={{
-                  background: highlight ? `${color}0d` : 'rgba(255,255,255,0.02)',
-                  border:     `1px solid ${highlight ? `${color}35` : 'rgba(255,255,255,0.06)'}`,
-                }}
-              >
-                {highlight && (
-                  <div
-                    className="absolute -top-2.5 left-4 rounded-[4px] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider"
-                    style={{ background: color, color: '#0a0f1a' }}
-                  >
-                    {t.contractor.mostPopular}
-                  </div>
-                )}
-                <div className="mb-1 flex items-center gap-2">
-                  <span className="text-[13px] font-bold" style={{ color: '#f8fafc' }}>{ret.tier}</span>
-                </div>
-                <div className="mb-4 text-xl font-bold" style={{ color, letterSpacing: '-0.02em' }}>
-                  {hoursMap[i]}
-                </div>
-                <ul className="flex flex-col gap-2">
-                  {ret.features.map((f, fi) => (
-                    <li key={fi} className="flex items-start gap-2 text-[12px]"
-                      style={{ color: '#94a3b8' }}>
-                      <span className="mt-[5px] h-1 w-1 flex-shrink-0 rounded-full"
-                        style={{ background: color }} />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
               </div>
             )
           })}
