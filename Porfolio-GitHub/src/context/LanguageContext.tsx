@@ -95,7 +95,7 @@ const en = {
   },
   contractor: {
     badge: 'Contractor Services',
-    title: 'What I Build For You',
+    title: 'Enterprise Consulting Services',
     body: 'Senior-level Elasticsearch expertise — no agency overhead. Direct engagement, measurable results, and knowledge transfer included in every project.',
     timezone: 'Remote-first · UTC-3 · EN/ES',
     servicesBadge: 'Services',
@@ -374,7 +374,7 @@ const es: Translations = {
   },
   contractor: {
     badge: 'Servicios de Consultoría',
-    title: 'Lo Que Construyo Para Vos',
+    title: 'Consultoría Especializada',
     body: 'Expertise senior en Elasticsearch — sin intermediarios. Trato directo, resultados medibles y transferencia de conocimiento incluida en cada proyecto.',
     timezone: 'Trabajo remoto · UTC-3 · ES/EN',
     servicesBadge: 'Servicios',
