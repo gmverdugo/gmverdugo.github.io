@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Sidebar from './Sidebar'
 import MobileHeader from './MobileHeader'
+import { LanguageProvider } from '@/context/LanguageContext'
 
 export default function ClientWrapper({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -14,24 +15,26 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
   }
 
   return (
-    <>
-      <MobileHeader onToggle={() => setSidebarOpen((v) => !v)} />
+    <LanguageProvider>
+      <>
+        <MobileHeader onToggle={() => setSidebarOpen((v) => !v)} />
 
-      <Sidebar
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-        activeSection={activeSection}
-        onNavigate={handleNavigate}
-      />
-
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-[90] bg-black/50 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
+        <Sidebar
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          activeSection={activeSection}
+          onNavigate={handleNavigate}
         />
-      )}
 
-      <main className="ml-0 min-h-screen lg:ml-[260px]">{children}</main>
-    </>
+        {sidebarOpen && (
+          <div
+            className="fixed inset-0 z-[90] bg-black/50 lg:hidden"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+
+        <main className="ml-0 min-h-screen lg:ml-[260px]">{children}</main>
+      </>
+    </LanguageProvider>
   )
 }

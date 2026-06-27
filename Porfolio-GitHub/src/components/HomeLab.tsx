@@ -1,3 +1,5 @@
+'use client'
+
 import { Network } from 'lucide-react'
 import {
   SiOpentelemetry,
@@ -7,6 +9,7 @@ import {
   SiPython,
   SiDocker,
 } from 'react-icons/si'
+import { useLanguage } from '@/context/LanguageContext'
 
 const labTags = [
   { label: 'OpenTelemetry',    icon: SiOpentelemetry, color: '#4285f4' },
@@ -19,6 +22,8 @@ const labTags = [
 ]
 
 export default function HomeLab() {
+  const { t } = useLanguage()
+
   return (
     <div
       className="flex h-full flex-col rounded-2xl p-6 transition-all duration-300 hover:border-white/10"
@@ -31,14 +36,13 @@ export default function HomeLab() {
       <div>
         <div className="font-geist text-[10px] font-bold uppercase tracking-[0.12em]"
           style={{ color: '#3b82f6' }}>
-          Home Lab
+          {t.homeLab.badge}
         </div>
         <h2 className="mt-2 text-lg font-semibold" style={{ color: '#f8fafc' }}>
-          Continuous Experimentation
+          {t.homeLab.title}
         </h2>
         <p className="mt-2 mb-5 text-[13px] leading-relaxed" style={{ color: '#64748b' }}>
-          Exploring technologies, automating solutions, and validating patterns before
-          recommending them at enterprise scale.
+          {t.homeLab.body}
         </p>
 
         <div className="flex flex-wrap gap-2">
@@ -58,7 +62,6 @@ export default function HomeLab() {
           ))}
         </div>
       </div>
-
     </div>
   )
 }

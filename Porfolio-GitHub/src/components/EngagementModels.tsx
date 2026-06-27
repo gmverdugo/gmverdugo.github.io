@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Network,
   BarChart3,
@@ -8,19 +10,22 @@ import {
   Users,
 } from 'lucide-react'
 import { SiElasticsearch } from 'react-icons/si'
+import { useLanguage } from '@/context/LanguageContext'
 
-const engagements = [
-  { label: 'Architecture Advisory',          Icon: Network,       color: '#3b82f6' },
-  { label: 'Platform Assessments',           Icon: BarChart3,     color: '#06b6d4' },
-  { label: 'Observability Programs',         Icon: Eye,           color: '#10b981' },
-  { label: 'Elasticsearch Optimization',     Icon: SiElasticsearch, color: '#00bfb3', isSi: true },
-  { label: 'Security Monitoring · SIEM',     Icon: ShieldCheck,   color: '#f59e0b' },
-  { label: 'Knowledge Transfer',             Icon: GraduationCap, color: '#8b5cf6' },
-  { label: 'DevSecOps Enablement',           Icon: GitMerge,      color: '#ec4899' },
-  { label: 'Technical Leadership',           Icon: Users,         color: '#3b82f6' },
+const engagementsMeta = [
+  { Icon: Network,         color: '#3b82f6' },
+  { Icon: BarChart3,       color: '#06b6d4' },
+  { Icon: Eye,             color: '#10b981' },
+  { Icon: SiElasticsearch, color: '#00bfb3', isSi: true },
+  { Icon: ShieldCheck,     color: '#f59e0b' },
+  { Icon: GraduationCap,   color: '#8b5cf6' },
+  { Icon: GitMerge,        color: '#ec4899' },
+  { Icon: Users,           color: '#3b82f6' },
 ]
 
 export default function EngagementModels() {
+  const { t } = useLanguage()
+
   return (
     <div
       className="flex h-full flex-col rounded-2xl p-6 transition-all duration-300 hover:border-white/10"
@@ -33,19 +38,19 @@ export default function EngagementModels() {
       <div>
         <div className="font-geist text-[10px] font-bold uppercase tracking-[0.12em]"
           style={{ color: '#3b82f6' }}>
-          Engagement Models
+          {t.engagement.badge}
         </div>
         <h2 className="mt-2 text-lg font-semibold" style={{ color: '#f8fafc' }}>
-          How We Work Together
+          {t.engagement.title}
         </h2>
         <p className="mt-2 mb-5 text-[13px]" style={{ color: '#64748b' }}>
-          Project · Retainer · Staff Augmentation · Hourly
+          {t.engagement.body}
         </p>
 
         <div className="grid grid-cols-2 gap-2">
-          {engagements.map(({ label, Icon, color, isSi }) => (
+          {engagementsMeta.map(({ Icon, color, isSi }, i) => (
             <div
-              key={label}
+              key={i}
               className="group flex cursor-pointer items-center gap-2.5 rounded-[12px] p-3 text-[12px] font-medium transition-all duration-200 hover:border-white/10"
               style={{
                 background: 'rgba(255,255,255,0.02)',
@@ -59,12 +64,11 @@ export default function EngagementModels() {
               >
                 <Icon size={isSi ? 13 : 14} style={{ color }} />
               </div>
-              <span className="leading-tight">{label}</span>
+              <span className="leading-tight">{t.engagement.items[i]}</span>
             </div>
           ))}
         </div>
       </div>
-
     </div>
   )
 }

@@ -2,6 +2,7 @@
 
 import { Mail } from 'lucide-react'
 import { FaGithub, FaLinkedin } from 'react-icons/fa6'
+import { useLanguage } from '@/context/LanguageContext'
 
 const contacts = [
   { icon: FaLinkedin, label: 'LinkedIn', href: 'https://linkedin.com/in/gmv88',            color: '#0a66c2' },
@@ -10,6 +11,8 @@ const contacts = [
 ]
 
 export default function Footer() {
+  const { t } = useLanguage()
+
   return (
     <footer
       className="mx-6 mb-10 rounded-2xl p-8 md:mx-12 md:p-10"
@@ -25,8 +28,7 @@ export default function Footer() {
           className="flex-1 border-l-[3px] pl-6 text-base italic leading-[1.75] md:text-lg"
           style={{ color: '#94a3b8', borderColor: '#3b82f6', maxWidth: 640 }}
         >
-          &ldquo;I don&apos;t just implement tools. I design platforms that deliver operational
-          intelligence, security and business value at enterprise scale.&rdquo;
+          {t.footer.quote}
         </blockquote>
 
         <div className="flex-shrink-0 text-right">
@@ -40,7 +42,7 @@ export default function Footer() {
             className="font-geist mt-1.5 text-[11px] font-medium uppercase tracking-[0.1em]"
             style={{ color: '#64748b' }}
           >
-            Enterprise Observability Architect
+            {t.footer.title}
           </div>
         </div>
       </div>
@@ -51,7 +53,7 @@ export default function Footer() {
         style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
       >
         <p className="text-[12px]" style={{ color: '#475569' }}>
-          Available for new engagements · Remote · EN / ES
+          {t.footer.availability}
         </p>
 
         <div className="flex items-center gap-2">

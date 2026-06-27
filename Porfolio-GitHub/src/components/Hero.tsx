@@ -1,9 +1,12 @@
+'use client'
+
 import { SiElasticsearch, SiOpentelemetry, SiKubernetes, SiLinux, SiSap, SiTerraform, SiDocker, SiPython } from 'react-icons/si'
 import { FaAws } from 'react-icons/fa6'
 import { MdSecurity } from 'react-icons/md'
 import PyramidMountain  from './PyramidMountain'
 import HeroNetworkGraph from './HeroNetworkGraph'
 import HeroWaveform     from './HeroWaveform'
+import { useLanguage }  from '@/context/LanguageContext'
 
 // ← Cambiá esto para previsualizar cada opción: 'pyramid' | 'network' | 'waveform'
 const HERO_VISUAL = 'pyramid' as string
@@ -34,6 +37,8 @@ const techPills: TechPill[] = [
 ]
 
 export default function Hero() {
+  const { t } = useLanguage()
+
   return (
     <section
       className="relative overflow-hidden px-6 pb-0 pt-[88px] md:px-12 lg:pt-12"
@@ -46,24 +51,23 @@ export default function Hero() {
           className="font-geist mb-4 text-[11px] font-semibold uppercase tracking-[0.12em]"
           style={{ color: 'var(--primary)' }}
         >
-          Enterprise Observability Architect
+          {t.hero.badge}
         </div>
 
         <h1
           className="mb-5 text-4xl font-bold leading-[1.1] tracking-tight md:text-[44px]"
           style={{ color: 'var(--text-primary)', letterSpacing: '-0.02em' }}
         >
-          Designing Observability
+          {t.hero.h1[0]}
           <br />
-          Platforms That Scale.
+          {t.hero.h1[1]}
         </h1>
 
         <p
           className="mb-7 max-w-[540px] text-base leading-[1.7]"
           style={{ color: 'var(--text-secondary)' }}
         >
-          I architect and build secure, reliable and cost-efficient observability platforms
-          that deliver real operational intelligence at enterprise scale.
+          {t.hero.desc}
         </p>
 
         <div className="mb-8 flex flex-wrap gap-2">

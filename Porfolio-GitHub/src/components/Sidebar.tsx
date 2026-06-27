@@ -14,50 +14,25 @@ import {
   Globe,
 } from 'lucide-react'
 import { FaGithub, FaLinkedin } from 'react-icons/fa6'
-
-interface NavItem {
-  label: string
-  icon: React.ElementType
-  sectionId: string
-}
-
-interface NavGroup {
-  label: string
-  items: NavItem[]
-}
-
-const navGroups: NavGroup[] = [
-  {
-    label: 'Portfolio',
-    items: [
-      { label: 'Overview',     icon: LayoutDashboard, sectionId: 'overview' },
-      { label: 'Architecture', icon: Network,          sectionId: 'architectures' },
-      { label: 'Client Work',  icon: FolderOpen,       sectionId: 'case-studies' },
-      { label: 'Lab',          icon: FlaskConical,     sectionId: 'home-lab' },
-    ],
-  },
-  {
-    label: 'Profile',
-    items: [
-      { label: 'Certifications', icon: BadgeCheck, sectionId: 'certifications' },
-      { label: 'Resume',         icon: FileText,   sectionId: 'resume' },
-    ],
-  },
-  {
-    label: 'Hire Me',
-    items: [
-      { label: 'Engagement', icon: Handshake, sectionId: 'engagement-models' },
-      { label: 'Services',   icon: Briefcase, sectionId: 'contractor' },
-      { label: 'Contact',    icon: Mail,      sectionId: 'contact' },
-    ],
-  },
-]
+import { useLanguage } from '@/context/LanguageContext'
 
 const socialLinks = [
   { icon: FaLinkedin, label: 'LinkedIn', href: 'https://linkedin.com/in/gmv88',             color: '#0a66c2' },
   { icon: FaGithub,   label: 'GitHub',   href: 'https://github.com/gmverdugo',              color: '#f0f6fc' },
   { icon: Mail,       label: 'Email',    href: 'mailto:gonzalomartinverdugo@gmail.com',     color: '#3b82f6', isLucide: true },
 ]
+
+const navIconsFlat = [
+  LayoutDashboard, Network, FolderOpen, FlaskConical,
+  BadgeCheck, FileText,
+  Handshake, Briefcase, Mail,
+]
+const navSectionIds = [
+  'overview', 'architectures', 'case-studies', 'home-lab',
+  'certifications', 'resume',
+  'engagement-models', 'contractor', 'contact',
+]
+const navGroupSizes = [4, 2, 3]
 
 interface SidebarProps {
   isOpen: boolean
@@ -67,6 +42,23 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isOpen, onClose, activeSection, onNavigate }: SidebarProps) {
+  const { lang, t, toggle } = useLanguage()
+
+  const navGroups = t.sidebar.groups.map((groupLabel, gi) => {
+    const startIdx = navGroupSizes.slice(0, gi).reduce((a, b) => a + b, 0)
+    return {
+      label: groupLabel,
+      items: Array.from({ length: navGroupSizes[gi] }, (_, ii) => {
+        const idx = startIdx + ii
+        return {
+          label: t.sidebar.items[idx],
+          icon: navIconsFlat[idx],
+          sectionId: navSectionIds[idx],
+        }
+      }),
+    }
+  })
+
   return (
     <aside
       className={`fixed left-0 top-0 z-[100] flex h-screen w-[260px] flex-col overflow-y-auto py-7 px-5 transition-transform duration-300 ease-in-out lg:translate-x-0 ${
@@ -90,7 +82,7 @@ export default function Sidebar({ isOpen, onClose, activeSection, onNavigate }: 
           className="font-geist mt-1 text-[11px] font-semibold uppercase tracking-widest"
           style={{ color: 'var(--text-muted)' }}
         >
-          Enterprise Observability
+          {t.sidebar.subtitle}
         </div>
       </div>
 
@@ -134,7 +126,7 @@ export default function Sidebar({ isOpen, onClose, activeSection, onNavigate }: 
               style={{ background: 'var(--success)', flexShrink: 0 }}
             />
             <span className="font-geist text-[10px] font-medium" style={{ color: 'var(--success)' }}>
-              Available
+              {t.sidebar.available}
             </span>
           </div>
         </div>
@@ -155,7 +147,7 @@ export default function Sidebar({ isOpen, onClose, activeSection, onNavigate }: 
               const isActive = activeSection === item.sectionId
               return (
                 <a
-                  key={item.label}
+                  key={item.sectionId}
                   href={`#${item.sectionId}`}
                   className={`nav-item${isActive ? ' active' : ''}`}
                   onClick={() => onNavigate(item.sectionId)}
@@ -188,19 +180,19 @@ export default function Sidebar({ isOpen, onClose, activeSection, onNavigate }: 
           <div className="flex items-center gap-2">
             <Globe size={12} style={{ color: 'var(--cyan)', flexShrink: 0 }} />
             <span className="text-[11px]" style={{ color: '#94a3b8' }}>
-              Remote-First
+              {t.sidebar.remote}
             </span>
             <span
               className="ml-auto rounded px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide"
               style={{ background: 'rgba(6,182,212,0.1)', color: 'var(--cyan)' }}
             >
-              Worldwide
+              {t.sidebar.worldwide}
             </span>
           </div>
         </div>
 
         {/* Social links */}
-        <div className="mb-5 flex gap-2">
+        <div className="mb-4 flex gap-2">
           {socialLinks.map(({ icon: Icon, label, href, color, isLucide }) => (
             <a
               key={label}
@@ -229,6 +221,42 @@ export default function Sidebar({ isOpen, onClose, activeSection, onNavigate }: 
               <Icon size={isLucide ? 14 : 13} />
             </a>
           ))}
+        </div>
+
+        {/* Language toggle */}
+        <div className="mb-3 flex items-center justify-between">
+          <span className="text-[10px]" style={{ color: 'var(--text-muted)', opacity: 0.55 }}>
+            {t.sidebar.toggleLabel}
+          </span>
+          <button
+            onClick={toggle}
+            className="flex items-center gap-0 rounded-lg overflow-hidden text-[11px] font-bold"
+            style={{
+              border: '1px solid var(--border)',
+              background: 'rgba(255,255,255,0.03)',
+            }}
+            aria-label="Toggle language"
+          >
+            <span
+              className="px-2.5 py-1 transition-colors duration-200"
+              style={{
+                background: lang === 'en' ? 'rgba(59,130,246,0.2)' : 'transparent',
+                color: lang === 'en' ? '#3b82f6' : 'var(--text-muted)',
+              }}
+            >
+              EN
+            </span>
+            <span style={{ color: 'var(--border)', opacity: 0.5 }}>|</span>
+            <span
+              className="px-2.5 py-1 transition-colors duration-200"
+              style={{
+                background: lang === 'es' ? 'rgba(59,130,246,0.2)' : 'transparent',
+                color: lang === 'es' ? '#3b82f6' : 'var(--text-muted)',
+              }}
+            >
+              ES
+            </span>
+          </button>
         </div>
 
         <div className="text-[11px]" style={{ color: 'var(--text-muted)', opacity: 0.5 }}>

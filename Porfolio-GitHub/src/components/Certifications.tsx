@@ -1,51 +1,20 @@
+'use client'
+
 import { BadgeCheck, GraduationCap } from 'lucide-react'
+import { useLanguage } from '@/context/LanguageContext'
 
 const meliCerts = [
-  {
-    code: 'SSDLC',
-    name: 'Secure Software Development Lifecycle',
-    color: '#10b981',
-    bg: 'rgba(16, 185, 129, 0.12)',
-    border: 'rgba(16, 185, 129, 0.2)',
-  },
-  {
-    code: 'SEC',
-    name: 'Security Guardians',
-    color: '#f59e0b',
-    bg: 'rgba(245, 158, 11, 0.12)',
-    border: 'rgba(245, 158, 11, 0.2)',
-  },
-  {
-    code: 'PY',
-    name: 'Python Development',
-    color: '#3776ab',
-    bg: 'rgba(55, 118, 171, 0.12)',
-    border: 'rgba(55, 118, 171, 0.2)',
-  },
-  {
-    code: 'GO',
-    name: 'Go Programming',
-    color: '#00add8',
-    bg: 'rgba(0, 173, 216, 0.12)',
-    border: 'rgba(0, 173, 216, 0.2)',
-  },
-  {
-    code: 'JAVA',
-    name: 'Java Development',
-    color: '#f89820',
-    bg: 'rgba(248, 152, 32, 0.12)',
-    border: 'rgba(248, 152, 32, 0.2)',
-  },
-  {
-    code: 'NODE',
-    name: 'Node.js Development',
-    color: '#68a063',
-    bg: 'rgba(104, 160, 99, 0.12)',
-    border: 'rgba(104, 160, 99, 0.2)',
-  },
+  { code: 'SSDLC', name: 'Secure Software Development Lifecycle', color: '#10b981', bg: 'rgba(16, 185, 129, 0.12)', border: 'rgba(16, 185, 129, 0.2)' },
+  { code: 'SEC',   name: 'Security Guardians',                    color: '#f59e0b', bg: 'rgba(245, 158, 11, 0.12)', border: 'rgba(245, 158, 11, 0.2)' },
+  { code: 'PY',    name: 'Python Development',                    color: '#3776ab', bg: 'rgba(55, 118, 171, 0.12)', border: 'rgba(55, 118, 171, 0.2)' },
+  { code: 'GO',    name: 'Go Programming',                        color: '#00add8', bg: 'rgba(0, 173, 216, 0.12)',  border: 'rgba(0, 173, 216, 0.2)'  },
+  { code: 'JAVA',  name: 'Java Development',                      color: '#f89820', bg: 'rgba(248, 152, 32, 0.12)', border: 'rgba(248, 152, 32, 0.2)' },
+  { code: 'NODE',  name: 'Node.js Development',                   color: '#68a063', bg: 'rgba(104, 160, 99, 0.12)', border: 'rgba(104, 160, 99, 0.2)' },
 ]
 
 export default function Certifications() {
+  const { t } = useLanguage()
+
   return (
     <div
       className="rounded-2xl p-8 transition-all duration-300 hover:border-white/10"
@@ -61,10 +30,10 @@ export default function Certifications() {
           className="font-geist text-[10px] font-bold uppercase tracking-[0.12em]"
           style={{ color: '#3b82f6' }}
         >
-          Certifications
+          {t.certifications.badge}
         </div>
         <h2 className="mt-2 text-lg font-semibold" style={{ color: '#f8fafc' }}>
-          Credentials & Technical Training
+          {t.certifications.title}
         </h2>
       </div>
 
@@ -95,17 +64,16 @@ export default function Certifications() {
                 className="font-geist mb-1.5 text-[11px] font-bold uppercase tracking-[0.1em]"
                 style={{ color: '#f04e23' }}
               >
-                Elastic · Industry Certification
+                {t.certifications.elasticBadge}
               </div>
               <h3 className="text-sm font-semibold leading-snug" style={{ color: '#f8fafc' }}>
-                Elastic Certified Observability Engineer
+                {t.certifications.elasticTitle}
               </h3>
             </div>
           </div>
 
           <p className="text-xs leading-relaxed" style={{ color: '#64748b' }}>
-            Validates deep expertise in building enterprise observability solutions with Elastic
-            Stack — APM, distributed tracing, log analytics, metrics, and synthetic monitoring.
+            {t.certifications.elasticDesc}
           </p>
 
           <div
@@ -118,7 +86,7 @@ export default function Certifications() {
             }}
           >
             <BadgeCheck size={13} />
-            Verified Credential
+            {t.certifications.verified}
           </div>
         </div>
 
@@ -142,7 +110,7 @@ export default function Certifications() {
                 MercadoLibre
               </div>
               <div className="text-[11px]" style={{ color: '#64748b' }}>
-                Internal Technical Training · Latin America&apos;s Largest E-Commerce & Fintech
+                {t.certifications.meliLabel}
               </div>
             </div>
           </div>
@@ -188,17 +156,17 @@ export default function Certifications() {
         </div>
         <div className="min-w-0 flex-1">
           <div className="text-[13px] font-semibold" style={{ color: '#f8fafc' }}>
-            Técnico en Redes de Datos y Telecomunicaciones
+            {t.certifications.eduTitle}
           </div>
           <div className="mt-0.5 text-[11px]" style={{ color: '#64748b' }}>
-            Universidad Nacional de Cuyo (UNCUYO) · 2022
+            {t.certifications.eduSub}
           </div>
         </div>
         <div
           className="flex-shrink-0 rounded-lg px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide"
           style={{ background: 'rgba(139, 92, 246, 0.1)', color: '#8b5cf6' }}
         >
-          Certified
+          {t.certifications.certified}
         </div>
       </div>
     </div>
