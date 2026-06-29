@@ -568,6 +568,7 @@ interface LanguageContextValue {
   lang: Lang
   t: Translations
   toggle: () => void
+  setLanguage: (l: Lang) => void
 }
 
 const LanguageContext = createContext<LanguageContextValue | null>(null)
@@ -580,15 +581,15 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     if (stored === 'en' || stored === 'es') setLang(stored)
   }, [])
 
-  const toggle = () =>
-    setLang(prev => {
-      const next: Lang = prev === 'en' ? 'es' : 'en'
-      localStorage.setItem('portfolio-lang', next)
-      return next
-    })
+  const setLanguage = (l: Lang) => {
+    localStorage.setItem('portfolio-lang', l)
+    setLang(l)
+  }
+
+  const toggle = () => setLanguage(lang === 'en' ? 'es' : 'en')
 
   return (
-    <LanguageContext.Provider value={{ lang, t: translations[lang], toggle }}>
+    <LanguageContext.Provider value={{ lang, t: translations[lang], toggle, setLanguage }}>
       {children}
     </LanguageContext.Provider>
   )

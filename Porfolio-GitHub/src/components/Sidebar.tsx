@@ -42,7 +42,7 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isOpen, onClose, activeSection, onNavigate }: SidebarProps) {
-  const { lang, t, toggle } = useLanguage()
+  const { lang, t, setLanguage } = useLanguage()
 
   const navGroups = t.sidebar.groups.map((groupLabel, gi) => {
     const startIdx = navGroupSizes.slice(0, gi).reduce((a, b) => a + b, 0)
@@ -228,35 +228,41 @@ export default function Sidebar({ isOpen, onClose, activeSection, onNavigate }: 
           <span className="text-[10px]" style={{ color: 'var(--text-muted)', opacity: 0.55 }}>
             {t.sidebar.toggleLabel}
           </span>
-          <button
-            onClick={toggle}
+          <div
+            role="group"
+            aria-label={lang === 'en' ? 'Language' : 'Idioma'}
             className="flex items-center gap-0 rounded-lg overflow-hidden text-[11px] font-bold"
             style={{
               border: '1px solid var(--border)',
               background: 'rgba(255,255,255,0.03)',
             }}
-            aria-label="Toggle language"
           >
-            <span
-              className="px-2.5 py-1 transition-colors duration-200"
+            <button
+              onClick={() => setLanguage('en')}
+              aria-pressed={lang === 'en'}
+              className="px-2.5 py-1 transition-colors duration-200 cursor-pointer"
               style={{
                 background: lang === 'en' ? 'rgba(59,130,246,0.2)' : 'transparent',
                 color: lang === 'en' ? '#3b82f6' : 'var(--text-muted)',
+                border: 'none',
               }}
             >
               EN
-            </span>
+            </button>
             <span style={{ color: 'var(--border)', opacity: 0.5 }}>|</span>
-            <span
-              className="px-2.5 py-1 transition-colors duration-200"
+            <button
+              onClick={() => setLanguage('es')}
+              aria-pressed={lang === 'es'}
+              className="px-2.5 py-1 transition-colors duration-200 cursor-pointer"
               style={{
                 background: lang === 'es' ? 'rgba(59,130,246,0.2)' : 'transparent',
                 color: lang === 'es' ? '#3b82f6' : 'var(--text-muted)',
+                border: 'none',
               }}
             >
               ES
-            </span>
-          </button>
+            </button>
+          </div>
         </div>
 
         <div className="text-[11px]" style={{ color: 'var(--text-muted)', opacity: 0.5 }}>

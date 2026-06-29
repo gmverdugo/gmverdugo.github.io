@@ -39,7 +39,7 @@ export default function ClientWrapper({ children }: { children: React.ReactNode 
           />
         )}
 
-        <main className="ml-0 min-h-screen lg:ml-[260px]">{children}</main>
+        <main className="ml-0 min-h-screen pt-16 lg:ml-[260px] lg:pt-0">{children}</main>
       </>
     </LanguageProvider>
   )
