@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import Container from '../components/ui/Container.astro';
+import { homePath, locales } from '../i18n';
+import { notfound } from '../i18n/sections/notfound';
+
+const title = `${notfound.en.title} / ${notfound.es.title}`;
+// One h1 per page: the English block leads, the Spanish block is a sibling section.
+const tagFor = (l: string) => (l === 'en' ? 'h1' : 'h2');
+---
+
+<Base locale="en" title={title} noindex>
+  <main id="main" tabindex="-1" class="py-[clamp(4rem,12vw,10rem)]">
+    <Container class="flex flex-col gap-12">
+      {locales.map((l) => {
+        const Tag = tagFor(l);
+        return (
+          <section lang={l} aria-labelledby={`notfound-${l}`} class="flex max-w-[62ch] flex-col gap-4">
+            <p class="label-mono text-signal">404</p>
+            <Tag
+              id={`notfound-${l}`}
+              class="font-serif text-4xl font-normal leading-tight tracking-tight text-ink md:text-headline"
+            >
+              {notfound[l].heading}
+            </Tag>
+            <p class="text-muted">{notfound[l].message}</p>
+            <p>
+              <a
+                href={homePath(l)}
+                class="inline-flex min-h-6 items-center text-lg text-ink underline decoration-rule-active underline-offset-4 transition-colors duration-150 hover:decoration-signal"
+              >
+                {notfound[l].homeLink}
+              </a>
+            </p>
+          </section>
+        );
+      })}
+    </Container>
+  </main>
+</Base>

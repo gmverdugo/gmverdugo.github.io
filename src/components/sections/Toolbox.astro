@@ -1,0 +1,137 @@
+---
+import Chapter from '../ui/Chapter.astro';
+import type { Locale } from '../../i18n';
+import { chapters } from '../../data/chapters';
+import { toolbox } from '../../i18n/sections/toolbox';
+import type { LayerKey } from '../../i18n/sections/toolbox';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = toolbox[locale];
+const layerKeys = Object.keys(t.layers) as LayerKey[];
+
+const groups = [
+  { id: 'tools', heading: null as string | null, rows: t.tools },
+  { id: 'security', heading: t.securityGroup, rows: t.security },
+];
+
+/*
+ * Why the table carries explicit ARIA roles (role="table", "row", "cell", "rowheader"...):
+ * below md every table part is switched to display: block / grid so a row reads as a stacked
+ * key/value card. Browsers (Safari and Chrome in particular) drop the implicit table semantics
+ * of elements whose display is no longer table-*, so the roles restore them for assistive tech.
+ * At md+ the elements are real table parts again and the roles are redundant but harmless.
+ */
+
+/** Mobile: every cell is a 2-column key/value grid; md+: a regular table cell. */
+const cell = 'grid grid-cols-[6.5rem_1fr] gap-x-3 px-0 py-1 md:table-cell md:px-4 md:py-4 md:align-baseline';
+/**
+ * Mobile pseudo-label: the column header row is visually hidden (sr-only) below md, so each cell
+ * shows its own column name. It is generated with `::before { content: attr(data-label) / '' }`:
+ * the text comes from the cell's `data-label` attribute (already localized, no duplicated copy) and
+ * the `/ ''` part gives it empty alt text, so screen readers do not announce it on top of the real
+ * column header. Hidden again at md+ where the visible header row takes over.
+ */
+const mobileLabel =
+  "before:font-mono before:text-xs before:font-medium before:uppercase before:leading-6 before:tracking-[0.08em] before:text-muted before:content-[attr(data-label)_/_''] md:before:hidden";
+---
+
+<Chapter id={chapters.toolbox.id} index={chapters.toolbox.index} tag={t.tag} title={t.title} intro={t.intro}>
+  {/* lg+: layers legend in the rail. Hidden (display: none) below lg, where the compact line below replaces it. */}
+  <div slot="rail" class="hidden lg:block">
+    <p class="mb-3">{t.legendTitle}</p>
+    <dl class="flex flex-col gap-3">
+      {layerKeys.map((key) => (
+        <div>
+          <dt class="text-ink">{t.layers[key].label}</dt>
+          <dd class="mt-0.5 text-[0.8125rem] normal-case leading-5 tracking-normal">{t.layers[key].description}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+
+  {/* Below lg: one compact wrapping line of the same layers. */}
+  <p class="label-mono -mt-4 mb-8 text-muted lg:hidden">
+    <span>{t.legendTitle}: </span>
+    {layerKeys.map((key, i) => (
+      <>
+        <span class="text-ink">{t.layers[key].label}</span>
+        <span class="sr-only">: {t.layers[key].description}</span>
+        {i < layerKeys.length - 1 && <span aria-hidden="true"> / </span>}
+      </>
+    ))}
+  </p>
+
+  <table role="table" class="block w-full border-t border-rule text-left md:table">
+    <caption class="sr-only">{t.caption}</caption>
+    <thead role="rowgroup" class="sr-only md:not-sr-only md:table-header-group">
+      <tr role="row" class="border-b border-rule">
+        <th role="columnheader" scope="col" class="label-mono px-4 py-3 font-medium text-muted first:pl-0">
+          {t.columns.tool}
+        </th>
+        <th role="columnheader" scope="col" class="label-mono px-4 py-3 font-medium text-muted">
+          {t.columns.layer}
+        </th>
+        <th role="columnheader" scope="col" class="label-mono px-4 py-3 font-medium text-muted">
+          {t.columns.role}
+        </th>
+        <th role="columnheader" scope="col" class="label-mono px-4 py-3 font-medium text-muted">
+          {t.columns.usedIn}
+        </th>
+      </tr>
+    </thead>
+    {groups.map((group) => (
+      <tbody role="rowgroup" class="block md:table-row-group">
+        {group.heading && (
+          <tr role="row" class="block border-b border-rule md:table-row">
+            <th
+              role="rowheader"
+              scope="rowgroup"
+              colspan="4"
+              class="label-mono block px-0 pb-3 pt-10 text-left font-medium text-signal md:table-cell"
+            >
+              {group.heading}
+            </th>
+          </tr>
+        )}
+        {group.rows.map((row) => (
+          <tr
+            role="row"
+            class="block border-b border-rule py-4 transition-colors duration-150 hover:bg-hover md:table-row md:py-0"
+          >
+            <th
+              role="rowheader"
+              scope="row"
+              class="block px-0 pb-2 text-left font-serif text-xl font-normal text-ink md:table-cell md:px-4 md:py-4 md:pl-0 md:align-baseline"
+            >
+              {row.name}
+            </th>
+            <td role="cell" data-label={t.columns.layer} class={`${cell} ${mobileLabel} label-mono text-ink`}>
+              <span class="min-w-0">{t.layers[row.layer].label}</span>
+            </td>
+            <td role="cell" data-label={t.columns.role} class={`${cell} ${mobileLabel} text-muted md:max-w-[38ch]`}>
+              <span class="min-w-0">{row.role}</span>
+            </td>
+            <td role="cell" data-label={t.columns.usedIn} class={`${cell} ${mobileLabel} text-muted`}>
+              <span class="min-w-0">
+                {row.usedIn.length > 0 ? (
+                  row.usedIn.map((k) => t.contexts[k]).join(', ')
+                ) : (
+                  <>
+                    <span aria-hidden="true" class="text-muted/40">
+                      &mdash;
+                    </span>
+                    <span class="sr-only">{t.notApplicable}</span>
+                  </>
+                )}
+              </span>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    ))}
+  </table>
+</Chapter>

@@ -1,0 +1,18 @@
+---
+import type { Locale } from '../../i18n';
+import { scope } from '../../i18n/sections/scope';
+import { chapters } from '../../data/chapters';
+import Chapter from '../ui/Chapter.astro';
+import NumberedList from '../ui/NumberedList.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = scope[locale];
+---
+
+<Chapter id={chapters.scope.id} index={chapters.scope.index} tag={t.tag} title={t.title} intro={t.intro} rail={t.rail}>
+  <NumberedList items={t.items} variant="ledger" />
+</Chapter>

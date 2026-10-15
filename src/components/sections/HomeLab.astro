@@ -1,0 +1,36 @@
+---
+import Chapter from '../ui/Chapter.astro';
+import { pad2 } from '../../i18n';
+import type { Locale } from '../../i18n';
+import { chapters } from '../../data/chapters';
+import { homelab } from '../../i18n/sections/homelab';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = homelab[locale];
+---
+
+<Chapter
+  id={chapters.lab.id}
+  index={chapters.lab.index}
+  tag={t.tag}
+  title={t.title}
+  intro={t.intro}
+  rail={[t.railNote]}
+>
+  <p class="label-mono mb-4 text-muted">
+    {t.inventoryLabel} / {pad2(t.items.length)}
+  </p>
+  <ul role="list" class="grid border-t border-rule md:grid-cols-2 md:gap-x-gutter">
+    {t.items.map((item) => (
+      <li class="flex flex-col gap-2 border-b border-rule py-5 transition-colors duration-150 hover:bg-hover">
+        <span class="label-mono text-muted">{item.id}</span>
+        <h3 class="font-serif text-xl font-normal text-ink">{item.name}</h3>
+        <p class="max-w-[52ch] text-muted">{item.description}</p>
+      </li>
+    ))}
+  </ul>
+</Chapter>

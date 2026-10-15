@@ -1,0 +1,16 @@
+---
+/**
+ * Two-column dossier grid: left rail (named slot "rail") and right narrative column (default slot).
+ * Shared by Chapter and the Cover so both keep the same columns, gutters and breakpoints.
+ */
+import Container from './Container.astro';
+---
+
+<Container class="grid gap-8 lg:grid-cols-[var(--spacing-rail)_minmax(0,1fr)] lg:gap-gutter">
+  <div class="flex flex-col gap-4 border-b border-rule pb-6 lg:border-b-0 lg:pb-0 lg:pt-3">
+    <slot name="rail" />
+  </div>
+  <div class="min-w-0">
+    <slot />
+  </div>
+</Container>

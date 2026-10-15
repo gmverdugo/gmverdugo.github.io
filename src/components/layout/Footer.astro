@@ -1,0 +1,30 @@
+---
+import { anchor, type Locale } from '../../i18n';
+import { nav } from '../../i18n/sections/nav';
+import { chapters } from '../../data/chapters';
+import { site } from '../../data/site';
+import Container from '../ui/Container.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = nav[locale].footer;
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <Container class="flex flex-col gap-3 py-8 md:flex-row md:items-center md:justify-between">
+    <p class="label-mono text-muted">
+      {t.colophon} <span aria-hidden="true">//</span> {site.name} <span aria-hidden="true">//</span> {year}. {t.rights}
+    </p>
+    <p class="label-mono text-muted normal-case">{t.builtWith}</p>
+    <a
+      href={anchor(locale, chapters.overview.id)}
+      class="label-mono inline-flex min-h-6 items-center text-muted transition-colors duration-150 hover:text-ink"
+    >
+      {t.backToTop}
+    </a>
+  </Container>
+</footer>

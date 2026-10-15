@@ -1,0 +1,46 @@
+---
+import Chapter from '../ui/Chapter.astro';
+import StatusLine from '../ui/StatusLine.astro';
+import type { Locale } from '../../i18n';
+import { contact } from '../../i18n/sections/contact';
+import { chapters } from '../../data/chapters';
+import { site } from '../../data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = contact[locale];
+const linkedinText = site.linkedin.replace(/^https?:\/\/(www\.)?/, '');
+const row = 'flex flex-col gap-1 border-t border-rule py-4 sm:flex-row sm:items-baseline sm:gap-8';
+const anchorClass =
+  'inline-flex min-h-6 items-center text-lg text-ink underline decoration-rule-active underline-offset-4 transition-colors duration-150 hover:decoration-signal';
+---
+
+<Chapter id={chapters.contact.id} index={chapters.contact.index} tag={t.tag} title={t.quote}>
+  <StatusLine slot="rail">{t.availability}</StatusLine>
+
+  <dl class="border-b border-rule">
+    <div class={row}>
+      <dt class="label-mono w-32 shrink-0 text-muted">{t.emailLabel}</dt>
+      <dd>
+        <a href={`mailto:${site.email}`} class={anchorClass}>
+          {site.email}
+        </a>
+      </dd>
+    </div>
+    <div class={row}>
+      <dt class="label-mono w-32 shrink-0 text-muted">{t.linkedinLabel}</dt>
+      <dd>
+        <a href={site.linkedin} rel="noopener noreferrer" class={anchorClass}>
+          {linkedinText}
+        </a>
+      </dd>
+    </div>
+    <div class={row}>
+      <dt class="label-mono w-32 shrink-0 text-muted">{t.locationLabel}</dt>
+      <dd class="text-lg text-ink">{t.location}</dd>
+    </div>
+  </dl>
+</Chapter>

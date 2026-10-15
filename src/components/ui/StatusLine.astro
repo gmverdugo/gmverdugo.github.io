@@ -1,0 +1,17 @@
+---
+/** Status dot followed by a line of text, in the "operational" tone. `loose` is the mono-label variant used in cards. */
+import StatusDot from './StatusDot.astro';
+
+interface Props {
+  loose?: boolean;
+}
+
+const { loose = false } = Astro.props;
+---
+
+<p class:list={['flex items-center text-ok', loose ? 'label-mono flex-wrap gap-3' : 'gap-2']}>
+  <StatusDot />
+  <span>
+    <slot />
+  </span>
+</p>

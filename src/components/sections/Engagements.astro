@@ -1,0 +1,130 @@
+---
+import Chapter from '../ui/Chapter.astro';
+import Badge from '../ui/Badge.astro';
+import { pad2 } from '../../i18n';
+import type { Locale } from '../../i18n';
+import { chapters, engagementIds } from '../../data/chapters';
+import { engagements } from '../../i18n/sections/engagements';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = engagements[locale];
+const steps = ['context', 'challenge', 'decision', 'outcome'] as const;
+---
+
+<Chapter
+  id={chapters.engagements.id}
+  index={chapters.engagements.index}
+  tag={t.tag}
+  title={t.title}
+  intro={t.intro}
+  rail={[t.railNote]}
+>
+  <ol role="list" class="list-none border-t border-rule">
+    {t.items.map((item, i) => (
+      <li class="border-b border-rule">
+        <article
+          aria-labelledby={engagementIds.caseTitle(i + 1)}
+          class="grid gap-8 py-10 md:py-12 xl:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] xl:gap-gutter"
+        >
+          <header class="flex flex-col gap-6">
+            <div>
+              <p class="label-mono text-muted">
+                {pad2(i + 1)} / {item.sector}
+              </p>
+              <h3
+                id={engagementIds.caseTitle(i + 1)}
+                class="mt-2 font-serif text-3xl leading-tight text-ink md:text-title"
+              >
+                {item.client}
+              </h3>
+            </div>
+            <div class="min-w-0 border-l border-signal pl-4">
+              <p class="font-mono text-[clamp(2rem,3.2vw,2.75rem)] font-medium leading-none tracking-tight text-signal [text-wrap:balance]">
+                {item.result}
+              </p>
+              {item.resultUnit && <p class="mt-2 font-mono text-sm leading-5 text-signal">{item.resultUnit}</p>}
+              <p class="label-mono mt-3 text-muted">{item.resultLabel}</p>
+            </div>
+          </header>
+
+          <div class="min-w-0">
+            <dl class="grid gap-x-gutter gap-y-6 md:grid-cols-2">
+              {steps.map((key) => (
+                <div class="border-t border-rule pt-3">
+                  <dt class="label-mono text-muted">{t.labels[key]}</dt>
+                  <dd class:list={['mt-2 text-[0.9375rem] leading-6', key === 'outcome' ? 'text-ink' : 'text-muted']}>
+                    {item[key]}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <div class="mt-8 flex flex-wrap items-center gap-2">
+              <p id={`${engagementIds.caseTitle(i + 1)}-tools`} class="label-mono mr-2 text-muted">
+                {t.labels.tools}
+              </p>
+              {/* display: contents keeps label and badges wrapping together in one flex row. */}
+              <ul
+                role="list"
+                aria-labelledby={`${engagementIds.caseTitle(i + 1)}-tools`}
+                class="m-0 contents list-none p-0"
+              >
+                {item.tools.map((tool) => (
+                  <li>
+                    <Badge>{tool}</Badge>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </article>
+      </li>
+    ))}
+  </ol>
+
+  <section aria-labelledby={engagementIds.more} class="mt-16">
+    <h3 id={engagementIds.more} class="font-serif text-3xl leading-tight text-ink md:text-title">
+      {t.othersTitle}
+    </h3>
+    <p class="mt-3 max-w-measure text-lede text-muted">{t.othersIntro}</p>
+    <ul role="list" class="mt-8 list-none border-t border-rule">
+      {t.others.map((item, i) => (
+        <li>
+          {/* One labelled block per engagement: period, client (h4) and sector are announced together with the details. */}
+          <article
+            aria-labelledby={`${engagementIds.more}-${i + 1}`}
+            class="grid gap-3 border-b border-rule py-6 transition-colors duration-150 hover:bg-hover md:grid-cols-[9rem_minmax(0,1fr)] md:gap-x-gutter xl:grid-cols-[9rem_16rem_minmax(0,1fr)]"
+          >
+            <p class="label-mono text-signal">{item.period}</p>
+            <div>
+              <h4
+                id={`${engagementIds.more}-${i + 1}`}
+                class="font-serif text-xl leading-snug text-ink [text-wrap:pretty]"
+              >
+                {item.client}
+              </h4>
+              <p class="label-mono mt-1 text-muted">{item.sector}</p>
+            </div>
+            <div class="min-w-0 md:col-start-2 xl:col-start-3 xl:row-start-1">
+              <p class="text-[0.9375rem] leading-6 text-muted">{item.scope}</p>
+              <p class="mt-3 text-[0.9375rem] leading-6 text-ink">
+                <span class="label-mono mr-2 text-muted">{t.labels.highlight}</span>
+                {item.highlight}
+              </p>
+              <ul role="list" aria-label={t.labels.tools} class="m-0 mt-4 flex list-none flex-wrap gap-2 p-0">
+                {item.tools.map((tool) => (
+                  <li>
+                    <Badge>{tool}</Badge>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Chapter>

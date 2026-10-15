@@ -1,0 +1,13 @@
+---
+/** Chapter index tag in the dossier style: `[ 02 // ARCHITECTURE ]`. */
+interface Props {
+  index: string;
+  tag: string;
+}
+
+const { index, tag } = Astro.props;
+---
+
+<p class="label-mono text-signal">
+  [ {index} <span aria-hidden="true">//</span> {tag} ]
+</p>

@@ -1,0 +1,36 @@
+---
+/**
+ * Text alternative of the Fig. 1 animation: the five stages, their modules and a one-sentence summary each.
+ * Screen-reader-only on screen (the animation is the visual), visible in print (the animation is hidden there).
+ */
+import type { ArchitectureCopy } from '../../i18n/sections/architecture';
+import { pad2 } from '../../i18n';
+
+interface Props {
+  t: ArchitectureCopy;
+}
+
+const { t } = Astro.props;
+---
+
+<div class="sr-only print:not-sr-only print:mt-6">
+  <h3 class="font-serif text-xl text-ink">{t.stagesHeading}</h3>
+  <ol role="list" class="m-0 list-none p-0">
+    {t.stages.map((stage, i) => (
+      <li class="mt-4">
+        <h4 class="font-serif text-lg text-ink">
+          {pad2(i + 1)} {stage.title}
+        </h4>
+        <p class="m-0">{stage.summary}</p>
+        <ul role="list" class="m-0 list-none p-0 font-mono text-xs text-muted">
+          {stage.modules.map((m) => (
+            <li>
+              {m.name}, {m.role}
+            </li>
+          ))}
+        </ul>
+        <p class="m-0 font-mono text-xs text-muted">{stage.notes.join(' ')}</p>
+      </li>
+    ))}
+  </ol>
+</div>

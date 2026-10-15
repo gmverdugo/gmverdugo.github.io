@@ -1,0 +1,26 @@
+---
+import Chapter from '../ui/Chapter.astro';
+import FigPlayer from '../diagram/FigPlayer.astro';
+import { architecture } from '../../i18n/sections/architecture';
+import type { Locale } from '../../i18n';
+import { chapters } from '../../data/chapters';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = architecture[locale];
+---
+
+<Chapter
+  id={chapters.architecture.id}
+  index={chapters.architecture.index}
+  tag={t.tag}
+  title={t.title}
+  intro={t.intro}
+  rail={t.rail}
+  railCase="upper"
+>
+  <FigPlayer locale={locale} />
+</Chapter>

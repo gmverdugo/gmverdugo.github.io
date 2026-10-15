@@ -1,0 +1,57 @@
+---
+/**
+ * Dossier chapter: left rail (index + marginalia) and right narrative column.
+ * Every numbered section uses this wrapper so rhythm and anchors stay consistent.
+ *
+ * Rail: pass `rail` for a plain list of marginalia lines (rendered sentence-case, or uppercase with
+ * `railCase="upper"`). Use the "rail" slot only for richer content (Toolbox legend, Contact status).
+ */
+import IndexLabel from './IndexLabel.astro';
+import RailGrid from './RailGrid.astro';
+
+interface Props {
+  id: string;
+  index: string;
+  tag: string;
+  title: string;
+  intro?: string;
+  rail?: string[];
+  railCase?: 'natural' | 'upper';
+}
+
+const { id, index, tag, title, intro, rail, railCase = 'natural' } = Astro.props;
+---
+
+<section id={id} aria-labelledby={`${id}-title`} class="border-b border-rule py-[clamp(4rem,8vw,6rem)]">
+  <RailGrid>
+    <Fragment slot="rail">
+      <IndexLabel index={index} tag={tag} />
+      <div class="label-mono text-muted [&_p]:normal-case">
+        {rail && (
+          <ul
+            role="list"
+            class:list={[
+              'm-0 flex list-none flex-col gap-1 p-0',
+              railCase === 'natural' && 'normal-case [text-wrap:pretty]',
+            ]}
+          >
+            {rail.map((line) => (
+              <li>{line}</li>
+            ))}
+          </ul>
+        )}
+        <slot name="rail" />
+      </div>
+    </Fragment>
+    <h2
+      id={`${id}-title`}
+      class="font-serif text-4xl font-normal leading-tight tracking-tight text-ink md:text-headline"
+    >
+      {title}
+    </h2>
+    {intro && <p class="mt-4 max-w-measure text-lede text-muted">{intro}</p>}
+    <div class="mt-10">
+      <slot />
+    </div>
+  </RailGrid>
+</section>

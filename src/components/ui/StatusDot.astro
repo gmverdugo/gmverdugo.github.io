@@ -1,0 +1,16 @@
+---
+/** 6px status dot with a flat ring (no blur, no glow). Green = operational. */
+interface Props {
+  tone?: 'ok';
+}
+
+const { tone = 'ok' } = Astro.props;
+---
+
+<span
+  aria-hidden="true"
+  class:list={[
+    'inline-block size-1.5 shrink-0 rounded-full outline outline-1 outline-offset-2',
+    tone === 'ok' && 'bg-ok outline-ok/40',
+  ]}
+></span>

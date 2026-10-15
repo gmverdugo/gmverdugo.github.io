@@ -1,0 +1,49 @@
+---
+/**
+ * Numbered list of titled items, shared by Scope (ledger) and Method (grid).
+ * ledger: signal number | serif title | muted description, one hairline row each.
+ * grid: two-column manifesto, number beside title and description.
+ */
+import { pad2 } from '../../i18n';
+import LedgerRow from './LedgerRow.astro';
+
+interface NumberedItem {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  items: NumberedItem[];
+  variant: 'ledger' | 'grid';
+}
+
+const { items, variant } = Astro.props;
+---
+
+{variant === 'ledger' ? (
+  <ol role="list" class="m-0 list-none p-0">
+    {items.map((item, i) => (
+      <li class="-mt-px">
+        <LedgerRow>
+          <div class="grid gap-2 md:grid-cols-[3rem_minmax(0,1fr)] md:gap-6 lg:grid-cols-[3rem_minmax(0,5fr)_minmax(0,6fr)]">
+            <span class="label-mono text-signal">{pad2(i + 1)}</span>
+            <h3 class="font-serif text-xl leading-snug text-ink md:text-title">{item.title}</h3>
+            <p class="text-muted md:col-start-2 lg:col-start-3">{item.description}</p>
+          </div>
+        </LedgerRow>
+      </li>
+    ))}
+  </ol>
+) : (
+  <ol role="list" class="m-0 grid list-none gap-x-gutter p-0 md:grid-cols-2">
+    {items.map((item, i) => (
+      <li class="flex gap-4 border-t border-rule py-6">
+        <span class="label-mono pt-1.5 text-signal">{pad2(i + 1)}</span>
+        <div>
+          <h3 class="font-serif text-xl leading-snug text-ink md:text-title">{item.title}</h3>
+          <p class="mt-2 max-w-[44ch] text-muted">{item.description}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+)}

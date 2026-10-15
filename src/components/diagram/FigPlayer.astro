@@ -1,0 +1,165 @@
+---
+/**
+ * Fig. 1 as a live HyperFrames composition (HTML + GSAP) rendered by <hyperframes-player>.
+ * Documented exception to "zero client JS" (see README, "Fig. 1"): one small observer script, and the
+ * player module, which is only fetched when the figure is within about one viewport of the screen.
+ *
+ *  - One composition per viewport: landscape >= 768px, portrait below. The script removes the other
+ *    element before the player module loads, so only one iframe is ever created.
+ *  - Autoplay, muted, loop. Plays only while on screen and while the tab is visible.
+ *  - prefers-reduced-motion: no autoplay, the poster stays until the visitor presses Play.
+ *  - Our own Pause/Play button (WCAG 2.2.2). The animation has a complete text alternative: the
+ *    caption, the glossary, the steps in a <details> and the stage list (StageList).
+ */
+import StageList from './StageList.astro';
+import { architecture } from '../../i18n/sections/architecture';
+import { pad2, type Locale } from '../../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = architecture[locale];
+const p = t.player;
+const base = '/fig1';
+
+const players = [
+  { layout: 'landscape', width: 1600, height: 900, class: 'hidden md:block aspect-[16/9] w-full' },
+  { layout: 'portrait', width: 1080, height: 1350, class: 'block md:hidden aspect-[4/5] w-full max-w-[480px]' },
+] as const;
+---
+
+{/* On lg+ the figure breaks out under the left rail to use the full container width. */}
+<figure class="m-0 lg:-ml-[calc(var(--spacing-rail)+var(--spacing-gutter))]" data-fig1>
+  <div class="border border-rule bg-plate-deep print:hidden">
+    <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-rule px-4 py-3 md:px-6">
+      <p class="label-mono text-signal">{t.figLabel}</p>
+      <p class="label-mono text-muted">{t.figTitle}</p>
+    </div>
+    <div class="blueprint-grid p-4 md:p-6">
+      {players.map((x) => (
+        <hyperframes-player
+          class:list={['mx-auto border border-rule bg-canvas', x.class]}
+          data-fig1-player={x.layout}
+          data-src={`${base}/${x.layout}-${locale}.html`}
+          poster={`${base}/poster-${x.layout}-${locale}.webp`}
+          width={x.width}
+          height={x.height}
+          role="img"
+          aria-label={p.title}
+          autoplay
+          muted
+          loop
+          low-power-idle
+        />
+      ))}
+    </div>
+    <div class="border-t border-rule px-4 py-3 md:px-6">
+      <button
+        type="button"
+        hidden
+        data-fig1-toggle
+        data-label-pause={p.pause}
+        data-label-play={p.play}
+        class="label-mono min-h-9 rounded-control border border-rule-strong px-3 text-ink hover:bg-hover"
+      >
+        {p.pause}
+      </button>
+    </div>
+  </div>
+  <figcaption class="mt-4 grid max-w-[110ch] gap-2">
+    <p class="m-0 text-[0.9375rem] leading-6 text-ink">{t.caption}</p>
+    <p class="m-0 font-mono text-xs leading-5 text-muted">{t.glossary}</p>
+  </figcaption>
+</figure>
+
+<details class="mt-6 max-w-[60ch] border-t border-rule pt-4 print:hidden">
+  <summary class="label-mono cursor-pointer text-signal">{p.stepsLabel}</summary>
+  <div>
+    <p class="mt-4 text-[0.9375rem] leading-6 text-ink">{p.intro}</p>
+    <ol role="list" class="m-0 mt-6 list-none p-0">
+      {p.steps.map((step, i) => (
+        <li class="-mt-px flex gap-4 border-t border-rule py-4 first:mt-0">
+          <span class="label-mono w-6 shrink-0 pt-0.5 text-signal" aria-hidden="true">
+            {i < 5 ? pad2(i + 1) : '×'}
+          </span>
+          <span class="text-[0.9375rem] leading-6 text-muted">{step}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</details>
+
+<StageList t={t} />
+
+<script>
+  import type { HyperframesPlayer } from '@hyperframes/player';
+
+  const fig = document.querySelector<HTMLElement>('[data-fig1]');
+
+  if (fig) {
+    // Keep only the composition that matches the viewport, before the player module upgrades anything.
+    const layout = matchMedia('(min-width: 768px)').matches ? 'landscape' : 'portrait';
+    for (const el of fig.querySelectorAll<HTMLElement>('[data-fig1-player]')) {
+      if (el.dataset.fig1Player !== layout) el.remove();
+    }
+
+    const player = fig.querySelector<HyperframesPlayer>('[data-fig1-player]')!;
+    const button = fig.querySelector<HTMLButtonElement>('[data-fig1-toggle]')!;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) player.removeAttribute('autoplay');
+
+    let wantPlay = !reduced; // what the visitor wants; the observers only pause temporarily
+    let onScreen = false;
+    let started = false;
+    let loading: Promise<unknown> | undefined;
+
+    const sync = () => {
+      button.textContent = wantPlay ? button.dataset.labelPause! : button.dataset.labelPlay!;
+    };
+    const update = () => {
+      if (!started) return;
+      if (wantPlay && onScreen && !document.hidden) player.play();
+      else player.pause();
+    };
+    const start = () => {
+      if (started) return;
+      started = true;
+      player.setAttribute('src', player.dataset.src!);
+    };
+    // The player module is imported on demand and registers <hyperframes-player>.
+    const load = () => (loading ??= import('@hyperframes/player'));
+
+    button.hidden = false;
+    sync();
+    button.addEventListener('click', async () => {
+      wantPlay = !wantPlay;
+      sync();
+      await load();
+      if (wantPlay) start();
+      update();
+    });
+    // autoplay may begin before we know whether the figure is visible: correct it once ready.
+    player.addEventListener('ready', update);
+    document.addEventListener('visibilitychange', update);
+
+    new IntersectionObserver(
+      ([entry]) => {
+        onScreen = entry.isIntersecting;
+        update();
+      },
+      { threshold: 0.1 },
+    ).observe(fig);
+
+    new IntersectionObserver(
+      async ([entry], self) => {
+        if (!entry.isIntersecting) return;
+        self.disconnect();
+        await load();
+        if (wantPlay) start();
+      },
+      { rootMargin: '100% 0px' },
+    ).observe(fig);
+  }
+</script>

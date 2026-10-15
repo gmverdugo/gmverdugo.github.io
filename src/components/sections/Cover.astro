@@ -1,0 +1,124 @@
+---
+import { Image } from 'astro:assets';
+import Container from '../ui/Container.astro';
+import IndexLabel from '../ui/IndexLabel.astro';
+import RailGrid from '../ui/RailGrid.astro';
+import StatusLine from '../ui/StatusLine.astro';
+import type { Locale } from '../../i18n';
+import { cover } from '../../i18n/sections/cover';
+import { nav } from '../../i18n/sections/nav';
+import { chapters } from '../../data/chapters';
+import { site } from '../../data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = cover[locale];
+const { id, index } = chapters.overview;
+
+// Optional portrait: drop src/assets/profile.(jpg|jpeg|png|webp) and it renders; without it nothing is shown.
+const portraits = import.meta.glob<{ default: ImageMetadata }>('../../assets/profile.{jpg,jpeg,png,webp}', {
+  eager: true,
+});
+const portrait = Object.values(portraits)[0]?.default;
+---
+
+<section
+  id={id}
+  aria-labelledby={`${id}-title`}
+  class="border-b border-rule pb-16 pt-[calc(var(--spacing-header)+2rem)] md:pb-24"
+>
+  <RailGrid>
+    <Fragment slot="rail">
+      <IndexLabel index={index} tag={t.tag} />
+      {portrait && (
+        <Image
+          src={portrait}
+          alt={t.photoAlt}
+          width={320}
+          height={400}
+          loading="eager"
+          class="aspect-[4/5] w-40 border border-rule object-cover grayscale"
+        />
+      )}
+      <div class="label-mono flex flex-col gap-2 text-muted">
+        <p class="text-ink">{t.name}</p>
+        <p>{t.title}</p>
+        <p>{site.location.label}</p>
+        <StatusLine>{nav[locale].status}</StatusLine>
+      </div>
+    </Fragment>
+
+    <h1
+      id={`${id}-title`}
+      class:list={[
+        'font-serif text-[clamp(2.75rem,5.2vw,5rem)] font-normal leading-[1.05] tracking-[-0.025em] text-ink',
+        locale === 'en' && 'max-w-[24ch]',
+      ]}
+    >
+      {t.headline}
+    </h1>
+    <p class="mt-8 max-w-measure text-lede text-muted">{t.summary}</p>
+  </RailGrid>
+
+  <Container class="mt-12">
+    <h2 class="sr-only">{t.factsLabel}</h2>
+    <dl class="facts grid grid-cols-2 border-y border-rule md:grid-cols-3 2xl:grid-cols-6">
+      {t.facts.map((fact) => (
+        <div class="flex flex-col-reverse justify-end gap-2 px-4 py-6">
+          <dt class="label-mono text-muted [overflow-wrap:anywhere]">{fact.label}</dt>
+          <dd class="font-serif text-2xl leading-tight tracking-tight text-ink [overflow-wrap:anywhere] sm:text-3xl 2xl:text-2xl">
+            {fact.value}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  </Container>
+</section>
+
+<style>
+  /* Per-column rhythm: left hairline on every cell except the first of each row, top hairline between rows. */
+  .facts > div {
+    border-left: 1px solid var(--color-rule);
+    border-top: 1px solid var(--color-rule);
+  }
+  /* 2 columns */
+  .facts > div:nth-child(odd) {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .facts > div:nth-child(-n + 2) {
+    border-top: 0;
+  }
+  @media (min-width: 48rem) {
+    /* 3 columns */
+    .facts > div:nth-child(n) {
+      border-left: 1px solid var(--color-rule);
+      padding-left: 1rem;
+    }
+    .facts > div:nth-child(3n + 1) {
+      border-left: 0;
+      padding-left: 0;
+    }
+    .facts > div:nth-child(-n + 3) {
+      border-top: 0;
+    }
+    .facts > div:nth-child(n + 4) {
+      border-top: 1px solid var(--color-rule);
+    }
+  }
+  @media (min-width: 96rem) {
+    /* 6 columns, single row (only when each cell has room for "10+ mil millones") */
+    .facts > div:nth-child(n) {
+      border-top: 0;
+      border-left: 1px solid var(--color-rule);
+      padding-left: 1rem;
+    }
+    .facts > div:first-child {
+      border-left: 0;
+      padding-left: 0;
+    }
+  }
+</style>

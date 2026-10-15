@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from './layout/Header.astro';
+import Footer from './layout/Footer.astro';
+import Cover from './sections/Cover.astro';
+import Scope from './sections/Scope.astro';
+import Architecture from './sections/Architecture.astro';
+import Engagements from './sections/Engagements.astro';
+import Method from './sections/Method.astro';
+import Toolbox from './sections/Toolbox.astro';
+import HomeLab from './sections/HomeLab.astro';
+import Credentials from './sections/Credentials.astro';
+import Contact from './sections/Contact.astro';
+import type { Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<Base locale={locale}>
+  <Header locale={locale} />
+  <main id="main" tabindex="-1">
+    <Cover locale={locale} />
+    <Scope locale={locale} />
+    <Architecture locale={locale} />
+    <Engagements locale={locale} />
+    <Method locale={locale} />
+    <Toolbox locale={locale} />
+    <HomeLab locale={locale} />
+    <Credentials locale={locale} />
+    <Contact locale={locale} />
+  </main>
+  <Footer locale={locale} />
+</Base>

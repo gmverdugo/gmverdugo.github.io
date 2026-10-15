@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <script data-hf-runtime src="assets/hyperframe.runtime.iife.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1350" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: 'Newsreader'; src: url('assets/fonts/newsreader-400.woff2') format('woff2'); font-weight: 400; }
+      @font-face { font-family: 'Inter'; src: url('assets/fonts/inter-400.woff2') format('woff2'); font-weight: 400; }
+      @font-face { font-family: 'JetBrains Mono'; src: url('assets/fonts/jbmono-400.woff2') format('woff2'); font-weight: 400; }
+      @font-face { font-family: 'JetBrains Mono'; src: url('assets/fonts/jbmono-500.woff2') format('woff2'); font-weight: 500; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1350px; overflow: hidden; background: #0f0f10; }
+      #root { position: relative; width: 1080px; height: 1350px; overflow: hidden; background: #0f0f10; color: #ede9e4; font-family: 'Inter', system-ui, sans-serif;
+        background-image: linear-gradient(to right, rgba(237,233,228,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(237,233,228,0.04) 1px, transparent 1px); background-size: 36px 36px; }
+      .h { opacity: 0; }
+      .scene { position: absolute; left: 0; top: 0; width: 1080px; height: 1350px; opacity: 0; }
+      .mono { font-family: 'JetBrains Mono', monospace; }
+      .lbl { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: #8a8780; }
+      .sig { color: #ff5a36; }
+      .box { position: absolute; background: #161514; border: 1px solid #3b3936; }
+      .hl { position: absolute; inset: -1px; border: 2px solid #ff5a36; opacity: 0; }
+
+      /* tracker */
+      #tracker { position: absolute; left: 0; top: 56px; width: 1080px; height: 60px; }
+      .tr { position: absolute; top: 0; width: 192px; height: 50px; }
+      .tt, .ta { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; }
+      .tt { color: #7d7b77; }
+      .tb { position: absolute; left: 0; top: 0; width: 192px; opacity: 0; }
+      .ta { color: #ff5a36; }
+      .tbar { margin-top: 12px; width: 168px; height: 3px; background: #ff5a36; }
+      .tr::after { content: ''; position: absolute; left: 0; top: 33px; width: 168px; height: 1px; background: #2e2d2b; }
+
+      /* captions */
+      .cap { position: absolute; left: 60px; top: 1138px; width: 960px; }
+      .capLabel { font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 18px; letter-spacing: 0.08em; color: #ff5a36; margin-bottom: 14px; text-transform: uppercase; }
+      .capText { font-size: 34px; line-height: 1.28; }
+
+      /* scene 1: source */
+      #svc { left: 60px; top: 170px; width: 440px; height: 100px; padding: 18px 24px; }
+      #svc .name { font-size: 34px; margin-top: 6px; }
+      #svcDot { position: absolute; right: 24px; top: 40px; width: 18px; height: 18px; background: #ff5a36; }
+      #svcLine { position: absolute; left: 279px; top: 270px; width: 2px; height: 60px; background: #ff5a36; }
+      #card { left: 60px; top: 330px; width: 960px; height: 730px; padding: 34px 40px; background: #121110; display: flex; flex-direction: column; }
+      #card .hdr { display: flex; justify-content: space-between; }
+      #card .body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+      .ln { font-family: 'JetBrains Mono', monospace; font-size: 38px; line-height: 1.7; white-space: pre; color: #ede9e4; opacity: 0; }
+      .ln .k { color: #8a8780; }
+      .ln .v2 { color: #ff5a36; }
+
+      /* scene 2: collector */
+      #colFrame { left: 60px; top: 275px; width: 960px; height: 560px; background: transparent; }
+      #colFrame .ft { position: absolute; left: 24px; top: 20px; font-size: 18px; }
+      .step { position: absolute; top: 415px; width: 270px; height: 330px; padding: 22px; display: flex; flex-direction: column; justify-content: center; }
+      .step .lbl { font-size: 18px; }
+      .step .st { font-family: 'Newsreader', Georgia, serif; font-size: 40px; margin-top: 14px; }
+      .step .ss { font-family: 'JetBrains Mono', monospace; font-size: 20px; letter-spacing: 0.02em; color: #8a8780; margin-top: 18px; }
+      .arr { position: absolute; top: 579px; width: 26px; height: 2px; background: #ff5a36; }
+      .chipRow { position: absolute; left: 60px; width: 960px; display: flex; gap: 14px; flex-wrap: wrap; }
+      .pill { padding: 14px 22px; border: 1px solid #3b3936; background: #121110; font-family: 'JetBrains Mono', monospace; font-size: 22px; letter-spacing: 0.04em; text-transform: uppercase; color: #ede9e4; }
+      .pill.sg { border-color: #ff5a36; color: #ff5a36; }
+
+      /* scene 3: store */
+      #esFrame { left: 60px; top: 255px; width: 960px; height: 600px; background: transparent; }
+      #esFrame .ft { position: absolute; left: 24px; top: 20px; font-size: 18px; }
+      .tier { position: absolute; top: 345px; width: 270px; height: 440px; padding: 24px; }
+      .tier .tn { font-family: 'Newsreader', Georgia, serif; font-size: 50px; }
+      .tier .tsub { margin-top: 12px; font-size: 18px; }
+      .tarr { position: absolute; top: 565px; width: 40px; height: 2px; background: #ff5a36; }
+      .tarrl { position: absolute; top: 534px; font-size: 16px; letter-spacing: 0; width: 34px; text-align: center; margin-left: 3px; }
+      #doc { left: 112px; top: 660px; width: 246px; height: 94px; padding: 14px 16px; border-color: #ff5a36; background: #121110; }
+      #doc .d1 { font-size: 24px; }
+      #doc .d2 { margin-top: 8px; }
+
+      /* scene 4: analyze */
+      #panelA { left: 60px; top: 180px; width: 960px; height: 360px; padding: 24px 32px; overflow: hidden; }
+      #chart { position: absolute; left: 40px; top: 90px; width: 880px; height: 220px; overflow: hidden; }
+      #chartCover { position: absolute; left: 0; top: 0; width: 880px; height: 220px; background: #161514; }
+      #ring { position: absolute; left: 841px; top: 99px; width: 70px; height: 70px; border: 3px solid #ff5a36; border-radius: 50%; opacity: 0; }
+      #mlChip { position: absolute; left: 560px; top: 484px; }
+      #panelB { left: 60px; top: 580px; width: 960px; height: 490px; padding: 30px 32px; }
+      .aiLine { font-size: 38px; line-height: 1.3; margin-top: 26px; opacity: 0; }
+
+      /* scene 5: automate */
+      #rule { left: 60px; top: 190px; width: 960px; height: 150px; padding: 24px 30px; }
+      #rule .rt { font-family: 'Newsreader', Georgia, serif; font-size: 40px; margin-top: 10px; }
+      .fan { position: absolute; background: #ff5a36; width: 2px; }
+      #jira { left: 60px; top: 440px; width: 460px; height: 430px; padding: 28px; }
+      #slack { left: 560px; top: 440px; width: 460px; height: 430px; padding: 28px; }
+      .ct { font-family: 'Newsreader', Georgia, serif; font-size: 44px; line-height: 1.12; margin-top: 24px; }
+      .cm { font-size: 27px; line-height: 1.4; color: #8a8780; margin-top: 22px; }
+      .badge { display: inline-block; padding: 6px 12px; border: 1px solid #ff5a36; color: #ff5a36; font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+      /* macro */
+      #macro { position: absolute; left: 0; top: 0; width: 1080px; height: 1350px; opacity: 0; transform-origin: 898px 1058px; }
+      #macroIn { position: absolute; left: 0; top: 0; width: 1080px; height: 1350px; transform-origin: 540px 675px; }
+      #macro .fig { position: absolute; left: 60px; top: 150px; }
+      #railBase { position: absolute; left: 83px; top: 210px; width: 2px; height: 896px; background: #ff5a36; opacity: 0.55; }
+      .node { position: absolute; left: 77px; width: 14px; height: 14px; border-radius: 50%; background: #ff5a36; }
+      .mp { position: absolute; left: 76px; top: 286px; width: 16px; height: 16px; background: #ff5a36; opacity: 0; }
+      .band { position: absolute; left: 130px; width: 890px; height: 168px; background: #161514; border: 1px solid #2e2d2b; }
+      .glow { position: absolute; inset: -1px; border: 2px solid #ff5a36; opacity: 0.45; }
+      .idx { position: absolute; left: 28px; top: 30px; font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 15px; letter-spacing: 0.08em; color: #ff5a36; }
+      .ttl { position: absolute; left: 28px; top: 60px; width: 200px; font-family: 'Newsreader', Georgia, serif; font-size: 34px; line-height: 1.1; }
+      .chips { position: absolute; left: 250px; top: 26px; width: 610px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+      .chip { height: 56px; padding: 8px 12px; background: #121110; border: 1px solid #3b3936; display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+      .chip .cn { font-size: 16px; line-height: 1.15; white-space: nowrap; }
+      .chip .cr { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8a8780; margin-top: 3px; white-space: nowrap; }
+      .chip.hot { border-color: #ff5a36; }
+      .chip.hot .cr { color: #ff5a36; }
+      #sig { position: absolute; left: 60px; top: 1296px; width: 960px; }
+
+      #packet { position: absolute; left: 0; top: 0; width: 22px; height: 22px; background: #ff5a36; opacity: 0; z-index: 50; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="30" data-width="1080" data-height="1350">
+
+      <div id="tracker" class="clip h" data-start="0" data-duration="30"><div class="tr" style="left:60px"><div class="tt" data-layout-allow-overlap>01 FUENTE</div><div class="tb" id="tb0"><div class="ta" data-layout-allow-overlap>01 FUENTE</div><div class="tbar"></div></div></div><div class="tr" style="left:252px"><div class="tt" data-layout-allow-overlap>02 RECOLECCIÓN</div><div class="tb" id="tb1"><div class="ta" data-layout-allow-overlap>02 RECOLECCIÓN</div><div class="tbar"></div></div></div><div class="tr" style="left:444px"><div class="tt" data-layout-allow-overlap>03 ALMACENAR</div><div class="tb" id="tb2"><div class="ta" data-layout-allow-overlap>03 ALMACENAR</div><div class="tbar"></div></div></div><div class="tr" style="left:636px"><div class="tt" data-layout-allow-overlap>04 ANALIZAR</div><div class="tb" id="tb3"><div class="ta" data-layout-allow-overlap>04 ANALIZAR</div><div class="tbar"></div></div></div><div class="tr" style="left:828px"><div class="tt" data-layout-allow-overlap>05 AUTOMATIZAR</div><div class="tb" id="tb4"><div class="ta" data-layout-allow-overlap>05 AUTOMATIZAR</div><div class="tbar"></div></div></div></div>
+
+      <!-- 01 SOURCE -->
+      <div id="s1" class="scene clip" data-start="0" data-duration="30">
+        <div id="svc" class="box h"><div class="lbl">Servicio</div><div class="name">payments-api</div><div id="svcDot"></div></div>
+        <div id="svcLine" class="h"></div>
+        <div id="card" class="box h">
+          <div class="hdr"><span class="lbl">Evento de traza</span><span class="lbl sig">Ilustrativo</span></div>
+          <div class="body">
+          <div class="ln" id="l0">{</div>
+          <div class="ln" id="l1">  <span class="k">"@timestamp"</span>: "2026-10-14T21:47:03Z",</div>
+          <div class="ln" id="l2">  <span class="k">"service.name"</span>: "payments-api",</div>
+          <div class="ln" id="l3">  <span class="k">"trace.id"</span>: "4bf92f35a1c0…",</div>
+          <div class="ln" id="l4">  <span class="k">"event.action"</span>: "payment.authorize",</div>
+          <div class="ln" id="l5">  <span class="k">"event.duration_ms"</span>: <span class="v2">412</span>,</div>
+          <div class="ln" id="l6">  <span class="k">"log.level"</span>: "warn"</div>
+          <div class="ln" id="l7">}</div>
+          </div>
+        </div>
+        <div class="cap h" id="c1"><div class="capLabel">Etapa 01 · Fuente</div><div class="capText">Un servicio emite una traza: un evento entre millones.</div></div>
+      </div>
+
+      <!-- 02 COLLECT -->
+      <div id="s2" class="scene clip" data-start="0" data-duration="30">
+        <div id="colFrame" class="box h"><div class="ft lbl sig">OpenTelemetry Collector</div></div>
+        <div class="box step h" id="st1" style="left:100px"><div class="lbl">Recibir</div><div class="st">Receptores</div><div class="ss">otlp</div><div class="hl" id="hs1"></div></div>
+        <div class="arr h" id="ar1" style="left:373px"></div>
+        <div class="box step h" id="st2" style="left:405px"><div class="lbl">Procesar</div><div class="st">Procesadores</div><div class="ss">batch · resource</div><div class="hl" id="hs2"></div></div>
+        <div class="arr h" id="ar2" style="left:678px"></div>
+        <div class="box step h" id="st3" style="left:710px"><div class="lbl">Exportar</div><div class="st">Exportadores</div><div class="ss">hacia Elasticsearch</div><div class="hl" id="hs3"></div></div>
+        <div class="chipRow h" id="chips2" style="top:895px"><span class="pill">Elastic Agent</span><span class="pill">Fleet</span><span class="pill sg">gestionado de forma central</span></div>
+        <div class="cap h" id="c2"><div class="capLabel">Etapa 02 · Recolección</div><div class="capText">El OpenTelemetry Collector lo recibe, lo enriquece y lo reenvía. Fleet gestiona los agentes.</div></div>
+      </div>
+
+      <!-- 03 STORE -->
+      <div id="s3" class="scene clip" data-start="0" data-duration="30">
+        <div id="esFrame" class="box h"><div class="ft lbl sig">Elasticsearch · data stream</div></div>
+        <div class="box tier h" id="tr1" style="left:100px"><div class="tn">Hot</div><div class="lbl tsub">Reciente, rápido</div></div>
+        <div class="tarr h" id="ta1" style="left:373px"></div><div class="tarrl lbl sig h" id="tl1" style="left:373px">ILM</div>
+        <div class="box tier h" id="tr2" style="left:405px"><div class="tn">Cold</div><div class="lbl tsub">Antiguo, más económico</div></div>
+        <div class="tarr h" id="ta2" style="left:678px"></div><div class="tarrl lbl sig h" id="tl2" style="left:678px">ILM</div>
+        <div class="box tier h" id="tr3" style="left:710px"><div class="tn">Frozen</div><div class="lbl tsub">Snapshots buscables</div></div>
+        <div id="doc" class="box h"><div class="d1 mono">payments-api</div><div class="d2 lbl sig">Indexado · 412 ms</div></div>
+        <div class="chipRow h" id="chips3" style="top:905px"><span class="pill">Data streams</span><span class="pill">ILM</span><span class="pill sg">LogsDB</span></div>
+        <div class="cap h" id="c3"><div class="capLabel">Etapa 03 · Procesar y almacenar</div><div class="capText">Elasticsearch lo indexa y las reglas de ciclo de vida lo mueven por los tiers hot, cold y frozen.</div></div>
+      </div>
+
+      <!-- 04 ANALYZE -->
+      <div id="s4" class="scene clip" data-start="0" data-duration="30">
+        <div id="panelA" class="box h"><div class="lbl">Latencia · payments-api</div>
+          <div id="chart"><svg width="880" height="220" viewBox="0 0 880 220"><line x1="0" y1="200" x2="880" y2="200" stroke="#2e2d2b" stroke-width="2"/><polyline fill="none" stroke="#ede9e4" stroke-width="4" points="0,150 60,142 120,150 180,138 240,146 300,140 360,148 420,136 480,144 540,140 600,148 660,142 720,146 760,132 800,84 836,44 866,60"/></svg><div id="chartCover"></div></div>
+          <div id="ring"></div>
+        </div>
+        <div id="mlChip" class="pill sg h">Machine learning · anomalía</div>
+        <div id="panelB" class="box h"><span class="badge">Asistente de IA</span> <span class="badge" style="margin-left:10px">Agent Builder · herramientas MCP</span>
+          <div class="aiLine" id="ai1">La latencia de payments-api está muy por encima de su línea base.</div>
+          <div class="aiLine" id="ai2">Causa probable: una llamada de autorización descendente lenta.</div>
+          <div class="aiLine sig" id="ai3">Acción sugerida: abrir un ticket de incidente.</div>
+        </div>
+        <div class="cap h" id="c4"><div class="capLabel">Etapa 04 · Analizar y actuar</div><div class="capText">Los dashboards y el machine learning lo detectan. Un asistente de IA lo explica.</div></div>
+      </div>
+
+      <!-- 05 AUTOMATE -->
+      <div id="s5" class="scene clip" data-start="0" data-duration="30" style="transform-origin:898px 1058px">
+        <div id="rule" class="box h"><div class="lbl">Regla de alerta</div><div class="rt" data-layout-allow-overlap>Latencia sobre la línea base → ejecutar acciones</div></div>
+        <div class="fan h" id="fn1" style="left:290px;top:340px;height:100px"></div>
+        <div class="fan h" id="fn2" style="left:790px;top:340px;height:100px"></div>
+        <div id="jira" class="box h"><span class="badge">Jira</span> <span class="lbl" style="margin-left:10px">OPS-1042</span>
+          <div class="ct">Anomalía de latencia en pagos</div>
+          <div class="cm">Prioridad: alta<br>Vinculado a la alerta de Kibana</div></div>
+        <div id="slack" class="box h"><span class="badge">Slack</span> <span class="lbl" style="margin-left:10px">#ops-alerts</span>
+          <div class="ct">Anomalía en payments-api</div>
+          <div class="cm" data-layout-allow-overlap>Ticket OPS-1042 creado y vinculado.</div></div>
+        <div class="chipRow h" id="chips5" style="top:925px"><span class="pill">PagerDuty</span><span class="pill">ServiceNow</span><span class="pill">Webhooks</span></div>
+        <div class="chipRow h" id="iac" style="top:1005px"><span class="pill sg" data-layout-allow-overlap>Terraform</span><span class="pill sg" data-layout-allow-overlap>Ansible</span><span class="pill sg" data-layout-allow-overlap>Jenkins</span><span class="pill sg" data-layout-allow-overlap>Python</span></div>
+        <div class="cap h" id="c5"><div class="capLabel">Etapa 05 · Automatizar</div><div class="capText">Una regla de alerta abre el ticket y avisa al equipo. La propia plataforma es código.</div></div>
+      </div>
+
+      <!-- MACRO -->
+      <div id="macro" class="clip" data-start="0" data-duration="30"><div id="macroIn">
+        <div class="fig lbl sig">Fig. 1 · Pipeline de telemetría para observabilidad y seguridad empresarial</div>
+        <div id="railBase"></div><div class="node" style="top:287px"></div><div class="node" style="top:469px"></div><div class="node" style="top:651px"></div><div class="node" style="top:833px"></div><div class="node" style="top:1015px"></div><div class="mp" id="mp0"></div><div class="mp" id="mp1"></div><div class="mp" id="mp2"></div><div class="mp" id="mp3"></div><div class="mp" id="mp4"></div><div class="mp" id="mp5"></div><div class="mp" id="mp6"></div><div class="mp" id="mp7"></div><div class="mp" id="mp8"></div><div class="mp" id="mp9"></div><div class="mp" id="mp10"></div><div class="mp" id="mp11"></div>
+        <div class="band" style="top:210px"><div class="glow"></div><div class="idx">01 / ETAPA</div><div class="ttl">Fuentes</div><div class="chips"><div class="chip"><span class="cn">Logs de aplicación</span><span class="cr">LOG</span></div><div class="chip"><span class="cn">Métricas infra</span><span class="cr">MÉTRICA</span></div><div class="chip"><span class="cn">Trazas distribuidas</span><span class="cr">TRAZA</span></div><div class="chip"><span class="cn">VPN</span><span class="cr">RED</span></div><div class="chip"><span class="cn">Seguridad de endpoint</span><span class="cr">EDR</span></div><div class="chip"><span class="cn">SAP BTP</span><span class="cr">PLATAFORMA</span></div></div></div><div class="band" style="top:392px"><div class="glow"></div><div class="idx">02 / ETAPA</div><div class="ttl">Recolección</div><div class="chips"><div class="chip"><span class="cn">Elastic Agent</span><span class="cr">AGENTE</span></div><div class="chip"><span class="cn">OTel Collector</span><span class="cr">COLECTOR</span></div><div class="chip"><span class="cn">Fleet</span><span class="cr">GESTIÓN</span></div></div></div><div class="band" style="top:574px"><div class="glow"></div><div class="idx">03 / ETAPA</div><div class="ttl">Procesar<br>y almacenar</div><div class="chips"><div class="chip"><span class="cn">Elasticsearch</span><span class="cr">BÚSQUEDA + ALMAC.</span></div><div class="chip"><span class="cn">ILM</span><span class="cr">CICLO DE VIDA</span></div><div class="chip"><span class="cn">Data streams</span><span class="cr">SERIES TEMP.</span></div><div class="chip"><span class="cn">LogsDB</span><span class="cr">MODO ÍNDICE</span></div></div></div><div class="band" style="top:756px"><div class="glow"></div><div class="idx">04 / ETAPA</div><div class="ttl">Analizar<br>y actuar</div><div class="chips"><div class="chip"><span class="cn">Kibana</span><span class="cr">VISUALIZAR</span></div><div class="chip"><span class="cn">APM</span><span class="cr">TRAZADO</span></div><div class="chip"><span class="cn">Elastic Security</span><span class="cr">SIEM</span></div><div class="chip hot"><span class="cn">Machine learning</span><span class="cr">ANOMALÍAS</span></div><div class="chip hot"><span class="cn">Asistente de IA</span><span class="cr">LLM</span></div><div class="chip hot"><span class="cn">Agent Builder</span><span class="cr">AGENTES MCP</span></div></div></div><div class="band" style="top:938px"><div class="glow"></div><div class="idx">05 / ETAPA</div><div class="ttl">Automatizar<br>y orquestar</div><div class="chips"><div class="chip"><span class="cn">Terraform</span><span class="cr">APROVISIONAR</span></div><div class="chip"><span class="cn">Ansible</span><span class="cr">CONFIGURAR</span></div><div class="chip"><span class="cn">Jenkins</span><span class="cr">PIPELINES</span></div><div class="chip"><span class="cn">Python</span><span class="cr">SCRIPTING</span></div><div class="chip hot"><span class="cn">Reglas de alertas</span><span class="cr">DISPARADORES</span></div><div class="chip hot"><span class="cn">Conectores</span><span class="cr">JIRA + SLACK</span></div></div></div>
+        <div class="cap h" id="c6"><div class="capLabel">Ahora multiplícalo</div><div class="capText">Cada fuente, cada tier, funcionando a la vez.</div></div>
+      </div></div>
+      <div id="sig" class="clip h lbl" data-start="0" data-duration="30">Gonzalo Verdugo · Arquitecto de observabilidad empresarial</div>
+
+      <div id="packet" class="clip" data-start="0" data-duration="30"></div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      const show = (sel, t, d = 0.4, y = 14) => tl.fromTo(sel, { opacity: 0, y }, { opacity: 1, y: 0, duration: d, ease: 'power2.out' }, t);
+      const hide = (sel, t, d = 0.3) => tl.to(sel, { opacity: 0, duration: d, ease: 'power1.in' }, t);
+      const sceneIn = (id, t) => tl.to('#' + id, { opacity: 1, duration: 0.3 }, t);
+      const sceneOut = (id, t) => tl.to('#' + id, { opacity: 0, duration: 0.3 }, t);
+      const act = (k, t) => { tl.to('#tb' + k, { opacity: 1, duration: 0.3 }, t); if (k > 0) tl.to('#tb' + (k - 1), { opacity: 0, duration: 0.3 }, t); };
+      const PK = (x, y) => ({ x: x - 11, y: y - 11 });
+      const pulse = (sel, t) => { tl.to(sel, { opacity: 1, duration: 0.25 }, t); };
+
+      // ---- initial states ----
+      gsap.set('#macro', { opacity: 0, scale: 5 });
+      gsap.set('#packet', { opacity: 0, ...PK(540, 695) });
+      gsap.set('#ring', { opacity: 0, scale: 0.2 });
+      gsap.set('#sig', { opacity: 0 });
+      gsap.set('#s1,#s2,#s3,#s4,#s5', { opacity: 0 });
+      gsap.set('#chartCover', { x: 0 });
+      gsap.set('#macroIn', { scale: 1 });
+      gsap.set('#s5', { scale: 1 });
+
+      // ---- tracker ----
+      show('#tracker', 0.1, 0.5, 0);
+
+      // ---- 01 SOURCE (0.4 - 5.0) ----
+      sceneIn('s1', 0.4); act(0, 0.5);
+      tl.fromTo('#s1', { scale: 1 }, { scale: 1.03, duration: 4.5, ease: 'none' }, 0.4);
+      show('#svc', 0.6); show('#svcLine', 1.0, 0.3, 0); show('#card', 1.1, 0.5, 24);
+      for (let l = 0; l < 8; l++) tl.to('#l' + l, { opacity: 1, duration: 0.2 }, 1.6 + l * 0.28);
+      show('#c1', 0.8);
+      tl.to('#card', { scale: 0.03, opacity: 0, duration: 0.6, ease: 'power2.in' }, 4.2);
+      tl.to('#svc,#svcLine', { opacity: 0, duration: 0.3 }, 4.2);
+      tl.to('#packet', { opacity: 1, duration: 0.15 }, 4.65);
+      hide('#c1', 4.5); sceneOut('s1', 4.9);
+
+      // ---- 02 COLLECT (5.2 - 9.0) ----
+      sceneIn('s2', 5.2); act(1, 5.2);
+      tl.fromTo('#s2', { scale: 1 }, { scale: 1.03, duration: 3.7, ease: 'none' }, 5.2);
+      show('#colFrame', 5.3); show('#st1', 5.5); show('#ar1', 5.7, 0.3, 0); show('#st2', 5.8); show('#ar2', 6.0, 0.3, 0); show('#st3', 6.1);
+      show('#chips2', 6.4); show('#c2', 5.5);
+      tl.to('#packet', { ...PK(235, 580), duration: 0.6, ease: 'power2.inOut' }, 5.5); pulse('#hs1', 6.0);
+      tl.to('#packet', { ...PK(540, 580), duration: 0.6, ease: 'power2.inOut' }, 6.7); tl.to('#hs1', { opacity: 0, duration: 0.2 }, 6.7); pulse('#hs2', 7.2);
+      tl.to('#packet', { ...PK(845, 580), duration: 0.6, ease: 'power2.inOut' }, 7.7); tl.to('#hs2', { opacity: 0, duration: 0.2 }, 7.7); pulse('#hs3', 8.2);
+      hide('#c2', 8.7); sceneOut('s2', 8.9);
+      tl.to('#packet', { ...PK(235, 400), duration: 0.6, ease: 'power2.inOut' }, 8.8);
+
+      // ---- 03 STORE (9.2 - 13.8) ----
+      sceneIn('s3', 9.2); act(2, 9.2);
+      tl.fromTo('#s3', { scale: 1 }, { scale: 1.03, duration: 4.5, ease: 'none' }, 9.2);
+      show('#esFrame', 9.3); show('#tr1', 9.5); show('#ta1', 9.7, 0.3, 0); show('#tl1', 9.7, 0.3, 0); show('#tr2', 9.8); show('#ta2', 10.0, 0.3, 0); show('#tl2', 10.0, 0.3, 0); show('#tr3', 10.1);
+      show('#chips3', 10.4); show('#c3', 9.5);
+      tl.to('#packet', { ...PK(235, 705), duration: 0.5, ease: 'power2.in' }, 10.2);
+      tl.to('#packet', { opacity: 0, duration: 0.1 }, 10.7);
+      tl.fromTo('#doc', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' }, 10.7);
+      tl.to('#doc', { x: 305, duration: 0.8, ease: 'power2.inOut' }, 12.0);
+      tl.to('#doc', { x: 610, duration: 0.8, ease: 'power2.inOut' }, 13.0);
+      hide('#c3', 13.5); sceneOut('s3', 13.7);
+
+      // ---- 04 ANALYZE (14.0 - 19.8) ----
+      sceneIn('s4', 14.0); act(3, 14.0);
+      tl.fromTo('#s4', { scale: 1 }, { scale: 1.03, duration: 5.9, ease: 'none' }, 14.0);
+      show('#panelA', 14.1); show('#c4', 14.3);
+      tl.to('#chartCover', { x: 880, duration: 1.4, ease: 'power1.inOut' }, 14.6);
+      tl.to('#ring', { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, 16.1);
+      tl.to('#ring', { scale: 1.25, duration: 0.4, yoyo: true, repeat: 1 }, 16.6);
+      show('#mlChip', 16.3);
+      show('#panelB', 17.0);
+      show('#ai1', 17.5, 0.4, 10); show('#ai2', 18.3, 0.4, 10); show('#ai3', 19.0, 0.4, 10);
+      hide('#c4', 19.6); sceneOut('s4', 19.9);
+
+      // ---- 05 AUTOMATE (20.2 - 23.6) ----
+      sceneIn('s5', 20.2); act(4, 20.2);
+      show('#rule', 20.3); show('#fn1', 20.7, 0.3, 0); show('#fn2', 20.7, 0.3, 0);
+      show('#jira', 20.9); show('#slack', 21.3); show('#chips5', 21.8); show('#iac', 22.1); show('#c5', 20.8);
+
+      // ---- ZOOM OUT: micro -> macro (23.6 - 25.4) ----
+      hide('#c5', 23.3);
+      tl.to('#macro', { opacity: 1, duration: 0.6, ease: 'power1.inOut' }, 23.6);
+      tl.fromTo('#macro', { scale: 5 }, { scale: 1, duration: 1.9, ease: 'power2.inOut' }, 23.6);
+      tl.fromTo('#s5', { scale: 1 }, { scale: 0.2, duration: 1.9, ease: 'power2.inOut' }, 23.6);
+      tl.to('#s5', { opacity: 0, duration: 0.8 }, 24.2);
+      tl.to('#tb0,#tb1,#tb2,#tb3,#tb4', { opacity: 1, duration: 0.4 }, 25.2);
+      tl.to('#c6', { opacity: 1, duration: 0.5 }, 25.4);
+
+      // many events at once (macro)
+      const y0 = 0, y1 = 4 * 182;
+      for (let k = 0; k < 6; k++) {
+        const s = 25.0 + k * 0.45;
+        tl.to('#mp' + k, { opacity: 1, duration: 0.2 }, s);
+        tl.fromTo('#mp' + k, { y: y0 }, { y: y1, duration: 2.0, ease: 'none' }, s);
+        tl.to('#mp' + k, { opacity: 0, duration: 0.2 }, s + 1.9);
+      }
+      // second wave (distinct packets)
+      for (let k = 0; k < 6; k++) {
+        const s = 27.0 + k * 0.1, e = 6 + k;
+        tl.to('#mp' + e, { opacity: 1, duration: 0.15 }, s);
+        tl.fromTo('#mp' + e, { y: y0 }, { y: y1, duration: 1.0, ease: 'none' }, s);
+        tl.to('#mp' + e, { opacity: 0, duration: 0.1 }, s + 0.95);
+      }
+
+      // ---- STOP (slow idle breathing, never frozen), signature, restart ----
+      tl.fromTo('#macroIn', { scale: 1 }, { scale: 1.02, duration: 3.7, ease: 'sine.inOut' }, 25.5);
+      tl.to('#sig', { opacity: 1, duration: 0.6 }, 27.8);
+      tl.to('#macro,#sig,#tracker', { opacity: 0, duration: 0.7, ease: 'power1.inOut' }, 29.2);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['main'] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

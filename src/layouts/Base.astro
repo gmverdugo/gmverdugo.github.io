@@ -1,0 +1,94 @@
+---
+import '../styles/global.css';
+import { Font } from 'astro:assets';
+import { site } from '../data/site';
+import { homePath, otherLocale, type Locale } from '../i18n';
+import { meta } from '../i18n/meta';
+import { nav } from '../i18n/sections/nav';
+
+interface Props {
+  locale: Locale;
+  /** Overrides the locale title (used by utility pages such as 404). */
+  title?: string;
+  /** Overrides the locale description. */
+  description?: string;
+  /** Utility pages: adds `robots: noindex` and omits canonical, hreflang and og:url. */
+  noindex?: boolean;
+}
+
+const { locale, noindex = false } = Astro.props;
+const { ogLocale, ogImageAlt } = meta[locale];
+const title = Astro.props.title ?? meta[locale].title;
+const description = Astro.props.description ?? meta[locale].description;
+const origin = Astro.site ?? new URL(site.url);
+const canonical = new URL(homePath(locale), origin).href;
+const alternate = new URL(homePath(otherLocale(locale)), origin).href;
+const ogImage = new URL(`/og-${locale}.png`, origin).href;
+const { skipLabel, jobTitle } = nav[locale];
+
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': new URL('/#person', origin).href,
+  name: site.name,
+  jobTitle,
+  url: canonical,
+  sameAs: [site.linkedin],
+  address: { '@type': 'PostalAddress', addressLocality: site.location.city, addressCountry: site.location.country },
+};
+// Escape "<" so the JSON can never close the script element.
+const personJson = JSON.stringify(personLd).replace(/</g, '\u003c');
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <!-- The only hex outside global.css: theme-color is a meta attribute and cannot read CSS tokens. Keep in sync with --color-canvas. -->
+    <meta name="theme-color" content="#0f0f10" />
+    {!noindex && (
+      <>
+        <link rel="canonical" href={canonical} />
+        <link rel="alternate" hreflang={locale} href={canonical} />
+        <link rel="alternate" hreflang={otherLocale(locale)} href={alternate} />
+        <link rel="alternate" hreflang="x-default" href={new URL('/', origin).href} />
+      </>
+    )}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {!noindex && <meta property="og:url" content={canonical} />}
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={meta[otherLocale(locale)].ogLocale} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+    {!noindex && <script type="application/ld+json" set:html={personJson} />}
+    <Font cssVariable="--font-newsreader" preload={[{ weight: 400, style: 'normal' }]} />
+    <Font cssVariable="--font-inter" preload={[{ weight: 400 }]} />
+    <Font cssVariable="--font-jetbrains-mono" preload={[{ weight: 500 }]} />
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="label-mono sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-control focus:bg-ink focus:px-3 focus:py-2 focus:text-canvas"
+    >
+      {skipLabel}
+    </a>
+    <slot />
+  </body>
+</html>
