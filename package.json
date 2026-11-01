@@ -27,7 +27,7 @@
     "@astrojs/check": "^0.9.10",
     "@hyperframes/core": "0.8.158",
     "prettier": "^3.9.10",
-    "prettier-plugin-astro": "^1.1.1",
+    "prettier-plugin-astro": "^1.1.2",
     "typescript": "^6.0.3"
   }
 }
